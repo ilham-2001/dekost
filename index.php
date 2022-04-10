@@ -1,7 +1,9 @@
 <?php
 
-require("model/db.connect.php");
-require("model/fetch.db.data.php");
+require("config/db.connect.php");
+require("php-query/fetch.db.data.php");
+
+$collections = getalldata();
 
 ?>
 
@@ -32,23 +34,17 @@ require("model/fetch.db.data.php");
                 </tr>
             </thead>
             <tbody>
+                <?php $row_index = 1; ?>
+                <?php foreach ($collections as $data) : ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th scope="row"><?php echo $row_index ?></th>
+                    <td><?php echo $data["id"] ?></td>
+                    <td><?php echo $data["nama"] ?></td>
+                    <td><?php echo $data["custodian"] ?></td>
+                    <td><?php echo $data["bank"] ?></td>
+                    <?php $row_index++; ?>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
