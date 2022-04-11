@@ -1,7 +1,7 @@
 # DEKOST
 
 ### CATATAN:
-- **source** terlebih dahulu sata dummy pada  folder db/dekost.sql pada mysql.sever
+- **source** terlebih dahulu data dummy pada  folder db/dekost.sql pada mysql.sever
 - ubah username dan password pada folder config/db.connect.php sesuai dengan device 
 - gunakan backtics (**`**) disaat mengedit file .sql 
 
