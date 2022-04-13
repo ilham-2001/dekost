@@ -54,6 +54,7 @@ CREATE TABLE `transactions` (
 
 CREATE TABLE `kos` (
   `kos_id` int(200) NOT NULL,
+  `fasilitas` varchar(255) NOT NULL,
   `jumlah_kamar` int(200) NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `kategori_kos` varchar(255) NOT NULL
@@ -65,4 +66,18 @@ CREATE TABLE `kos` (
 -- (),
 -- (),
 -- ();
+
+CREATE TABLE `user` (
+  `customer_id` int(200) NOT NULL,
+  `nama_depan` varchar(128) NOT NULL,
+  `nama_belakang` varchar(128) NOT NULL,
+  `jenis_kelamin` varchar(64) NOT NULL
+)
+
+-- INSERT INTO `user` VALUES 
+-- (),
+-- (),
+-- (),
+-- (),
+-- (),
 

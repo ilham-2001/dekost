@@ -3,7 +3,7 @@
 require("config/db.connect.php");
 require("php-query/fetch.db.data.php");
 
-$collections = getalldata();
+$collections = getalldata("asset_manager");
 
 ?>
 
@@ -22,7 +22,7 @@ $collections = getalldata();
 </head>
 
 <body>
-
+    <h1>Hello</h1>
     <div class="table-container">
         <table class="table">
             <thead>

@@ -1,12 +1,13 @@
 <?php
 
 require("config/db.connect.php");
-$data_query = mysqli_query($conn, "SELECT * FROM asset_manager");
 
-function getalldata()
+function getalldata($table)
 {
-    global $data_query;
+    global $conn;
+
     $data_array = [];
+    $data_query = mysqli_query($conn, "SELECT * FROM $table");
 
     while ($data = mysqli_fetch_assoc($data_query)) {
         array_push($data_array, $data);
