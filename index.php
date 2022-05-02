@@ -3,7 +3,7 @@
 require("config/db.connect.php");
 require("php-query/fetch.db.data.php");
 
-$collections = getalldata("asset_manager");
+$collections = getalldata("users");
 
 ?>
 

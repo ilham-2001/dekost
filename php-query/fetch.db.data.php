@@ -1,7 +1,5 @@
 <?php
 
-require("config/db.connect.php");
-
 function getalldata($table)
 {
     global $conn;
@@ -14,4 +12,17 @@ function getalldata($table)
     }
 
     return $data_array;
+}
+
+function verifyLogin($email, $password)
+{
+    $users = getalldata("users");
+
+    foreach ($users as $user) {
+        if ($user['email'] == $email && $user['password'] == $password) {
+            return true;
+        }
+    }
+
+    return false;
 }
