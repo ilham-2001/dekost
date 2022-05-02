@@ -1,6 +1,6 @@
 <?php
 
-require('../config/db.connect.php')
+require('config/db.connect.php')
 
 ?>
 
