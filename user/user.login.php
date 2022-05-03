@@ -34,10 +34,22 @@ if (isset($_POST["btn_submit"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/custom.style.css">
-    <title>User Login</title>
+    <title>Login - De'kost</title>
 </head>
 
 <body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <?php if (isset($_SESSION['login'])) : ?>
+                    <a class="navbar-brand" href="index.php">De`Kost</a>
+                <?php else : ?>
+                    <a class="navbar-brand" href="user.login.php">De`Kost</a>
+                <?php endif; ?>
+            </div>
+        </nav>
+    </header>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -60,21 +72,14 @@ if (isset($_POST["btn_submit"])) {
         </div>
     </div>
 
-
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <?php if (isset($_SESSION['login'])) : ?>
-                    <a class="navbar-brand" href="index.php">De`Kost</a>
-                <?php else : ?>
-                    <a class="navbar-brand" href="user.login.php">De`Kost</a>
-                <?php endif; ?>
-            </div>
-        </nav>
-    </header>
-
-
     <main>
+
+        <div class="container">
+            <div class="row align-items-start">
+                
+            </div>
+        </div>
+
         <div class="main-form">
             <form class="form-signin" method="POST">
                 <img class="mb-4" src="" alt="" width="72" height="57">
@@ -106,6 +111,9 @@ if (isset($_POST["btn_submit"])) {
     </main>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+
+    <!-- Alert saat salah password atau username -->
 
     <?php if (isset($_POST['btn_submit'])) : ?>
         <script type="text/javascript">
@@ -121,7 +129,6 @@ if (isset($_POST["btn_submit"])) {
         }
         </script>
     <?php endif; ?>
-
 
 </body>
 
