@@ -32,25 +32,17 @@ if (isset($_POST["btn_submit"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - De'kost</title>
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/custom.style.css">
-    <title>Login - De'kost</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <?php if (isset($_SESSION['login'])) : ?>
-                    <a class="navbar-brand" href="index.php">De`Kost</a>
-                <?php else : ?>
-                    <a class="navbar-brand" href="user.login.php">De`Kost</a>
-                <?php endif; ?>
-            </div>
-        </nav>
-    </header>
-
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
@@ -72,42 +64,82 @@ if (isset($_POST["btn_submit"])) {
         </div>
     </div>
 
-    <main>
+    <main class="container-fluid">
+        <div class="row align-items-start">
+            <div class="col col-lf">
+                <div class="sign-in-img">
+                    <h2 class="brand">De'Kost</h2>
 
-        <div class="container">
-            <div class="row align-items-start">
-                
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="assets/images/login.png" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>First slide label</h5>
+                                    <p>Some representative placeholder content for the first slide.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/images/login2.png" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Second slide label</h5>
+                                    <p>Some representative placeholder content for the second slide.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/images/login3.png" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Third slide label</h5>
+                                    <p>Some representative placeholder content for the third slide.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-rg">
+                <div class="main-form">
+                    <form class="form-signin" method="POST">
+                        <img class="mb-4" src="" alt="" width="72" height="57">
+                        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
+                            <label for="floatingInput">Email address</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" value="true" name="is_remember"> Remember me
+                            </label>
+                        </div>
+                        <button class="w-100 btn btn-lg btn-primary btn-login" type="submit" name="btn_submit">Sign
+                            in</button>
+                    </form>
+
+                    <a class="user-signup" href="signup.user.php">Sign Up</a>
+                    <p class="mb-3 text-muted cr-text">&copy;2022 De'kost All rights reserved</p>
+
+                </div>
             </div>
         </div>
-
-        <div class="main-form">
-            <form class="form-signin" method="POST">
-                <img class="mb-4" src="" alt="" width="72" height="57">
-                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-                <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
-                    <label for="floatingInput">Email address</label>
-                </div>
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-                    <label for="floatingPassword">Password</label>
-                </div>
-
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="true" name="is_remember"> Remember me
-                    </label>
-                </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit" name="btn_submit">Sign in</button>
-            </form>
-
-            <a class="user-signup" href="signup.user.php">Sign Up</a>
-            <p class="mt-5 mb-3 text-muted cr-text">&copy;2022</p>
-
-
-        </div>
-
     </main>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -119,14 +151,14 @@ if (isset($_POST["btn_submit"])) {
         <script type="text/javascript">
             let isVerify = "<?= $verify; ?>"
             let alert = document.querySelector(".alert-danger");
-            
-            
-            if (!isVerify){
+
+
+            if (!isVerify) {
                 alert.classList.add('alert-on');
                 setTimeout(() => {
-                alert.classList.remove('alert-on');
-            }, 2500);
-        }
+                    alert.classList.remove('alert-on');
+                }, 2500);
+            }
         </script>
     <?php endif; ?>
 

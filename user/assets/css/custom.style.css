@@ -6,7 +6,8 @@
 
 .alert-on {
   position: absolute;
-  left: 43%;
+  left: 68.5%;
+  top: 1.5rem;
   visibility: visible;
 }
 
@@ -15,8 +16,29 @@ body {
   background-color: #fff;
 }
 
+.brand {
+  position: relative;
+  top: 1rem;
+  left: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
+  color: #fff;
+}
+
+.btn {
+  border-radius: 1.5rem;
+}
+
+.btn-login {
+  margin-top: 5rem;
+}
+
+.container-fluid {
+  padding: 0 0 0 0 ;
+}
+
 .cr-text {
-  text-align: center;
+  margin-top: 10rem;
 }
 
 .form-signin {
@@ -50,6 +72,15 @@ body {
   text-align: left;
 }
 
+.img {
+  position: relative;
+  top: 8.5rem;
+  left: 7.5rem;
+}
+
+.carousel {
+  margin-top: 5rem;
+}
 .main-form {
   border-radius: 10px;
   margin: 10rem auto 0 auto;
@@ -59,10 +90,25 @@ body {
   text-align: center;
 }
 
+.sign-in-img {
+  width: 59rem;
+  height: 53.6rem;
+  background-color: #2155CD;
+}
+
 .table-container {
   width: 30rem;
   height: 30rem;
   position: relative;
   top: 10rem;
   left: 50rem;
+}
+
+
+@media only screen and (max-height:650) {
+  .sign-in-img {
+    width: 59rem;
+    height: 70rem;
+    background-color: #2155CD;
+  }
 }
