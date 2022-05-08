@@ -1,7 +1,6 @@
 <?php
 
-require('config/db.connect.php');
-require('includes/fetch.db.data.php');
+require('core/init.php');
 
 session_start();
 
@@ -70,7 +69,8 @@ if (isset($_POST["btn_submit"])) {
                 <div class="sign-in-img">
                     <h2 class="brand">De'Kost</h2>
 
-                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Carousel -->
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval=3500>
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>

@@ -79,7 +79,7 @@ body {
 }
 
 .carousel {
-  margin-top: 5rem;
+  margin-top: 7rem;
 }
 .main-form {
   border-radius: 10px;
@@ -91,7 +91,7 @@ body {
 }
 
 .sign-in-img {
-  width: 59rem;
+  width: 42rem;
   height: 53.6rem;
   background-color: #2155CD;
 }
@@ -102,13 +102,4 @@ body {
   position: relative;
   top: 10rem;
   left: 50rem;
-}
-
-
-@media only screen and (max-height:650) {
-  .sign-in-img {
-    width: 59rem;
-    height: 70rem;
-    background-color: #2155CD;
-  }
 }
