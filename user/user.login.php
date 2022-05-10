@@ -150,13 +150,13 @@ if (isset($_POST["btn_submit"])) {
     <?php if (isset($_POST['btn_submit'])) : ?>
         <script type="text/javascript">
             let isVerify = "<?= $verify; ?>"
-            let alert = document.querySelector(".alert-danger");
+            let alert = $(".alert-danger")
 
 
             if (!isVerify) {
-                alert.classList.add('alert-on');
+                alert.addClass('alert-on');
                 setTimeout(() => {
-                    alert.classList.remove('alert-on');
+                    alert.removeClass('alert-on');
                 }, 2500);
             }
         </script>

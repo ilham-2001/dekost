@@ -8,6 +8,8 @@
 ### Tech Stack:
 - HTML5
 - PHP
+- Javascript
 - CSS
 - Bootstrap
+- JQuery
 
