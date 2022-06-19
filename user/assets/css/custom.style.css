@@ -1,4 +1,4 @@
-.alert{
+.alert {
   position: absolute;
   left: 43%;
   visibility: hidden;
@@ -20,8 +20,8 @@ body {
   position: relative;
   top: 1rem;
   left: 1rem;
-  font-family: 'Montserrat', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   color: #fff;
 }
 
@@ -33,8 +33,17 @@ body {
   margin-top: 5rem;
 }
 
+.carousel-section .carousel {
+  margin-top: 0;
+}
+
+.carousel-section {
+  width: 40rem;
+  margin: 0 auto 0;
+}
+
 .container-fluid {
-  padding: 0 0 0 0 ;
+  padding: 0 0 0 0;
 }
 
 .cr-text {
@@ -93,7 +102,7 @@ body {
 .sign-in-img {
   width: 42rem;
   height: 53.6rem;
-  background-color: #2155CD;
+  background-color: #2155cd;
 }
 
 .table-container {

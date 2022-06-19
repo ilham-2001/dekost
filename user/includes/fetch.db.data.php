@@ -19,11 +19,22 @@ function getalldata($table)
 function verifyLogin($email, $password)
 {
     global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email' AND password='$password'");
+    $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
 
     $verif = mysqli_num_rows($query)? TRUE: FALSE;
-    
-    return $verif;
+
+    if (!$verif){
+        return FALSE;
+    }
+
+    $queryPassword = mysqli_fetch_assoc($query)['password'];
+    $passwordVerif = password_verify($password, $queryPassword);
+
+    if (!$passwordVerif){
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 function checkRegistredUser($email){
@@ -57,5 +68,7 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_
 
     return FALSE;
 }
+
+
 
 ?>
