@@ -15,7 +15,7 @@ body {
   opacity: 1;
   background: #ff9966;
   background: -webkit-linear-gradient(to bottom, #ff5e62, #ff9966);
-  background: linear-gradient(to bottom, #ff5e62, #ff9966);
+  background: linear-gradient(to bottom, #4872d4, #2155cd);
   color: #fff;
 }
 .slider-card {
@@ -58,4 +58,8 @@ body {
   margin-left: 3px;
   margin-right: 3px;
   outline: none;
+}
+
+.owl-dots .owl-dot.active {
+  background: #2155cd !important;
 }

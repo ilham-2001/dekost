@@ -19,34 +19,36 @@ function getalldata($table)
 function verifyLogin($email, $password)
 {
     global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    $query = mysqli_query($conn, "SELECT * FROM Users WHERE email='$email'");
 
-    $verif = mysqli_num_rows($query)? TRUE: FALSE;
+    $verif = mysqli_num_rows($query) ? TRUE : FALSE;
 
-    if (!$verif){
+    if (!$verif) {
         return FALSE;
     }
 
-    $queryPassword = mysqli_fetch_assoc($query)['password'];
+    $queryPassword = mysqli_fetch_assoc($query)['keypassword'];
     $passwordVerif = password_verify($password, $queryPassword);
 
-    if (!$passwordVerif){
+    if (!$passwordVerif) {
         return FALSE;
     }
 
     return TRUE;
 }
 
-function checkRegistredUser($email){
+function checkRegistredUser($email)
+{
     global $conn;
-    $query = mysqli_query($conn, "SELECT email from users WHERE email='$email'");
+    $query = mysqli_query($conn, "SELECT email from Users WHERE email='$email'");
 
-    $isRegistred = mysqli_num_rows($query)? TRUE: FALSE;
+    $isRegistred = mysqli_num_rows($query) ? TRUE : FALSE;
 
     return $isRegistred;
 }
 
-function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin){
+function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik)
+{
     global $conn;
 
     $email = mysqli_real_escape_string($conn, $email);
@@ -54,13 +56,14 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_
     $nama_depan = mysqli_real_escape_string($conn, $nama_depan);
     $nama_belakang = mysqli_real_escape_string($conn, $nama_belakang);
     $jenis_kelamin = mysqli_real_escape_string($conn, $jenis_kelamin);
+    $nik = mysqli_real_escape_string($conn, $nik);
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = mysqli_query($conn, "INSERT INTO users(email, password, nama_depan, nama_belakang, jenis_kelamin) VALUES('$email', '$password', '$nama_depan', '$nama_belakang', '$jenis_kelamin') ");
+    $query = mysqli_query($conn, "INSERT INTO Users(NIK, firstName, lastName, email, jenisKelamin, keypassword) VALUES('$nik', '$nama_depan', '$nama_belakang', '$email', '$jenis_kelamin', '$password') ");
 
-    if ($query){
-        $q = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    if ($query) {
+        $q = mysqli_query($conn, "SELECT * FROM Users WHERE email='$email'");
         $user = mysqli_fetch_assoc($q);
 
         return $user;
@@ -68,7 +71,3 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_
 
     return FALSE;
 }
-
-
-
-?>
