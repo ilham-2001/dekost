@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+HK&display=swap");
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Noto Sans HK", sans-serif;
+  background: #fff;
+}
+.wrapper .content{
+    padding-top: 35px;
+}
+.wrapper .content .side-nav{
+    background-color: rgb(54, 99, 211);
+    height: 100vh;
+    border-radius: 0 15px 0 0;
+    position:fixed;
+    box-shadow: 10px 10px 5px rgb(195, 191, 191)
+}
+.wrapper .content .side-nav .nav-item:hover{
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding-left: 20px;
+}
+.side-nav .sidebar-brand .sidebar-brand-icon img{
+    height: 40px;
+    width: 40px;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+.side-nav a{
+    color: #fff;
+}
+.accordion-item{
+    color: rgb(54, 99, 211);
+    background-color: rgb(54, 99, 211);
+    border: none;
+}
+.accordion-header button{
+    color: #fff;
+    background-color: rgb(54, 99, 211);
+}
+.side-nav .btn{
+    background-color: #ffffff;
+    color: rgb(54, 99, 211);
+    margin-left: 25px;
+    border-radius: 30px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.side-nav .btn:hover{
+    background-color: rgb(54, 99, 211);
+    color: #ffffff;
+    margin-left: 70px;
+    margin-bottom: 15px;
+    transition: 0.4s;
+    margin-left: 75px;
+}
+@media only screen and (max-width: 576px) {
+    .wrapper .content .side-nav{
+        position: static;
+        height: auto;
+        display: none;     
+    }
+}
