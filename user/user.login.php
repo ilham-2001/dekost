@@ -17,6 +17,7 @@ if (isset($_POST["btn_submit"])) {
 
     if ($verify) {
         $_SESSION['login'] = true;
+        var_dump($_POST);
         header('Location: index.php');
         exit;
     }

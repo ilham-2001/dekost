@@ -6,6 +6,17 @@ body {
   font-family: "Noto Sans HK", sans-serif;
   background: #fff;
 }
+.container-fluid {
+  padding: 0 20rem 0 20rem;
+}
+.content-section {
+  margin: 10.5rem 0 10.5rem 0;
+}
+.navbar-brand {
+  font-family: "Montserrat", sans-serif;
+  font-family: "Ubuntu", sans-serif;
+  color: #2155cd !important;
+}
 .slider {
   margin-bottom: 30px;
   position: relative;
@@ -62,4 +73,8 @@ body {
 
 .owl-dots .owl-dot.active {
   background: #2155cd !important;
+}
+.promote-section {
+  position: relative;
+  left: 15.375rem;
 }
