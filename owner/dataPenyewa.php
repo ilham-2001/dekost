@@ -36,7 +36,7 @@
                 <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                     <ul class="nav flex-column">
                         <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
-                            href="dashboard.php">
+                            href="index.php">
                             <div class="sidebar-brand-icon">
                                 <img src="../owner/assets/icons/logo.png" alt="#logo">
                             </div>
@@ -47,7 +47,7 @@
                         <hr class="sidebar-divider mt-2 bg-light">
 
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="dashboard.php"><i
+                            <a class="nav-link active" aria-current="page" href="index.php"><i
                                     class="fas fa-fw fa-tachometer-alt me-2 active"></i>
                                 Dashboard
                             </a>
