@@ -3,10 +3,10 @@
 require('core/init.php');
 
 session_start();
-if (!isset($_SESSION['login'])) {
-    header("Location: user.login.php");
-    exit;
-}
+// if (!isset($_SESSION['login'])) {
+//     header("Location: user.login.php");
+//     exit;
+// }
 
 $dataKost = getalldata('Kost');
 ?>
@@ -27,6 +27,8 @@ $dataKost = getalldata('Kost');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/icon/favicon.ico">
     <title>Cari Kos</title>
 </head>
 

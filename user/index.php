@@ -2,17 +2,27 @@
 
 session_start();
 
-if (!isset($_SESSION["login"])) {
-    header('Location: user.login.php');
-    exit;
-}
+// if (!isset($_SESSION["login"])) {
+//     header('Location: user.login.php');
+//     exit;
+// }
 
 if (isset($_POST['logout'])) {
     session_unset();
     session_destroy();
-    header('Location: user.login.php');
+    header('Location: index.php');
     exit;
 };
+
+if (isset($_POST['signin'])) {
+    header('Location: user.login.php');
+    exit;
+}
+
+if (isset($_POST['signup'])) {
+    header('Location: user.signup.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +40,9 @@ if (isset($_POST['logout'])) {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/icon/favicon.ico">
     <title>Home</title>
 </head>
 
@@ -41,9 +51,7 @@ if (isset($_POST['logout'])) {
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -52,10 +60,16 @@ if (isset($_POST['logout'])) {
                             <a class="nav-link active" aria-current="page" href="user.carikos.php">Cari Kos</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-primary" type="submit">Search</button>
-                    </form>
+                    <?php if (!isset($_SESSION['login'])) : ?>
+                        <form class="d-flex" method="POST">
+                            <button class="btn btn-outline-primary btn-nav" type="submit" name="signin">Sign In</button>
+                            <button class="btn btn-outline-primary btn-nav" type="submit" name="signup">Sign Up</button>
+                        </form>
+                    <?php else : ?>
+                        <form class="d-flex" method="POST">
+                            <button class="btn btn-outline-danger btn-nav" type="submit" name="logout">Log Out</button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>

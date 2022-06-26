@@ -4,9 +4,9 @@ require('core/init.php');
 
 session_start();
 
-if (isset($_SESSION['login'])) {
-    header("Location: index.php");
-}
+// if (isset($_SESSION['login'])) {
+//     header("Location: index.php");
+// }
 
 if (isset($_POST["btn_submit"])) {
     // cek ketersediaan akun di DB
@@ -42,6 +42,8 @@ if (isset($_POST["btn_submit"])) {
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
         rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/icon/favicon.ico">
 </head>
 
 <body>

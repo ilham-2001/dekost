@@ -64,6 +64,8 @@ if (isset($_POST['button_signup'])) {
     <!-- Bootstrap -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/custom.style.css">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/icon/favicon.ico">
 </head>
 
 <body>
@@ -80,38 +82,45 @@ if (isset($_POST['button_signup'])) {
                     <form class="form-signin" method="POST">
 
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                                name="email" autocomplete="off">
                             <label for="floatingInput">Email address</label>
                         </div>
 
                         <div class="form-floating">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="password" name="password" autocomplete="off">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="password"
+                                name="password" autocomplete="off">
                             <label for="floatingPassword">Password</label>
                         </div>
 
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="nama depan" name="nama_depan" autocomplete="off">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="nama depan"
+                                name="nama_depan" autocomplete="off">
                             <label for="floatingInput">Nama Depan</label>
                         </div>
 
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="nama belakang" name="nama_belakang" autocomplete="off">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="nama belakang"
+                                name="nama_belakang" autocomplete="off">
                             <label for="floatingInput">Nama Belakang</label>
                         </div>
 
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="NIK" name="nik" autocomplete="off">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="NIK" name="nik"
+                                autocomplete="off">
                             <label for="floatingInput">NIK</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault1" value="L">
+                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault1"
+                                value="L">
                             <label class="form-check-label" for="flexRadioDefault1">
                                 Laki-laki
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault2" checked value="P">
+                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault2"
+                                checked value="P">
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Perempuan
                             </label>
@@ -119,7 +128,7 @@ if (isset($_POST['button_signup'])) {
 
                         <button type="submit" name="button_signup">Submit</button>
                     </form>
-                    <a href="user.login.php">Home</a>
+                    <a href="index.php">Home</a>
                 </div>
             </div>
         </div>
