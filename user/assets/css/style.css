@@ -2,15 +2,34 @@
 html {
   scroll-behavior: smooth;
 }
+a {
+  text-decoration: none;
+}
 body {
   font-family: "Noto Sans HK", sans-serif;
   background: #fff;
+}
+.card-text {
+  font-size: 0.9rem;
+}
+.card-title {
+  font-weight: bold;
 }
 .container-fluid {
   padding: 0 20rem 0 20rem;
 }
 .content-section {
   margin: 10.5rem 0 10.5rem 0;
+}
+h3 {
+  font-weight: bold;
+}
+.kos-field .card-text {
+  color: #000;
+}
+.kos-field {
+  height: 1500px;
+  margin-top: 5rem;
 }
 .navbar-brand {
   font-family: "Montserrat", sans-serif;

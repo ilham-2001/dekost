@@ -73,7 +73,7 @@ if (isset($_POST["btn_submit"])) {
         <div class="row align-items-start">
             <div class="col">
                 <div class="sign-in-img">
-                    <h2 class="brand">De'Kost</h2>
+                    <h2 class="brand"><a href="index.php">De'Kost</a></h2>
 
                     <!-- Carousel -->
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel"
