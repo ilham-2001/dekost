@@ -127,33 +127,57 @@ if (isset($_POST["btn_submit"])) {
                                 incorrect email or password
                             </div>
                         </div>
-                        <h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">Sign In</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">Sign
+                                    Up</button>
+                            </li>
+                        </ul>
+                        <!-- <h5 class="modal-title" id="exampleModalLabel">Sign In</h5> -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Form Login -->
-                        <form class="form-signin" method="POST">
-                            <img class="mb-4 icon-img" src="assets/icon/favicon.ico" alt="" width="72" height="57">
-                            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-                            <div class="form-floating">
-                                <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com" name="email" autocomplete="off">
-                                <label for="floatingInput">Email address</label>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <!-- Form Login -->
+                                <form class="form-signin" method="POST">
+                                    <img class="mb-4 icon-img" src="assets/icon/favicon.ico" alt="" width="72"
+                                        height="57">
+                                    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="floatingInput"
+                                            placeholder="name@example.com" name="email" autocomplete="off">
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="floatingPassword"
+                                            placeholder="Password" name="password">
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" value="true" name="is_remember"> Remember me
+                                        </label>
+                                    </div>
+                                    <button class="w-100 btn btn-lg btn-primary btn-login" type="submit"
+                                        name="btn_submit">Sign
+                                        in</button>
+                                </form>
+
                             </div>
-                            <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                                    name="password">
-                                <label for="floatingPassword">Password</label>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...
                             </div>
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" value="true" name="is_remember"> Remember me
-                                </label>
-                            </div>
-                            <button class="w-100 btn btn-lg btn-primary btn-login" type="submit" name="btn_submit">Sign
-                                in</button>
-                        </form>
+                        </div>
+
                     </div>
                     <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
