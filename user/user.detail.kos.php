@@ -17,9 +17,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/icon/favicon.ico">
     <title>Detail Kost</title>
 </head>
 
@@ -28,9 +28,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -53,11 +51,21 @@
         <section class="display-kos-image">
             <div class="row">
                 <div class="col">
-
+                    <img src="assets/images/kamar_kos.jpg" alt="" width="500">
                 </div>
                 <div class="col">
-
+                    <div class="row">
+                        <div class="col">
+                            <img src="assets/images/kamar_kos.jpg" alt="" width="250">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <img src="assets/images/kamar_kos.jpg" alt="" width="250">
+                        </div>
+                    </div>
                 </div>
+            </div>
             </div>
         </section>
 

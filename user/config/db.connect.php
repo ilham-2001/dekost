@@ -2,7 +2,7 @@
 
 $mysql_server = "localhost";
 $username = "ilham"; // root
-$password = "ilham2001#"; // " "
+$password = "ilham2001#"; // ""
 $database = "dekost";
 
 try {
