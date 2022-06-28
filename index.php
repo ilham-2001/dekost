@@ -10,9 +10,9 @@
 
 <body>
 
-<a href="user/index.php">User</a>
-<br>
-<a href="admin/index.php">Admin</a>
+    <a href="user/index.php">User</a>
+    <br>
+    <a href="owner/index.php">Admin</a>
 
 
 </body>

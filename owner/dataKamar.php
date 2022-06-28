@@ -94,7 +94,7 @@
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
-
+                            
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <button class="btn btn-primary" type="submit"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
@@ -119,6 +119,7 @@
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span>Ini Nama Pemilik Kost</span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
+
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -251,19 +252,19 @@
         </div>
     </div>
     <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
+    function myFunction() {
+        var x = document.getElementById("side-nav");
+        var y = document.getElementById("side-nav1");
+        var a = document.getElementById("main-content-header");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            y.style.display = "none";
+        } else {
+            x.style.display = "block";
+            y.style.display = "block";
+            a.style.width = "none";
         }
+    }
     </script>
 
     <!-- <script src="../owner/assets/app/js/bootstrap.min.js"></script> -->

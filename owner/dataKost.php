@@ -94,7 +94,6 @@
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
-
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <button class="btn btn-primary" type="submit"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
@@ -245,19 +244,19 @@
     </div>
     </div>
     <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
+    function myFunction() {
+        var x = document.getElementById("side-nav");
+        var y = document.getElementById("side-nav1");
+        var a = document.getElementById("main-content-header");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            y.style.display = "none";
+        } else {
+            x.style.display = "block";
+            y.style.display = "block";
+            a.style.width = "none";
         }
+    }
     </script>
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
