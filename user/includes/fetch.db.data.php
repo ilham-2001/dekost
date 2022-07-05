@@ -86,3 +86,51 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_
 
     return FALSE;
 }
+
+function findMaxHarga()
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `harga` FROM Kost ORDER BY harga DESC LIMIT 0, 1");
+    $maxValue = mysqli_fetch_assoc($query);
+
+    return $maxValue['harga'];
+}
+
+function findMinHarga()
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `harga` FROM Kost ORDER BY harga ASC LIMIT 0, 1");
+    $minValue = mysqli_fetch_assoc($query);
+
+    return $minValue['harga'];
+}
+
+function filterSearch($jenis, $minHarga, $maxHarga)
+{
+    global $conn;
+    $retVal = [];
+
+    if (!$minHarga) {
+        $minHarga = findMinHarga() - 1000;
+    }
+
+    if (!$maxHarga) {
+        $maxHarga = findMaxHarga() + 1000;
+    }
+
+    if (!$jenis && !$minHarga && !$maxHarga) {
+        $query = mysqli_query($conn, "SELECT * FROM Kost");
+    } else if (!$jenis) {
+        $query = mysqli_query($conn, "SELECT * FROM Kost WHERE harga BETWEEN $minHarga AND $maxHarga");
+    } else {
+        $query = mysqli_query($conn, "SELECT * FROM Kost WHERE jenis='$jenis' AND (harga BETWEEN $minHarga AND $maxHarga)");
+    }
+
+    while ($data = mysqli_fetch_assoc($query)) {
+        array_push($retVal, $data);
+    }
+
+    return $retVal;
+}

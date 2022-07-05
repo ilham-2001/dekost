@@ -8,9 +8,9 @@ $kos = getDataFromId("Kost", $kosId);
 
 $mapKosAddr = explode(" ", $kos['alamat']);
 $mapKosNama = explode(" ", $kos['nama']);
-var_dump($mapKosAddr);
+// var_dump($mapKosAddr);
 
-var_dump($mapKosNama);
+// var_dump($mapKosNama);
 
 ?>
 

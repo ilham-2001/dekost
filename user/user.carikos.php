@@ -3,14 +3,17 @@
 require('core/init.php');
 
 session_start();
-// if (!isset($_SESSION['login'])) {
-//     header("Location: user.login.php");
-//     exit;
-// }
 
 $dataKost = getalldata('Kost');
 
-// var_dump(substr($dataKost[1]['alamat'], 0, 31) . "...");
+if (isset($_POST['set-filter'])) {
+    $filterJenis = $_POST['jenis-filter'];
+    $minHarga = $_POST['min-harga'];
+    $maxHarga = $_POST['max-harga'];
+    $dataKost = filterSearch($filterJenis, $minHarga, $maxHarga);
+}
+
+
 
 ?>
 
@@ -67,14 +70,14 @@ $dataKost = getalldata('Kost');
     <main class="container-fluid">
         <section class="filter-field">
             <form method="POST">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Semua</option>
+                <select class="form-select" aria-label="Default select example" name="jenis-filter">
+                    <option selected value="">Semua</option>
                     <option value="Putra">Putra</option>
                     <option value="Putri">Putri</option>
                     <option value="Campur">Campur</option>
                 </select>
-                <input type="text" class="form-control filter-input" placeholder="Rp. 0">
-                <input type="text" class="form-control filter-input" placeholder="Rp. 1.000.000">
+                <input type="text" class="form-control filter-input" placeholder="Rp. 0" name="min-harga">
+                <input type="text" class="form-control filter-input" placeholder="Rp. 1.000.000" name="max-harga">
                 <button class="btn btn-primary" type="submit" name="set-filter">Set</button>
             </form>
         </section>
@@ -106,7 +109,11 @@ $dataKost = getalldata('Kost');
                                     <span>3</span>
                                 </p>
                                 <p class="card-text harga-text">
-                                    <?php echo "Rp $kos[harga]"; ?>
+                                    <?php
+                                        $floatHarga = (float) $kos['harga'];
+                                        $hargaFormatted = number_format($floatHarga);
+                                        echo "Rp $hargaFormatted.00";
+                                        ?>
                                     <span class="subs-text">/ bulan</span>
                                 </p>
                             </div>
