@@ -388,9 +388,9 @@ if (isset($_POST['button_signup'])) {
         </footer>
     </main>
 
-    <form action="index.php" method="POST">
+    <!-- <form action="index.php" method="POST">
         <button name="logout" type="submit">Logout</button>
-    </form>
+    </form> -->
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
