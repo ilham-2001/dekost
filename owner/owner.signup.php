@@ -62,8 +62,8 @@ if (isset($_POST['button_signup'])) {
     <title>Sign Up - De'kost</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/custom.style.css">
+    <link rel="stylesheet" href="assets/app/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/app/css/custom.style.css">
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/favicon.ico">
 </head>
@@ -137,8 +137,8 @@ if (isset($_POST['button_signup'])) {
     </main>
 
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/app/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/app/js/jquery.min.js"></script>
 
 </body>
 

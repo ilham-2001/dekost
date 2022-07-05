@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 22, 2022 at 01:27 PM
+-- Generation Time: Jul 05, 2022 at 05:33 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -24,6 +24,32 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Fasilitas`
+--
+
+CREATE TABLE `Fasilitas` (
+  `id` int(2) NOT NULL,
+  `nama` varchar(64) NOT NULL,
+  `id_kost` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Kamar`
+--
+
+CREATE TABLE `Kamar` (
+  `no_kamar` int(3) NOT NULL,
+  `id_kost` int(6) DEFAULT NULL,
+  `status` varchar(6) DEFAULT NULL,
+  `lebar` float DEFAULT NULL,
+  `panjang` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Kost`
 --
 
@@ -32,8 +58,19 @@ CREATE TABLE `Kost` (
   `alamat` varchar(120) NOT NULL,
   `nama` varchar(60) DEFAULT NULL,
   `jumlahKamar` int(3) DEFAULT 0,
-  `NIK_Pemilik` char(16) DEFAULT NULL
+  `NIK_Pemilik` char(16) DEFAULT NULL,
+  `harga` int(7) NOT NULL,
+  `jenis` enum('Putra','Putri','Campur') DEFAULT NULL,
+  `gambar_preview` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `Kost`
+--
+
+INSERT INTO `Kost` (`id`, `alamat`, `nama`, `jumlahKamar`, `NIK_Pemilik`, `harga`, `jenis`, `gambar_preview`) VALUES
+(1, 'Jl. Raya Tajem Gg Manduro No.km 6', 'Kost Ali', 35, NULL, 950000, 'Putra', NULL),
+(2, 'Jl. Kemuning Salam No.52, Sanggrahan, Condongcatur, Kec. Depok', 'Kos Putra Nusantara', 25, NULL, 730000, 'Putra', NULL);
 
 -- --------------------------------------------------------
 
@@ -48,6 +85,20 @@ CREATE TABLE `Pemilik` (
   `alamat` varchar(255) NOT NULL,
   `email` varchar(60) NOT NULL,
   `keypassword` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Penyewaan`
+--
+
+CREATE TABLE `Penyewaan` (
+  `id` int(6) NOT NULL,
+  `NIK_penyewa` char(16) DEFAULT NULL,
+  `no_kamar` int(3) DEFAULT NULL,
+  `tannggal_mulai` date NOT NULL,
+  `tanggal_akhir` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -85,11 +136,25 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`NIK`, `firstName`, `lastName`, `email`, `jenisKelamin`, `keypassword`) VALUES
-('1989403989087564', 'Lala', 'Poo', 'lala@gmail.com', 'P', '$2y$10$k6cR1REVbQ3ORdL7GvHIQO7PSND244r0rIAP99r/7HeVhOQWCn1dK');
+('1989403989087564', 'Lala', 'Poo', 'lala@gmail.com', 'P', '$2y$10$k6cR1REVbQ3ORdL7GvHIQO7PSND244r0rIAP99r/7HeVhOQWCn1dK'),
+('9090808070706060', 'admin', 'admin', 'admin@gmail.com', 'L', '$2y$10$dueCV/bVHp1fBacPJ.GEA.las18IGBMTMLnT6WEjvgakf7IWy41.m');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `Fasilitas`
+--
+ALTER TABLE `Fasilitas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_kost_id` (`id_kost`);
+
+--
+-- Indexes for table `Kamar`
+--
+ALTER TABLE `Kamar`
+  ADD PRIMARY KEY (`no_kamar`);
 
 --
 -- Indexes for table `Kost`
@@ -103,6 +168,14 @@ ALTER TABLE `Kost`
 --
 ALTER TABLE `Pemilik`
   ADD PRIMARY KEY (`NIK`);
+
+--
+-- Indexes for table `Penyewaan`
+--
+ALTER TABLE `Penyewaan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `NIK_penyewa` (`NIK_penyewa`),
+  ADD KEY `no_kamar` (`no_kamar`);
 
 --
 -- Indexes for table `Review`
@@ -126,6 +199,12 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `Kost`
 --
 ALTER TABLE `Kost`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `Penyewaan`
+--
+ALTER TABLE `Penyewaan`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
@@ -133,10 +212,23 @@ ALTER TABLE `Kost`
 --
 
 --
+-- Constraints for table `Fasilitas`
+--
+ALTER TABLE `Fasilitas`
+  ADD CONSTRAINT `fk_kost_id` FOREIGN KEY (`id_kost`) REFERENCES `Kost` (`id`);
+
+--
 -- Constraints for table `Kost`
 --
 ALTER TABLE `Kost`
   ADD CONSTRAINT `Kost_ibfk_1` FOREIGN KEY (`NIK_Pemilik`) REFERENCES `Pemilik` (`NIK`);
+
+--
+-- Constraints for table `Penyewaan`
+--
+ALTER TABLE `Penyewaan`
+  ADD CONSTRAINT `Penyewaan_ibfk_1` FOREIGN KEY (`NIK_penyewa`) REFERENCES `Users` (`NIK`),
+  ADD CONSTRAINT `Penyewaan_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `Kamar` (`no_kamar`);
 
 --
 -- Constraints for table `Review`
