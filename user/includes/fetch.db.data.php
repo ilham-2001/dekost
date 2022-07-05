@@ -16,6 +16,21 @@ function getalldata($table)
     return $data_array;
 }
 
+function getDataFromId($table, $id)
+{
+    global $conn;
+
+    $data_query = mysqli_query($conn, "SELECT * FROM $table WHERE `id`=$id");
+
+    $fetched = mysqli_num_rows($data_query) ? TRUE : FALSE;
+
+    if (!$fetched) {
+        return;
+    }
+
+    return mysqli_fetch_assoc($data_query);
+}
+
 function verifyLogin($email, $password)
 {
     global $conn;

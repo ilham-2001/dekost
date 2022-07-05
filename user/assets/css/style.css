@@ -4,6 +4,7 @@ html {
 }
 a {
   text-decoration: none;
+  color: #000 !important;
 }
 .alert {
   position: absolute;
@@ -27,11 +28,17 @@ body {
 .btn-nav {
   margin: 0 0.5rem 0 0.5rem;
 }
+.card-img-top {
+  width: 288px;
+}
 .card-text {
   font-size: 0.9rem;
 }
 .card-title {
   font-weight: bold;
+}
+.checked {
+  color: orange;
 }
 .container-fluid {
   padding: 0 20rem 0 20rem;
@@ -41,6 +48,19 @@ body {
 }
 .display-kos-image {
   margin-top: 5rem;
+}
+.filter-input {
+  width: 11.18125rem;
+  display: inline-block;
+  margin: 0 0.5rem 0 0.5rem;
+}
+.filter-field {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.form-select {
+  width: 12rem;
+  display: inline-block;
 }
 .form-signin {
   width: 100%;
@@ -73,6 +93,9 @@ body {
 h3 {
   font-weight: bold;
 }
+.harga-text {
+  font-weight: bold;
+}
 .icon-img {
   margin: 0 auto 0 auto;
   display: block;
@@ -82,12 +105,15 @@ h3 {
 }
 .kos-field {
   height: 1500px;
-  margin-top: 5rem;
+  margin-top: 3.5rem;
 }
 .navbar-brand {
   font-family: "Montserrat", sans-serif;
   font-family: "Ubuntu", sans-serif;
   color: #2155cd !important;
+}
+.lower-row-galery {
+  margin-top: 0.5rem;
 }
 .slider {
   margin-bottom: 30px;
@@ -113,6 +139,9 @@ h3 {
 }
 .slider-card img {
   border-radius: 5px 5px 0px 0px;
+}
+.subs-text {
+  font-weight: 400;
 }
 .owl-nav .owl-prev {
   position: absolute;
