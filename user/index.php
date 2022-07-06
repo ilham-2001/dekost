@@ -128,7 +128,7 @@ if (isset($_POST['button_signup'])) {
                     <!-- </form> -->
                     <?php else : ?>
                     <form class="d-flex" method="POST">
-                        <button class="btn btn-outline-danger btn-nav" type="submit" name="logout">Log Out</button>
+                        <button class="btn btn-outline-primary btn-nav" type="submit" name="logout">Log Out</button>
                     </form>
                     <?php endif; ?>
                 </div>

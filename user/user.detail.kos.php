@@ -66,17 +66,17 @@ $mapKosNama = explode(" ", $kos['nama']);
         <section class="display-kos-image">
             <div class="row">
                 <div class="col">
-                    <img src="assets/images/kamar_kos.jpg" alt="" width="500">
+                    <img class="primary-img" src="assets/images/kamar_kos.jpg" alt="">
                 </div>
                 <div class="col">
                     <div class="row">
                         <div class="col">
-                            <img src="assets/images/kamar_kos.jpg" alt="" width="250">
+                            <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
                         </div>
                     </div>
                     <div class="row lower-row-galery">
                         <div class="col">
-                            <img src="assets/images/kamar_kos.jpg" alt="" width="250">
+                            <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -87,38 +87,68 @@ $mapKosNama = explode(" ", $kos['nama']);
         <section class="">
             <div class="row">
                 <div class="col specification-section">
-                    <div>
-                        <span> <?= $kos['nama']; ?> </span>
-                        <span> Jenis Kos </span>
-                        <span> <?= $kos['alamat']; ?> </span>
+
+                    <div class="kos-info">
+                        <h3 class="section-heading"> <?= $kos['nama']; ?> </h3>
+                        <span class="section-col"> <?= $kos['jenis'] ?> </span>
+                        <span class="section-col"> <?= $kos['alamat']; ?> </span>
+                    </div>
+                    <hr>
+                    <div class="kos-specification">
+                        <h4 class="section-heading"> Spesifikasi </h4>
+                        <span class="section-col"> <?= $kos['jenis'] ?> </span>
+                        <span class="section-col"> <?= $kos['alamat']; ?> </span>
+                    </div>
+                    <hr>
+                    <div class="kos-facility">
+                        <h4 class="section-heading"> Fasilitas </h4>
+
+                        <?php
+                        global $conn;
+                        $fasilitas = [];
+                        $query = mysqli_query($conn, "SELECT Fasilitas.nama FROM Fasilitas INNER JOIN Kost ON Fasilitas.id_kost=Kost.id");
+
+                        while ($resQuery = mysqli_fetch_assoc($query)) {
+                            array_push($fasilitas, $resQuery);
+                        }
+
+                        ?>
+
+                        <?php foreach ($fasilitas as $value) : ?>
+                        <p class="section-col"> <?= $value['nama'] ?> </p>
+                        <?php endforeach; ?>
+                    </div>
+                    <hr>
+
+                    <div class="kos-lokasi">
+                        <h4 class="section-heading">Lokasi</h4>
+                        <div class="mapouter">
+                            <div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas"
+                                    src="https://maps.google.com/maps?q=Kost%20Ali%20Jl.%20Raya%20Tajem%20Gg%20Manduro%20No.km%206&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
+                                    href="https://123movies-to.org"></a><br>
+                                <style>
+                                .mapouter {
+                                    position: relative;
+                                    text-align: right;
+                                    height: 300px;
+                                    width: 400px;
+                                }
+                                </style><a href="https://www.embedgooglemap.net">google maps iframe embed</a>
+                                <style>
+                                .gmap_canvas {
+                                    overflow: hidden;
+                                    background: none !important;
+                                    height: 300px;
+                                    width: 400px;
+                                }
+                                </style>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col rent-section">
 
-                </div>
-            </div>
-
-            <div class="mapouter">
-                <div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas"
-                        src="https://maps.google.com/maps?q=Kost%20Ali%20Jl.%20Raya%20Tajem%20Gg%20Manduro%20No.km%206&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
-                        href="https://123movies-to.org"></a><br>
-                    <style>
-                    .mapouter {
-                        position: relative;
-                        text-align: right;
-                        height: 300px;
-                        width: 400px;
-                    }
-                    </style><a href="https://www.embedgooglemap.net">google maps iframe embed</a>
-                    <style>
-                    .gmap_canvas {
-                        overflow: hidden;
-                        background: none !important;
-                        height: 300px;
-                        width: 400px;
-                    }
-                    </style>
                 </div>
             </div>
 

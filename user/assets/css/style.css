@@ -115,6 +115,16 @@ h3 {
 .lower-row-galery {
   margin-top: 0.5rem;
 }
+.secondary-img {
+  width: 343px;
+}
+.section-col {
+  margin-right: 0.8rem;
+}
+.section-heading {
+  font-weight: bold;
+  margin-top: 1rem;
+}
 .slider {
   margin-bottom: 30px;
   position: relative;
@@ -174,6 +184,9 @@ h3 {
 
 .owl-dots .owl-dot.active {
   background: #2155cd !important;
+}
+.primary-img {
+  width: 700px;
 }
 .promote-section {
   position: relative;
