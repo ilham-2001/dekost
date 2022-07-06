@@ -4,7 +4,10 @@ html {
 }
 a {
   text-decoration: none;
-  color: #000 !important;
+  color: #000;
+}
+a.btn {
+  color: #fff;
 }
 .alert {
   position: absolute;
@@ -191,4 +194,10 @@ h3 {
 .promote-section {
   position: relative;
   left: 15.375rem;
+}
+.rent-input {
+  width: 10rem;
+}
+.rent-section {
+  margin-top: 2rem;
 }

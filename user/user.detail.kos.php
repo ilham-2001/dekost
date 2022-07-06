@@ -124,7 +124,7 @@ $mapKosNama = explode(" ", $kos['nama']);
                         <h4 class="section-heading">Lokasi</h4>
                         <div class="mapouter">
                             <div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas"
-                                    src="https://maps.google.com/maps?q=Kost%20Ali%20Jl.%20Raya%20Tajem%20Gg%20Manduro%20No.km%206&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                    src="https://maps.google.com/maps?q=<?= $mapKosNama[0] ?>%20<?= $mapKosNama[1] ?>%20<?= $mapKosAddr[0] ?>%20<?= $mapKosAddr[1] ?>%20<?= $mapKosAddr[2] ?>&t=&z=13&ie=UTF8&iwloc=&output=embed"
                                     frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
                                     href="https://123movies-to.org"></a><br>
                                 <style>
@@ -148,7 +148,25 @@ $mapKosNama = explode(" ", $kos['nama']);
                     </div>
                 </div>
                 <div class="col rent-section">
-
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <?php
+                                $floatHarga = (float) $kos['harga'];
+                                $hargaFormatted = number_format($floatHarga);
+                                echo "Rp $hargaFormatted.00";
+                                ?>
+                                <span class="subs-text">/ bulan</span>
+                            </h5>
+                            <form>
+                                <input class="form-control me-2 rent-input" type="search" placeholder="Mulai Sewa"
+                                    aria-label="Search">
+                                <input class="form-control me-2 rent-input" type="search" placeholder="Lama Sewa"
+                                    aria-label="Search">
+                                <button class="btn btn-outline-primary" type="submit">Ajukan Penyewaan</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
