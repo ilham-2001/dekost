@@ -158,6 +158,7 @@ if (isset($_POST['set-filter'])) {
                         <li>
                             <a class="social-media-ref" href="#LinkedInDEKOST">
                                 <i class="fa-brands fa-linkedin me-2"></i>LinkedIn
+
                             </a>
                         </li>
                         <li>
