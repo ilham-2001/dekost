@@ -22,10 +22,10 @@ if (isset($_POST["btn_submit"])) {
     $password = $_POST['password'];
 
     $verify = verifyLogin($email, $password);
-    var_dump($verify);
+    // var_dump($verify);
 
     if ($verify) {
-        $_SESSION['login'] = true;
+        $_SESSION['login'] = TRUE;
         var_dump($_POST);
         header('Location: index.php');
         exit;
@@ -123,9 +123,9 @@ if (isset($_POST['button_signup'])) {
                         <!-- <button class="btn btn-outline-primary btn-nav" type="submit" name="signup">Sign Up</button> -->
                         <!-- </form> -->
                     <?php else : ?>
-                        <form class="d-flex" method="POST">
-                            <button class="btn btn-outline-danger btn-nav" type="submit" name="logout">Log Out</button>
-                        </form>
+                    <form class="d-flex" method="POST">
+                        <button class="btn btn-outline-primary btn-nav" type="submit" name="logout">Log Out</button>
+                    </form>
                     <?php endif; ?>
                 </div>
             </div>
@@ -395,11 +395,14 @@ if (isset($_POST['button_signup'])) {
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h5 class="text-Black fw-bold mb-3 pt-3">Yogyakarta, Indonesia</h5>
-                    <p class="small text-muted">Jika ada sesuatu hal yang ingin disampaikan silahkan kirimkan pesan kepada kami.</p>
+                    <p class="small text-muted">Jika ada sesuatu hal yang ingin disampaikan silahkan kirimkan pesan
+                        kepada kami.</p>
                     <form action="#">
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
+                            <input class="form-control" type="text" placeholder="Recipient's username"
+                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" id="button-addon2" type="button"><i
+                                    class="fas fa-paper-plane"></i></button>
                         </div>
                     </form>
                 </div>
@@ -410,10 +413,6 @@ if (isset($_POST['button_signup'])) {
             </div>
         </div>
     </footer>
-
-    <form action="index.php" method="POST">
-        <button name="logout" type="submit">Logout</button>
-    </form>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/popper.min.js"></script>

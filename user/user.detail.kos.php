@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require('core/init.php');
 
 $kosId = $_GET['q'];
@@ -8,6 +10,26 @@ $kos = getDataFromId("Kost", $kosId);
 
 $mapKosAddr = explode(" ", $kos['alamat']);
 $mapKosNama = explode(" ", $kos['nama']);
+
+if (isset($_POST["btn_submit"])) {
+    // cek ketersediaan akun di DB
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $verify = verifyLogin($email, $password);
+    // var_dump($verify);
+
+    if ($verify) {
+        $_SESSION['login'] = TRUE;
+    }
+}
+
+if (isset($_POST['rent-btn'])) {
+    var_dump($_POST);
+    header("Location: user.transaksi.php");
+    exit;
+}
+// var_dump($_SESSION);
 // var_dump($mapKosAddr);
 
 // var_dump($mapKosNama);
@@ -60,20 +82,139 @@ $mapKosNama = explode(" ", $kos['nama']);
 
     <main class="container-fluid">
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                            </symbol>
+                            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                            </symbol>
+                            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </symbol>
+                        </svg>
+
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                                <use xlink:href="#exclamation-triangle-fill" />
+                            </svg>
+                            <div>
+                                incorrect email or password
+                            </div>
+                        </div>
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Sign In</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Sign
+                                    Up</button>
+                            </li>
+                        </ul>
+                        <!-- <h5 class="modal-title" id="exampleModalLabel">Sign In</h5> -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <!-- Form Login -->
+                                <form class="form-signin" method="POST">
+                                    <img class="mb-4 icon-img" src="assets/icon/favicon.ico" alt="" width="72" height="57">
+                                    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" value="true" name="is_remember"> Remember me
+                                        </label>
+                                    </div>
+                                    <button class="w-100 btn btn-lg btn-primary btn-login" type="submit" name="btn_submit">Sign
+                                        in</button>
+                                </form>
+
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <form class="form-signin" method="POST">
+
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="floatingPassword" placeholder="password" name="password" autocomplete="off">
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="nama depan" name="nama_depan" autocomplete="off">
+                                        <label for="floatingInput">Nama Depan</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="nama belakang" name="nama_belakang" autocomplete="off">
+                                        <label for="floatingInput">Nama Belakang</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK" name="nik" autocomplete="off">
+                                        <label for="floatingInput">NIK</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault1" value="L">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Laki-laki
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault2" checked value="P">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Perempuan
+                                        </label>
+                                    </div>
+
+                                    <button class="btn btn-primary" type="submit" name="button_signup">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
         <section class="display-kos-image">
             <div class="row">
                 <div class="col">
-                    <img src="assets/images/kamar_kos.jpg" alt="" width="500">
+                    <img class="primary-img" src="assets/images/kamar_kos.jpg" alt="">
                 </div>
                 <div class="col">
                     <div class="row">
                         <div class="col">
-                            <img src="assets/images/kamar_kos.jpg" alt="" width="250">
+                            <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
                         </div>
                     </div>
                     <div class="row lower-row-galery">
                         <div class="col">
-                            <img src="assets/images/kamar_kos.jpg" alt="" width="250">
+                            <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -84,118 +225,240 @@ $mapKosNama = explode(" ", $kos['nama']);
         <section class="">
             <div class="row">
                 <div class="col specification-section">
-                    <div>
-                        <span> <?= $kos['nama']; ?> </span>
-                        <span> Jenis Kos </span>
-                        <span> <?= $kos['alamat']; ?> </span>
+
+                    <div class="kos-info">
+                        <h3 class="section-heading"> <?= $kos['nama']; ?> </h3>
+                        <span class="section-col"> <?= $kos['jenis'] ?> </span>
+                        <span class="section-col"> <?= $kos['alamat']; ?> </span>
+                    </div>
+                    <hr>
+                    <div class="kos-specification">
+                        <h4 class="section-heading"> Spesifikasi </h4>
+                        <span class="section-col"> <?= $kos['jenis'] ?> </span>
+                        <span class="section-col"> <?= $kos['alamat']; ?> </span>
+                    </div>
+                    <hr>
+                    <div class="kos-facility">
+                        <h4 class="section-heading"> Fasilitas </h4>
+
+                        <?php
+                        global $conn;
+                        $fasilitas = [];
+                        $query = mysqli_query($conn, "SELECT Fasilitas.nama FROM Fasilitas INNER JOIN Kost ON Fasilitas.id_kost=Kost.id");
+
+                        while ($resQuery = mysqli_fetch_assoc($query)) {
+                            array_push($fasilitas, $resQuery);
+                        }
+
+                        ?>
+                        <?php foreach ($fasilitas as $value) : ?>
+                            <p class="section-col"> <?= $value['nama'] ?> </p>
+                        <?php endforeach; ?>
+                    </div>
+                    <hr>
+
+                    <div class="kos-lokasi">
+                        <h4 class="section-heading">Lokasi</h4>
+                        <div class="mapouter">
+                            <div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=<?= $mapKosNama[0] ?>%20<?= $mapKosNama[1] ?>%20<?= $mapKosAddr[0] ?>%20<?= $mapKosAddr[1] ?>%20<?= $mapKosAddr[2] ?>&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br>
+                                <style>
+                                    .mapouter {
+                                        position: relative;
+                                        text-align: right;
+                                        height: 300px;
+                                        width: 400px;
+                                    }
+                                </style><a href="https://www.embedgooglemap.net">google maps iframe embed</a>
+                                <style>
+                                    .gmap_canvas {
+                                        overflow: hidden;
+                                        background: none !important;
+                                        height: 300px;
+                                        width: 400px;
+                                    }
+                                </style>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col rent-section">
-
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <?php
+                                $floatHarga = (float) $kos['harga'];
+                                $hargaFormatted = number_format($floatHarga);
+                                echo "Rp $hargaFormatted.00";
+                                ?>
+                                <span class="subs-text">/ bulan</span>
+                            </h5>
+                            <form method="POST">
+                                <input class="form-control me-2 rent-input" type="date" placeholder="Mulai Sewa" aria-label="Search" name="start-date">
+                                <input class="form-control me-2 rent-input" type="text" placeholder="Lama Sewa" aria-label="Search" name="duration">
+                                <?php if (isset($_SESSION['login'])) : ?>
+                                    <button class="btn btn-primary rent-btn" type="submit" name="rent-btn">Ajukan
+                                        Penyewaan</button>
+                                <?php endif; ?>
+                            </form>
+                            <?php if (!isset($_SESSION['login'])) : ?>
+                                <button class="btn btn-primary rent-btn hidden-btn" type="submit" name="rent-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajukan
+                                    Penyewaan</button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="mapouter">
-                <div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=Kost%20Ali%20Jl.%20Raya%20Tajem%20Gg%20Manduro%20No.km%206&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br>
-                    <style>
-                        .mapouter {
-                            position: relative;
-                            text-align: right;
-                            height: 300px;
-                            width: 400px;
-                        }
-                    </style><a href="https://www.embedgooglemap.net">google maps iframe embed</a>
-                    <style>
-                        .gmap_canvas {
-                            overflow: hidden;
-                            background: none !important;
-                            height: 300px;
-                            width: 400px;
-                        }
-                    </style>
-                </div>
-            </div>
-
+        <section class="kos-review">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim, possimus! Aperiam animi fugiat obcaecati
+            laudantium dolorem nihil a rerum voluptatibus temporibus voluptatem ut id excepturi expedita, doloribus quas
+            ex. Veritatis?
+            Quos recusandae commodi corporis eos eum, ducimus quae? Eveniet at commodi iste repellendus pariatur
+            corrupti reprehenderit, laudantium alias cupiditate! Sed ut sint omnis consequuntur pariatur! Eveniet,
+            quidem. Odio, natus alias?
+            Expedita dolorum, reprehenderit, corrupti nihil ad omnis neque cum aut quibusdam dolor quia dignissimos
+            voluptatem dolores aliquid sint maiores nisi placeat amet qui doloribus soluta optio quae. Expedita,
+            voluptatibus a?
+            Assumenda dolorum consequatur, autem aliquam unde nulla fugit earum expedita consectetur optio omnis tempora
+            similique aliquid minima, atque praesentium amet? Expedita cumque tempore maiores magnam debitis delectus
+            quae qui ipsum?
+            Dicta sunt nisi atque odio unde rerum quas error maiores qui, cupiditate recusandae quaerat possimus, eius
+            autem fugiat est aperiam nulla, voluptatum ex. Aliquam eveniet, laborum ut maxime ipsum dolor.
         </section>
     </main>
-    <footer class="w-100 py-4 flex-shrink-0">
+    <footer class="container bg-light text-center pt-3">
+        <!-- Grid container -->
         <div class="container">
-            <div class="row gy-4 gx-5">
-                <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
-                    <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
-                    <ul class="list-unstyled text-muted">
-                        <li><a href="#tentangkami">Tentang Kami</a></li>
-                        <li><a href="#..">Promosikan Kos Anda</a></li>
-                        <li><a href="#bantuan">Pusat Bantuan</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-6 pt-3">
-                    <h5 class="text-black mb-3 fw-bold">Hubungi Kami</h5>
-
-                    <ul class="list-unstyled text-muted">
-                        <li>
-                            <!-- Facebook -->
-                            <a class="social-media-ref" href="#FacebookDEKOST">
-                                <i class="fa-brands fa-facebook me-2"></i>Facebook
-                            </a>
-                        </li>
-                        <li>
-                            <!-- Twitter -->
-                            <a class="social-media-ref" href="#TwitterDEKOST">
-                                <i class="fa-brands fa-twitter me-2 "></i>Twitter
-                            </a>
-                        </li>
-                        <li>
-                            <!-- Instagram -->
-                            <a class="social-media-ref" href="#InstagramDEKOST">
-                                <i class="fa-brands fa-instagram me-2"></i>Instagram
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social-media-ref" href="#LinkedInDEKOST">
-                                <i class="fa-brands fa-linkedin me-2"></i>LinkedIn
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social-media-ref" href="#FacebookDEKOST">
-                                <i class="fa-regular fa-envelope me-2"></i>Dekost@gmail.com
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social-media-ref" href="#WADEKOST">
-                                <i class="fab fa-whatsapp-square me-2"></i> +6281668909890
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <h5 class="text-black mb-3 fw-bold pt-3">Kebijakan</h5>
-                    <ul class="list-unstyled text-muted">
-                        <li><a href="#kebijakan">Kebijakan Privasi</a></li>
-                        <li><a href="#syarat&ketentuan">Syarat dan Ketentuan Umum</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <h5 class="text-Black fw-bold mb-3 pt-3">Yogyakarta, Indonesia</h5>
-                    <p class="small text-muted">Jika ada sesuatu hal yang ingin disampaikan silahkan kirimkan pesan kepada kami.</p>
-                    <form action="#">
-                        <div class="input-group mb-3">
-                            <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
+            <!-- Section: Social media -->
+            <div class="row">
+                <div class="col">
+                    <section class="social-media mb-4">
+                        <h3 class=" pb-5 fw-bold">Social Media</h3>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Facebook -->
+                                <a class="social-media-ref" href="#FacebookDEKOST">
+                                    <i class="fa-brands fa-facebook me-2"></i>Facebook
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Twitter -->
+                                <a class="social-media-ref" href="#TwitterDEKOST">
+                                    <i class="fa-brands fa-twitter me-2 "></i>Twitter
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Instagram -->
+                                <a class="social-media-ref" href="#InstagramDEKOST">
+                                    <i class="fa-brands fa-instagram me-2"></i>Instagram
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Linkedin -->
+                                <a class="social-media-ref" href="#LinkedInDEKOST">
+                                    <i class="fa-brands fa-linkedin me-2"></i>LinkedIn
+                                </a>
+                            </div>
                         </div>
-                    </form>
+                    </section>
                 </div>
-            </div>
-            <!-- Copyright -->
-            <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
-                2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+                <div class="col">
+                    <section class="contact mb-4">
+                        <h3 class="header-footer pb-5">Contact me</h3>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <a class="social-media-ref" href="#FacebookDEKOST">
+                                    <i class="fa-regular fa-envelope me-2"></i>Dekost@gmail.com
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <i class="fab fa-whatsapp-square me-2"></i> +6281668909890
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
-    </footer>
+        </section>
+        </main>
+        <footer class="w-100 py-4 flex-shrink-0">
+            <div class="container">
+                <div class="row gy-4 gx-5">
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
+                        <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
+                        <ul class="list-unstyled text-muted">
+                            <li><a href="#tentangkami">Tentang Kami</a></li>
+                            <li><a href="#..">Promosikan Kos Anda</a></li>
+                            <li><a href="#bantuan">Pusat Bantuan</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 pt-3">
+                        <h5 class="text-black mb-3 fw-bold">Hubungi Kami</h5>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+                        <ul class="list-unstyled text-muted">
+                            <li>
+                                <!-- Facebook -->
+                                <a class="social-media-ref" href="#FacebookDEKOST">
+                                    <i class="fa-brands fa-facebook me-2"></i>Facebook
+                                </a>
+                            </li>
+                            <li>
+                                <!-- Twitter -->
+                                <a class="social-media-ref" href="#TwitterDEKOST">
+                                    <i class="fa-brands fa-twitter me-2 "></i>Twitter
+                                </a>
+                            </li>
+                            <li>
+                                <!-- Instagram -->
+                                <a class="social-media-ref" href="#InstagramDEKOST">
+                                    <i class="fa-brands fa-instagram me-2"></i>Instagram
+                                </a>
+                            </li>
+                            <li>
+                                <a class="social-media-ref" href="#LinkedInDEKOST">
+                                    <i class="fa-brands fa-linkedin me-2"></i>LinkedIn
+                                </a>
+                            </li>
+                            <li>
+                                <a class="social-media-ref" href="#FacebookDEKOST">
+                                    <i class="fa-regular fa-envelope me-2"></i>Dekost@gmail.com
+                                </a>
+                            </li>
+                            <li>
+                                <a class="social-media-ref" href="#WADEKOST">
+                                    <i class="fab fa-whatsapp-square me-2"></i> +6281668909890
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5 class="text-black mb-3 fw-bold pt-3">Kebijakan</h5>
+                        <ul class="list-unstyled text-muted">
+                            <li><a href="#kebijakan">Kebijakan Privasi</a></li>
+                            <li><a href="#syarat&ketentuan">Syarat dan Ketentuan Umum</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class="text-Black fw-bold mb-3 pt-3">Yogyakarta, Indonesia</h5>
+                        <p class="small text-muted">Jika ada sesuatu hal yang ingin disampaikan silahkan kirimkan pesan kepada kami.</p>
+                        <form action="#">
+                            <div class="input-group mb-3">
+                                <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Copyright -->
+                <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
+                    2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+                </div>
+            </div>
+        </footer>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
