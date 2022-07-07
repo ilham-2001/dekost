@@ -197,6 +197,11 @@ h3 {
 }
 .rent-input {
   width: 10rem;
+  display: inline-block;
+}
+.rent-btn {
+  display: block;
+  margin-top: 1.5rem;
 }
 .rent-section {
   margin-top: 2rem;

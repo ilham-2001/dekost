@@ -163,7 +163,7 @@ $mapKosNama = explode(" ", $kos['nama']);
                                     aria-label="Search">
                                 <input class="form-control me-2 rent-input" type="search" placeholder="Lama Sewa"
                                     aria-label="Search">
-                                <button class="btn btn-outline-primary" type="submit">Ajukan Penyewaan</button>
+                                <button class="btn btn-primary rent-btn" type="submit">Ajukan Penyewaan</button>
                             </form>
                         </div>
                     </div>
