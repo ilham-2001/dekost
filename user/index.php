@@ -96,22 +96,19 @@ if (isset($_POST['button_signup'])) {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/favicon.ico">
+    <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
     <title>Home</title>
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
+            <div class="container">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -121,12 +118,12 @@ if (isset($_POST['button_signup'])) {
                         </li>
                     </ul>
                     <?php if (!isset($_SESSION['login'])) : ?>
-                    <!-- <form class="d-flex" method="POST"> -->
-                    <button class="btn btn-outline-primary btn-nav" type="submit" name="signin" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">Sign In</button>
-                    <!-- <button class="btn btn-outline-primary btn-nav" type="submit" name="signup">Sign Up</button> -->
-                    <!-- </form> -->
+                        <!-- <form class="d-flex" method="POST"> -->
+                        <button class="btn btn-outline-primary btn-nav" type="submit" name="signin" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In</button>
+                        <!-- <button class="btn btn-outline-primary btn-nav" type="submit" name="signup">Sign Up</button> -->
+                        <!-- </form> -->
                     <?php else : ?>
+
                     <form class="d-flex" method="POST">
                         <button class="btn btn-outline-primary btn-nav" type="submit" name="logout">Log Out</button>
                     </form>
@@ -135,7 +132,7 @@ if (isset($_POST['button_signup'])) {
             </div>
         </nav>
     </header>
-    <main class="container-fluid">
+    <main class="container">
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -144,16 +141,13 @@ if (isset($_POST['button_signup'])) {
                     <div class="modal-header">
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-                                <path
-                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                             </symbol>
                             <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-                                <path
-                                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                             </symbol>
                             <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-                                <path
-                                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                             </symbol>
                         </svg>
 
@@ -168,13 +162,10 @@ if (isset($_POST['button_signup'])) {
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                    aria-selected="true">Sign In</button>
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Sign In</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                    type="button" role="tab" aria-controls="profile" aria-selected="false">Sign
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Sign
                                     Up</button>
                             </li>
                         </ul>
@@ -187,18 +178,15 @@ if (isset($_POST['button_signup'])) {
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <!-- Form Login -->
                                 <form class="form-signin" method="POST">
-                                    <img class="mb-4 icon-img" src="assets/icon/favicon.ico" alt="" width="72"
-                                        height="57">
+                                    <img class="mb-4 icon-img" src="assets/icon/favicon.ico" alt="" width="72" height="57">
                                     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com" name="email" autocomplete="off">
+                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
                                         <label for="floatingInput">Email address</label>
                                     </div>
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password" name="password">
+                                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
                                         <label for="floatingPassword">Password</label>
                                     </div>
                                     <div class="checkbox mb-3">
@@ -206,8 +194,7 @@ if (isset($_POST['button_signup'])) {
                                             <input type="checkbox" value="true" name="is_remember"> Remember me
                                         </label>
                                     </div>
-                                    <button class="w-100 btn btn-lg btn-primary btn-login" type="submit"
-                                        name="btn_submit">Sign
+                                    <button class="w-100 btn btn-lg btn-primary btn-login" type="submit" name="btn_submit">Sign
                                         in</button>
                                 </form>
 
@@ -216,45 +203,38 @@ if (isset($_POST['button_signup'])) {
                                 <form class="form-signin" method="POST">
 
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com" name="email" autocomplete="off">
+                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
                                         <label for="floatingInput">Email address</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="password" name="password" autocomplete="off">
+                                        <input type="password" class="form-control" id="floatingPassword" placeholder="password" name="password" autocomplete="off">
                                         <label for="floatingPassword">Password</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput"
-                                            placeholder="nama depan" name="nama_depan" autocomplete="off">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="nama depan" name="nama_depan" autocomplete="off">
                                         <label for="floatingInput">Nama Depan</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput"
-                                            placeholder="nama belakang" name="nama_belakang" autocomplete="off">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="nama belakang" name="nama_belakang" autocomplete="off">
                                         <label for="floatingInput">Nama Belakang</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
-                                            name="nik" autocomplete="off">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK" name="nik" autocomplete="off">
                                         <label for="floatingInput">NIK</label>
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
-                                            id="flexRadioDefault1" value="L">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault1" value="L">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             Laki-laki
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
-                                            id="flexRadioDefault2" checked value="P">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault2" checked value="P">
                                         <label class="form-check-label" for="flexRadioDefault2">
                                             Perempuan
                                         </label>
@@ -351,46 +331,74 @@ if (isset($_POST['button_signup'])) {
                     </p>
                 </div>
                 <div class="col">
-                    <img class="promote-section" src="assets/images/bed2.jpg" alt="">
+                    <img src="assets/images/bed2.jpg" alt="">
                 </div>
             </div>
         </section>
-
-        <footer class="">
+    </main>
+    <footer class="container bg-light text-center pt-3">
+        <!-- Grid container -->
+        <div class="container">
+            <!-- Section: Social media -->
             <div class="row">
-                <div class="col-lg-4">
-                    <h2 class="header-footer">Contact me</h2>
-                    <p><i class="fas fa-envelope-square"></i> arizqyakbar@gmail.com</p>
-                    <p><i class="fab fa-whatsapp-square"></i></i> +6281326768372</p>
+                <div class="col">
+                    <section class="social-media mb-4">
+                        <h3 class=" pb-5 fw-bold">Social Media</h3>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Facebook -->
+                                <a class="social-media-ref" href="#FacebookDEKOST">
+                                    <i class="fa-brands fa-facebook me-2"></i>Facebook
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Twitter -->
+                                <a class="social-media-ref" href="#TwitterDEKOST">
+                                    <i class="fa-brands fa-twitter me-2 "></i>Twitter
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Instagram -->
+                                <a class="social-media-ref" href="#InstagramDEKOST">
+                                    <i class="fa-brands fa-instagram me-2"></i>Instagram
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <!-- Linkedin -->
+                                <a class="social-media-ref" href="#LinkedInDEKOST">
+                                    <i class="fa-brands fa-linkedin me-2"></i>LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-                <div class="col-lg-4 social-media-row">
-                    <h4>Social Media</h4>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <a class="social-media-ref" href="https://www.instagram.com/irizqy_/">
-                                <p><i class="fab fa-instagram"></i> Instagram</p>
-                            </a>
+                <div class="col">
+                    <section class="contact mb-4">
+                        <h3 class="header-footer pb-5">Contact me</h3>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <a class="social-media-ref" href="#FacebookDEKOST">
+                                    <i class="fa-regular fa-envelope me-2"></i>Dekost@gmail.com
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <i class="fab fa-whatsapp-square me-2"></i> +6281668909890
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <a class="social-media-ref" href="https://www.linkedin.com/in/irizqyakbr/">
-                                <p><i class="fab fa-linkedin"></i> Linkedin</p>
-                            </a>
-                        </div>
-                        <div class="col-lg-4">
-                            <a class="social-media-ref" href="https://vsco.co/irizqy/gallery">
-                                <p><i class="fas fa-camera"></i> VSCO</p>
-                            </a>
-                        </div>
-                    </div>
-                    <p id="copyright">Copyright <i class="far fa-copyright"></i> Ilham Rizqyakbar</p>
+                    </section>
                 </div>
             </div>
-        </footer>
-    </main>
+        </div>
 
-    <!-- <form action="index.php" method="POST">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+        </div>
+    </footer>
+
+    <form action="index.php" method="POST">
         <button name="logout" type="submit">Logout</button>
-    </form> -->
+    </form>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
@@ -400,18 +408,18 @@ if (isset($_POST['button_signup'])) {
 
     <!-- Alert saat salah password atau username -->
     <?php if (isset($_POST['btn_submit'])) : ?>
-    <script type="text/javascript">
-    let isVerify = "<?= $verify; ?>"
-    let alert = $(".alert-danger")
-    console.log(isVerify);
+        <script type="text/javascript">
+            let isVerify = "<?= $verify; ?>"
+            let alert = $(".alert-danger")
+            console.log(isVerify);
 
-    if (!isVerify) {
-        alert.addClass('alert-on');
-        setTimeout(() => {
-            alert.removeClass('alert-on');
-        }, 2500);
-    }
-    </script>
+            if (!isVerify) {
+                alert.addClass('alert-on');
+                setTimeout(() => {
+                    alert.removeClass('alert-on');
+                }, 2500);
+            }
+        </script>
     <?php endif; ?>
 
 </body>
