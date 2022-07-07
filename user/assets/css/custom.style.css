@@ -1,3 +1,12 @@
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+a.user-signup {
+  color: #2155cd;
+}
+
 .alert {
   position: absolute;
   left: 43%;
@@ -22,6 +31,9 @@ body {
   left: 1rem;
   font-family: "Montserrat", sans-serif;
   font-family: "Ubuntu", sans-serif;
+}
+
+.brand:hover {
   color: #fff;
 }
 
@@ -49,7 +61,6 @@ body {
 .cr-text {
   margin-top: 10rem;
 }
-
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -60,7 +71,9 @@ body {
 .form-signin .checkbox {
   font-weight: 400;
 }
-
+.main-form a {
+  color: #2155cd;
+}
 .form-signin .form-floating:focus-within {
   z-index: 2;
 }
@@ -86,7 +99,6 @@ body {
   top: 8.5rem;
   left: 7.5rem;
 }
-
 .carousel {
   margin-top: 7rem;
 }

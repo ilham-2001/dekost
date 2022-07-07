@@ -2,9 +2,131 @@
 html {
   scroll-behavior: smooth;
 }
+a {
+  text-decoration: none;
+  color: #000;
+}
+a.btn {
+  color: #fff;
+}
+.alert {
+  position: absolute;
+  left: 43%;
+  visibility: hidden;
+}
+
+.alert-on {
+  position: absolute;
+  left: 68.5%;
+  top: 1.5rem;
+  visibility: visible;
+}
 body {
   font-family: "Noto Sans HK", sans-serif;
   background: #fff;
+}
+.btn-login {
+  margin-top: 5rem;
+}
+.btn-nav {
+  margin: 0 0.5rem 0 0.5rem;
+}
+.card-img-top {
+  width: 288px;
+}
+.card-text {
+  font-size: 0.9rem;
+}
+.card-title {
+  font-weight: bold;
+}
+.checked {
+  color: orange;
+}
+.container-fluid {
+  padding: 0 20rem 0 20rem;
+}
+.content-section {
+  margin: 10.5rem 0 10.5rem 0;
+}
+.display-kos-image {
+  margin-top: 5rem;
+}
+.filter-input {
+  width: 11.18125rem;
+  display: inline-block;
+  margin: 0 0.5rem 0 0.5rem;
+}
+.filter-field {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.form-select {
+  width: 12rem;
+  display: inline-block;
+}
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin: 10px 0 10px 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin .checkbox {
+  text-align: left;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+h3 {
+  font-weight: bold;
+}
+.harga-text {
+  font-weight: bold;
+}
+.icon-img {
+  margin: 0 auto 0 auto;
+  display: block;
+}
+.kos-field .card-text {
+  color: #000;
+}
+.kos-field {
+  height: 1500px;
+  margin-top: 3.5rem;
+}
+.navbar-brand {
+  font-family: "Montserrat", sans-serif;
+  font-family: "Ubuntu", sans-serif;
+  color: #2155cd !important;
+}
+.lower-row-galery {
+  margin-top: 0.5rem;
+}
+.secondary-img {
+  width: 343px;
+}
+.section-col {
+  margin-right: 0.8rem;
+}
+.section-heading {
+  font-weight: bold;
+  margin-top: 1rem;
 }
 .slider {
   margin-bottom: 30px;
@@ -15,7 +137,7 @@ body {
   opacity: 1;
   background: #ff9966;
   background: -webkit-linear-gradient(to bottom, #ff5e62, #ff9966);
-  background: linear-gradient(to bottom, #ff5e62, #ff9966);
+  background: linear-gradient(to bottom, #4872d4, #2155cd);
   color: #fff;
 }
 .slider-card {
@@ -30,6 +152,9 @@ body {
 }
 .slider-card img {
   border-radius: 5px 5px 0px 0px;
+}
+.subs-text {
+  font-weight: 400;
 }
 .owl-nav .owl-prev {
   position: absolute;
@@ -58,4 +183,26 @@ body {
   margin-left: 3px;
   margin-right: 3px;
   outline: none;
+}
+
+.owl-dots .owl-dot.active {
+  background: #2155cd !important;
+}
+.primary-img {
+  width: 700px;
+}
+.promote-section {
+  position: relative;
+  left: 15.375rem;
+}
+.rent-input {
+  width: 10rem;
+  display: inline-block;
+}
+.rent-btn {
+  display: block;
+  margin-top: 1.5rem;
+}
+.rent-section {
+  margin-top: 2rem;
 }
