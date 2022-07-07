@@ -167,7 +167,6 @@
         </div>
         </div>
     </main>
-
     <footer class="w-100 py-4 flex-shrink-0">
         <div class="container">
             <div class="row gy-4 gx-5">
@@ -251,7 +250,5 @@
     <script src="assets/js/scripts.js"></script>
 
 </body>
-
-
 
 </html>
