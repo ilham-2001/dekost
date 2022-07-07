@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require('core/init.php');
 
 $kosId = $_GET['q'];
@@ -8,6 +10,26 @@ $kos = getDataFromId("Kost", $kosId);
 
 $mapKosAddr = explode(" ", $kos['alamat']);
 $mapKosNama = explode(" ", $kos['nama']);
+
+if (isset($_POST["btn_submit"])) {
+    // cek ketersediaan akun di DB
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $verify = verifyLogin($email, $password);
+    // var_dump($verify);
+
+    if ($verify) {
+        $_SESSION['login'] = TRUE;
+    }
+}
+
+if (isset($_POST['rent-btn'])) {
+    var_dump($_POST);
+    header("Location: user.transaksi.php");
+    exit;
+}
+// var_dump($_SESSION);
 // var_dump($mapKosAddr);
 
 // var_dump($mapKosNama);
@@ -28,7 +50,9 @@ $mapKosNama = explode(" ", $kos['nama']);
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/favicon.ico">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
@@ -40,7 +64,9 @@ $mapKosNama = explode(" ", $kos['nama']);
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -60,6 +86,142 @@ $mapKosNama = explode(" ", $kos['nama']);
 
     <main class="container-fluid">
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                            </symbol>
+                            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                            </symbol>
+                            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path
+                                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </symbol>
+                        </svg>
+
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                                <use xlink:href="#exclamation-triangle-fill" />
+                            </svg>
+                            <div>
+                                incorrect email or password
+                            </div>
+                        </div>
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">Sign In</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">Sign
+                                    Up</button>
+                            </li>
+                        </ul>
+                        <!-- <h5 class="modal-title" id="exampleModalLabel">Sign In</h5> -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <!-- Form Login -->
+                                <form class="form-signin" method="POST">
+                                    <img class="mb-4 icon-img" src="assets/icon/favicon.ico" alt="" width="72"
+                                        height="57">
+                                    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="floatingInput"
+                                            placeholder="name@example.com" name="email" autocomplete="off">
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="floatingPassword"
+                                            placeholder="Password" name="password">
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" value="true" name="is_remember"> Remember me
+                                        </label>
+                                    </div>
+                                    <button class="w-100 btn btn-lg btn-primary btn-login" type="submit"
+                                        name="btn_submit">Sign
+                                        in</button>
+                                </form>
+
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <form class="form-signin" method="POST">
+
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="floatingInput"
+                                            placeholder="name@example.com" name="email" autocomplete="off">
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="floatingPassword"
+                                            placeholder="password" name="password" autocomplete="off">
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput"
+                                            placeholder="nama depan" name="nama_depan" autocomplete="off">
+                                        <label for="floatingInput">Nama Depan</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput"
+                                            placeholder="nama belakang" name="nama_belakang" autocomplete="off">
+                                        <label for="floatingInput">Nama Belakang</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
+                                            name="nik" autocomplete="off">
+                                        <label for="floatingInput">NIK</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
+                                            id="flexRadioDefault1" value="L">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Laki-laki
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
+                                            id="flexRadioDefault2" checked value="P">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Perempuan
+                                        </label>
+                                    </div>
+
+                                    <button class="btn btn-primary" type="submit" name="button_signup">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
         <section class="display-kos-image">
             <div class="row">
                 <div class="col">
@@ -154,18 +316,43 @@ $mapKosNama = explode(" ", $kos['nama']);
                                 ?>
                                 <span class="subs-text">/ bulan</span>
                             </h5>
-                            <form>
-                                <input class="form-control me-2 rent-input" type="search" placeholder="Mulai Sewa"
-                                    aria-label="Search">
-                                <input class="form-control me-2 rent-input" type="search" placeholder="Lama Sewa"
-                                    aria-label="Search">
-                                <button class="btn btn-primary rent-btn" type="submit">Ajukan Penyewaan</button>
+                            <form method="POST">
+                                <input class="form-control me-2 rent-input" type="date" placeholder="Mulai Sewa"
+                                    aria-label="Search" name="start-date">
+                                <input class="form-control me-2 rent-input" type="text" placeholder="Lama Sewa"
+                                    aria-label="Search" name="duration">
+                                <?php if (isset($_SESSION['login'])) : ?>
+                                <button class="btn btn-primary rent-btn" type="submit" name="rent-btn">Ajukan
+                                    Penyewaan</button>
+                                <?php endif; ?>
                             </form>
+                            <?php if (!isset($_SESSION['login'])) : ?>
+                            <button class="btn btn-primary rent-btn hidden-btn" type="submit" name="rent-btn"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">Ajukan
+                                Penyewaan</button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
 
+        </section>
+
+        <section class="kos-review">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim, possimus! Aperiam animi fugiat obcaecati
+            laudantium dolorem nihil a rerum voluptatibus temporibus voluptatem ut id excepturi expedita, doloribus quas
+            ex. Veritatis?
+            Quos recusandae commodi corporis eos eum, ducimus quae? Eveniet at commodi iste repellendus pariatur
+            corrupti reprehenderit, laudantium alias cupiditate! Sed ut sint omnis consequuntur pariatur! Eveniet,
+            quidem. Odio, natus alias?
+            Expedita dolorum, reprehenderit, corrupti nihil ad omnis neque cum aut quibusdam dolor quia dignissimos
+            voluptatem dolores aliquid sint maiores nisi placeat amet qui doloribus soluta optio quae. Expedita,
+            voluptatibus a?
+            Assumenda dolorum consequatur, autem aliquam unde nulla fugit earum expedita consectetur optio omnis tempora
+            similique aliquid minima, atque praesentium amet? Expedita cumque tempore maiores magnam debitis delectus
+            quae qui ipsum?
+            Dicta sunt nisi atque odio unde rerum quas error maiores qui, cupiditate recusandae quaerat possimus, eius
+            autem fugiat est aperiam nulla, voluptatum ex. Aliquam eveniet, laborum ut maxime ipsum dolor.
         </section>
     </main>
     <footer class="container bg-light text-center pt-3">
@@ -224,7 +411,8 @@ $mapKosNama = explode(" ", $kos['nama']);
 
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+            2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in
+            Yogyakarta
         </div>
     </footer>
 
