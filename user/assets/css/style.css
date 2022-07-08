@@ -6,6 +6,9 @@ a {
   text-decoration: none;
   color: #000;
 }
+a:hover {
+  color: #000;
+}
 a.btn {
   color: #fff;
 }
@@ -30,6 +33,9 @@ body {
 }
 .btn-nav {
   margin: 0 0.5rem 0 0.5rem;
+}
+.card {
+  width: 424px;
 }
 .card-img-top {
   width: 288px;
@@ -99,6 +105,9 @@ h3 {
 .harga-text {
   font-weight: bold;
 }
+.hidden-btn {
+  display: none;
+}
 .icon-img {
   margin: 0 auto 0 auto;
   display: block;
@@ -114,6 +123,9 @@ h3 {
   font-family: "Montserrat", sans-serif;
   font-family: "Ubuntu", sans-serif;
   color: #2155cd !important;
+}
+.navbar {
+  height: 4rem;
 }
 .lower-row-galery {
   margin-top: 0.5rem;
