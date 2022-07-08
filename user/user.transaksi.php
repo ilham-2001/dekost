@@ -4,7 +4,16 @@ session_start();
 $nik = $_SESSION['NIK'];
 
 $user = getUserData($nik);
+$durasi = 2628000 * $_SESSION['durasi'];
+$time = strtotime($_SESSION['tgl_mulai']) + $durasi;
+
+$tglAkhir = date('Y-m-d', $time);
+// var_dump($tglAkhir);
+// var_dump($_SESSION['durasi']);
+
+$totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
 // var_dump($user);
+// var_dump($_SESSION);
 
 
 ?>
@@ -108,18 +117,27 @@ $user = getUserData($nik);
                                 <tbody>
                                     <tr style="height:60px">
                                         <th>Harga</th>
-                                        <td>: Rp700000.00 / Bulan</td>
+                                        <td colspan="3">: <?php
+                                                            $harga = $_SESSION['harga'];
+                                                            $formattedharga = number_format((float) $harga);
+                                                            echo "Rp. $formattedharga.00"
+
+                                                            ?> / Bulan</td>
                                     </tr>
                                     <tr style="height:60px">
                                         <th>Tanggal Sewa</th>
-                                        <td>: Tgl Mulai</td>
+                                        <td colspan="2">: <?= $_SESSION['tgl_mulai'] ?></td>
                                         <td>s/d</td>
-                                        <td>Tgl Selesai</td>
+                                        <td colspan="2"><?= $tglAkhir ?></td>
                                     </tr>
                                     <tr style="height:60px">
                                         <th>Total Pembayaran</th>
-                                        <td>
-                                            <h6>: Rp700000.00</h6>
+                                        <td colspan="2">
+                                            <h6>: <?php
+                                                    $formattedTotal = number_format((float)$totalPembayaran);
+                                                    echo "Rp. $formattedTotal.00";
+
+                                                    ?></h6>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -132,51 +150,46 @@ $user = getUserData($nik);
                         <div class="card-body ms-3">
                             <h5 style="font-weight: bold;"> Transfer Bank </h5>
                             <div class="form-check mt-4">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BCAVA">
+                                <label class="form-check-label" for="BCAVA">
                                     Bank BCA (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
                                 <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                    id="MandiriVA">
+                                <label class="form-check-label" for="MandiriVA">
                                     Bank Mandiri (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BNIVA">
+                                <label class="form-check-label" for="BNIVA">
                                     Bank BNI (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BRIVA">
+                                <label class="form-check-label" for="BRIVA">
                                     Bank BRI (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BSIVA">
+                                <label class="form-check-label" for="BSIVA">
                                     Bank Syariah Indonesia (BSI) (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="MegaVA">
+                                <label class="form-check-label" for="MegaVA">
                                     Bank Mega (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
                                 <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                    id="PermataVA">
+                                <label class="form-check-label" for="PermataVA">
                                     Bank Permata (inc. Virtual Account)
                                 </label>
                             </div>

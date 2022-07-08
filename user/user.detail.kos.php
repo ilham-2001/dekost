@@ -11,6 +11,9 @@ $kos = getDataFromId("Kost", $kosId);
 $mapKosAddr = explode(" ", $kos['alamat']);
 $mapKosNama = explode(" ", $kos['nama']);
 
+$floatHarga = (float) $kos['harga'];
+$hargaFormatted = number_format($floatHarga);
+
 if (isset($_POST["btn_submit"])) {
     // cek ketersediaan akun di DB
     $email = $_POST['email'];
@@ -32,6 +35,9 @@ if (isset($_POST['rent-btn'])) {
     $startDate = $_POST['start-date'];
 
     if (checkRentFillness($startDate, $duration)) {
+        $_SESSION['harga'] = (int) $floatHarga;
+        $_SESSION['tgl_mulai'] = $startDate;
+        $_SESSION['durasi'] = $duration;
         header("Location: user.transaksi.php");
         exit;
     }
@@ -318,8 +324,6 @@ if (isset($_POST['rent-btn'])) {
                         <div class="card-body">
                             <h5 class="card-title">
                                 <?php
-                                $floatHarga = (float) $kos['harga'];
-                                $hargaFormatted = number_format($floatHarga);
                                 echo "Rp $hargaFormatted.00";
                                 ?>
                                 <span class="subs-text">/ bulan</span>
