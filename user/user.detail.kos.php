@@ -54,6 +54,8 @@ if (isset($_POST['rent-btn'])) {
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/favicon.ico">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
+    <!-- xzoom -->
+    <link rel="stylesheet" href="../user/assets/js/dist/xzoom.css">
     <title>Detail Kost</title>
 </head>
 
@@ -80,7 +82,7 @@ if (isset($_POST['rent-btn'])) {
         </nav>
     </header>
 
-    <main class="container-fluid">
+    <main class="container">
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -203,10 +205,36 @@ if (isset($_POST['rent-btn'])) {
         </div>
         <section class="display-kos-image">
             <div class="row">
-                <div class="col">
-                    <img class="primary-img" src="assets/images/kamar_kos.jpg" alt="">
+                <div class="col-lg-6 col-md-6 col-sm-12 xzoom-container">
+                    <img class="primary-img img-fluid rounded xzoom" xoriginal="assets/images/kamar_kos.jpg" id="xzoom-default" src="assets/images/kamar_kos.jpg" title="Gambar Kost 1" alt="">
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <a href="assets/images/kamar_kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kamar_kos.jpg" title="Gambar Kost 2" alt="">
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="assets/images/kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg" title="Gambar Kost 3" alt="">
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="assets/images/kamar_kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kamar_kos.jpg" title="Gambar Kost 4" alt="">
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="assets/images/kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg" title="Gambar Kost 5" alt="">
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <!-- kanan -->
+                </div>
+
+                <!-- <div class="col">
                     <div class="row">
                         <div class="col">
                             <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
@@ -217,8 +245,7 @@ if (isset($_POST['rent-btn'])) {
                             <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> -->
             </div>
         </section>
 
@@ -459,6 +486,19 @@ if (isset($_POST['rent-btn'])) {
         </footer>
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <!-- XZOOM -->
+        <script src="../user/assets/js/dist/xzoom.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.xzoom, .xzoom-gallery').xzoom({
+                    zoomWidth: 500,
+                    zoomHeight: 300,
+                    title: true,
+                    tint: '#333',
+                    Xoffset: 50,
+                })
+            });
+        </script>
 </body>
 
 </html>
