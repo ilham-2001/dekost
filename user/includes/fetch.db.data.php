@@ -134,3 +134,23 @@ function filterSearch($jenis, $minHarga, $maxHarga)
 
     return $retVal;
 }
+
+function getUniqueId($email)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `NIK` FROM Users WHERE email='$email'");
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery['NIK'];
+}
+
+function getUserData($nik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `firstName`, `lastName`, `email`, `no_telepon` FROM Users WHERE NIK='$nik'");
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery;
+}
