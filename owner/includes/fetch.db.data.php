@@ -219,7 +219,7 @@ function getDataPesanan()
 {
     global $conn;
     $data = [];
-    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK");
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK");
 
 
     if ($query) {

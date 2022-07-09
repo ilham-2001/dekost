@@ -22,6 +22,9 @@ $(document).ready(function () {
       {
         data: "action",
       },
+      {
+        data: "tglPemesanan",
+      },
     ],
     order: [[1, "asc"]],
   });
@@ -52,9 +55,9 @@ $(document).ready(function () {
       "</td>" +
       "</tr>" +
       "<tr>" +
-      "<td>ID Pesanan:</td>" +
+      "<td>Tanggal Pemesanan:</td>" +
       "<td>" +
-      d.idPesanan +
+      d.tglPemesanan +
       "</td>" +
       "</tr>" +
       "</table>"

@@ -200,6 +200,7 @@ $dataPemesan = getDataPesanan();
                                                         <th>Mulai Sewa</th>
                                                         <th>Akhir Sewa</th>
                                                         <th>Action</th>
+                                                        <th style="display: none;">Tanggal Sewa</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -210,10 +211,15 @@ $dataPemesan = getDataPesanan();
                                                         <td><?= "$data[firstName] $data[lastName]" ?></td>
                                                         <td><?= $data['mulaiSewa'] ?></td>
                                                         <td><?= $data['akhirSewa'] ?></td>
-                                                        <td><a href=""><button
-                                                                    class="btn btn-success">Accept</button></a> <a
-                                                                href=""><button
-                                                                    class="btn btn-danger">Reject</button></a></td>
+                                                        <td>
+                                                            <form action="">
+                                                                <button class="btn btn-success"
+                                                                    value="accept <?= $data['idPesanan'] ?>">Accept</button>
+                                                                <button class="btn btn-danger"
+                                                                    value="reject <?= $data['idPesanan'] ?>">Reject</button>
+                                                            </form>
+                                                        </td>
+                                                        <td style="display: none;"><?= $data['tglPemesanan'] ?></td>
                                                     </tr>
                                                     <?php endforeach; ?>
                                                 </tbody>
