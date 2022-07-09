@@ -1,19 +1,17 @@
 <?php
 require('core/init.php');
 session_start();
-$nik = $_SESSION['NIK'];
+$nik = $_SESSION['userNIK'];
+$idPemilik = $_SESSION['id_pemilik'];
 
 $user = getUserData($nik);
 $durasi = 2628000 * $_SESSION['durasi'];
 $time = strtotime($_SESSION['tgl_mulai']) + $durasi;
 
 $tglAkhir = date('Y-m-d', $time);
-// var_dump($tglAkhir);
-// var_dump($_SESSION['durasi']);
+$rekeningPemilik = getRekeningInfo($idPemilik);
 
 $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
-// var_dump($user);
-// var_dump($_SESSION);
 
 
 ?>
@@ -32,9 +30,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/favicon.ico">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
@@ -46,9 +42,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -74,8 +68,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                             <h3 class="text-center">Ini nama kost</h3>
                         </div>
                         <div class="gambar text-center mb-3">
-                            <img src="../user/assets/images/kamar_kos.jpg" alt="gambar kost" class="img-kost img-fluid"
-                                width="450" height="300">
+                            <img src="../user/assets/images/kamar_kos.jpg" alt="gambar kost" class="img-kost img-fluid" width="450" height="300">
                         </div>
                         <div class="informasi-pemilik ps-5">
                             <div class="nama-pemilik">
@@ -88,8 +81,9 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                             </div>
                             <div class="rekening-pemilik mt-3">
                                 <h4> Rekening tujuan: </h4>
-                                <h6 style="color:#2155CD;"> 3211198xxxxxx </h6>
-                                <h6 style="color:#2155CD;"> BNI a.n. Fajrun Shubhi</h6>
+                                <h6 style="color:#2155CD;"> <?= $rekeningPemilik['noRekening']  ?> </h6>
+                                <h6 style="color:#2155CD;"> <?= $rekeningPemilik['bank'] ?> a.n.
+                                    <?= $rekeningPemilik['nama'] ?> </h6>
                             </div>
                         </div>
                         <div class="waktu-pembayaran ms-5 mt-3">
@@ -104,8 +98,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                         <hr class="sidebar-divider mt-1 bg-light">
                         <form action="" class="mb-3 ms-5 me-5">
                             <input type="file" class="form-control" id="inputGroupFile02"><br><br>
-                            <input type="submit" value="Konfirmasi Pembayaran"
-                                style="background-color: #2155CD; border:none; color:#ffffff;padding:10px 60px; border-radius:30px;">
+                            <input type="submit" value="Konfirmasi Pembayaran" style="background-color: #2155CD; border:none; color:#ffffff;padding:10px 60px; border-radius:30px;">
                         </form>
                     </section>
                 </div>
@@ -151,44 +144,42 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                             <h5 style="font-weight: bold;"> Transfer Bank </h5>
                             <div class="form-check mt-4">
                                 <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BCAVA">
-                                <label class="form-check-label" for="BCAVA">
+                                <label class="form-check-label" for="BCAVA" name="payment-method">
                                     Bank BCA (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="MandiriVA">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="MandiriVA" name="payment-method">
                                 <label class="form-check-label" for="MandiriVA">
                                     Bank Mandiri (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
                                 <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BNIVA">
-                                <label class="form-check-label" for="BNIVA">
+                                <label class="form-check-label" for="BNIVA" name="payment-method">
                                     Bank BNI (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
                                 <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BRIVA">
-                                <label class="form-check-label" for="BRIVA">
+                                <label class="form-check-label" for="BRIVA" name="payment-method">
                                     Bank BRI (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
                                 <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BSIVA">
-                                <label class="form-check-label" for="BSIVA">
+                                <label class="form-check-label" for="BSIVA" name="payment-method">
                                     Bank Syariah Indonesia (BSI) (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
                                 <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="MegaVA">
-                                <label class="form-check-label" for="MegaVA">
+                                <label class="form-check-label" for="MegaVA" name="payment-method">
                                     Bank Mega (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
-                                    id="PermataVA">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="PermataVA" name="payment-method">
                                 <label class="form-check-label" for="PermataVA">
                                     Bank Permata (inc. Virtual Account)
                                 </label>
@@ -204,8 +195,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2"
-                            width="50" height="50" alt="logo"> Dekost</h5>
+                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
                     <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
                     <ul class="list-unstyled text-muted">
                         <li><a href="#tentangkami">Tentang Kami</a></li>
@@ -265,10 +255,8 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                         kepada kami.</p>
                     <form action="#">
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" placeholder="Recipient's username"
-                                aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-primary" id="button-addon2" type="button"><i
-                                    class="fas fa-paper-plane"></i></button>
+                            <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </form>
                 </div>

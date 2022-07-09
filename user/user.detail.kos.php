@@ -6,7 +6,6 @@ require('core/init.php');
 
 $kosId = $_GET['q'];
 $kos = getDataFromId("Kost", $kosId);
-// var_dump($kos);
 
 $mapKosAddr = explode(" ", $kos['alamat']);
 $mapKosNama = explode(" ", $kos['nama']);
@@ -20,17 +19,16 @@ if (isset($_POST["btn_submit"])) {
     $password = $_POST['password'];
 
     $verify = verifyLogin($email, $password);
-    // var_dump($verify);
 
     if ($verify) {
         $NIK = getUniqueId($email);
+        $_SESSION['userNIK'] = $NIK;
         $_SESSION['NIK'] = $NIK;
         $_SESSION['login'] = TRUE;
     }
 }
 
 if (isset($_POST['rent-btn'])) {
-    // var_dump($_POST);
     $duration = $_POST['duration'];
     $startDate = $_POST['start-date'];
 
@@ -38,15 +36,21 @@ if (isset($_POST['rent-btn'])) {
         $_SESSION['harga'] = (int) $floatHarga;
         $_SESSION['tgl_mulai'] = $startDate;
         $_SESSION['durasi'] = $duration;
-        header("Location: user.transaksi.php");
-        exit;
+        $_SESSION['id_pemilik'] = findKostOwner($kos['nama']);
+
+        $idPemesan = $_SESSION['userNIK'];
+        $durasi = 2628000 * $duration;
+        $time = strtotime($startDate) + $durasi;
+        $endDate = date('Y-m-d', $time);
+        $qualify = addPesanan($idPemesan, $kosId, $startDate, $endDate);
+
+        if ($qualify) {
+            header("Location: user.transaksi.php");
+            exit;
+        }
     }
     echo "Belum terisi penuh";
 }
-// var_dump($_SESSION);
-// var_dump($mapKosAddr);
-
-// var_dump($mapKosNama);
 
 ?>
 
