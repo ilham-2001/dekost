@@ -5,8 +5,24 @@ session_start();
 
 $dataPemesan = getDataPesanan();
 
-// echo "<script> console.log($dataPemesan) </script>";
-// var_dump($dataPemesan);
+if (isset($_POST['logout-owner-btn'])) {
+    session_unset();
+    session_destroy();
+    header('Location: owner.login.php');
+    exit;
+}
+
+if (isset($_POST['validation-btn'])) {
+    $val = explode(" ", $_POST['validation-btn']);
+
+    if ($val[0] == "accept") {
+        // accept and set to random room
+
+    } else {
+        // reject, delete from data pemesanan 
+        rejectPemesanan($val[1]);
+    }
+}
 
 ?>
 
@@ -38,7 +54,7 @@ $dataPemesan = getDataPesanan();
     <div class=" wrapper">
         <div class="container-fluid">
             <!-- navbar header -->
-            <nav class="navbar navbar-light fixed-top">
+            <nav class="navbar navbar-light">
                 <div class="container-fluid justify-content-center">
                     <h4 class="navbar-header text-white">
                         Selamat Datang di Sistem Informasi Kostan | DEKOST
@@ -118,8 +134,10 @@ $dataPemesan = getDataPesanan();
 
                             <div class="logout">
                                 <li class="nav-item-logout">
-                                    <button class="btn btn-primary" type="submit"><i
-                                            class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    <form method="POST">
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    </form>
                                 </li>
                             </div>
 
@@ -154,7 +172,7 @@ $dataPemesan = getDataPesanan();
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                                 aria-labelledby="userDropdown">
-                                                <a class="dropdown-item" href="#profile">
+                                                <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
                                                 </a>
@@ -212,11 +230,15 @@ $dataPemesan = getDataPesanan();
                                                         <td><?= $data['mulaiSewa'] ?></td>
                                                         <td><?= $data['akhirSewa'] ?></td>
                                                         <td>
-                                                            <form action="">
+                                                            <form method="POST">
                                                                 <button class="btn btn-success"
-                                                                    value="accept <?= $data['idPesanan'] ?>">Accept</button>
+                                                                    value="accept <?= $data['idPesanan'] ?>"
+                                                                    name="validation-btn"
+                                                                    onclick="return confirm('Terima Pesanan?');">Accept</button>
                                                                 <button class="btn btn-danger"
-                                                                    value="reject <?= $data['idPesanan'] ?>">Reject</button>
+                                                                    value="reject <?= $data['idPesanan'] ?>"
+                                                                    name="validation-btn"
+                                                                    onclick="return confirm('Tolak dan Hapus Pesanan?');">Reject</button>
                                                             </form>
                                                         </td>
                                                         <td style="display: none;"><?= $data['tglPemesanan'] ?></td>

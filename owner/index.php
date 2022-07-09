@@ -4,6 +4,13 @@ session_start();
 
 echo "<script> console.log('Masuk') </script>";
 
+if (isset($_POST['logout-owner-btn'])) {
+    session_unset();
+    session_destroy();
+    header('Location: owner.login.php');
+    exit;
+}
+
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
@@ -116,8 +123,10 @@ if (!isset($_SESSION['login-admin'])) {
 
                         <div class="logout">
                             <li class="nav-item-logout">
-                                <button class="btn btn-primary" type="submit"><i
-                                        class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                <form method="POST">
+                                    <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                            class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                </form>
                             </li>
                         </div>
 
@@ -148,7 +157,7 @@ if (!isset($_SESSION['login-admin'])) {
                                         <!-- Dropdown - User Information -->
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                             aria-labelledby="userDropdown">
-                                            <a class="dropdown-item" href="#profile">
+                                            <a class="dropdown-item" href="owner.profile.php">
                                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                 Profile
                                             </a>

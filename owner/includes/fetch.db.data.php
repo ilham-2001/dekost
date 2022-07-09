@@ -16,16 +16,17 @@ function getalldata($table)
     return $data_array;
 }
 
+
 function getDataFromId($table, $id)
 {
     global $conn;
 
-    $data_query = mysqli_query($conn, "SELECT * FROM $table WHERE `id`=$id");
+    $data_query = mysqli_query($conn, "SELECT * FROM $table WHERE `NIK`=$id");
 
     $fetched = mysqli_num_rows($data_query) ? TRUE : FALSE;
 
     if (!$fetched) {
-        return;
+        return FALSE;
     }
 
     return mysqli_fetch_assoc($data_query);
@@ -231,4 +232,27 @@ function getDataPesanan()
     }
 
     return FALSE;
+}
+
+function rejectPemesanan($id)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "DELETE FROM pesanan WHERE `idPesanan`='$id'");
+
+    if ($query) {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+function getUniqueId($email)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `NIK` FROM pemilik WHERE email='$email'");
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery['NIK'];
 }
