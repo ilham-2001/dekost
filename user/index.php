@@ -4,11 +4,6 @@ require('core/init.php');
 
 session_start();
 
-// if (!isset($_SESSION["login"])) {
-//     header('Location: user.login.php');
-//     exit;
-// }
-
 if (isset($_POST['logout'])) {
     session_unset();
     session_destroy();
@@ -26,11 +21,10 @@ if (isset($_POST["btn_submit"])) {
 
     if ($verify) {
         $NIK = getUniqueId($email);
-        $_SESSION['NIK'] = $NIK;
+        $_SESSION['userNIK'] = $NIK;
         $_SESSION['login'] = TRUE;
-        // var_dump($_SESSION);
-        // header('Location: index.php');
-        // exit;
+        header('Location: index.php');
+        exit;
     }
 }
 
@@ -109,7 +103,7 @@ if (isset($_POST['button_signup'])) {
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

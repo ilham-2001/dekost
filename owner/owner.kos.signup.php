@@ -4,56 +4,25 @@ require('core/init.php');
 
 session_start();
 
-$response = ['error' => FALSE];
+var_dump($_SESSION);
 
-if (isset($_POST['button_signup'])) {
-    $nama_depan = $_POST['nama_depan'];
-    $nama_belakang = $_POST['nama_belakang'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $alamat = $_POST['alamat'];
-    $nik = $_POST['nik'];
-    $noTelepon = $_POST['no-telepon'];
+if (isset($_POST['btn-kos-singup'])) {
+    var_dump($_POST);
+    var_dump($_FILES);
 
-    $isComplete = checkCompleteess($email, $password, $nik, $alamat, $noTelepon);
+    $namaKos = $_POST['nama-kos'];
+    $alamatKos = $_POST['alamat-kos'];
+    $jumlahKamarKos = $_POST['jmlh-kamar'];
+    $hargaKos = $_POST['harga'];
+    $jenisKos = $_POST['jenis'];
+    $idPemilik = $_SESSION['NIK'];
+    $gambar = $_FILES['kost-gambar'];
 
-    if ($isComplete) {
-        // procees to checking regitered account by email
-        $isRegistred = checkRegistredUser($email);
+    $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik);
 
-        if (!$isRegistred) {
-            // make account if email is not set yet in the database
-            $nik = registerAccount($email, $password, $nama_depan, $nama_belakang, $nik, $alamat, $noTelepon);
-
-            if ($nik) {
-                // regis is success 
-                $response['error'] = FALSE;
-                $response['user']['name'] = $regis['email'];
-                $response['user']['key'] = $regis['NIK'];
-                $_SESSION['NIK'] = $nik;
-
-                header("Location: owner.kos.signup.php");
-                exit;
-
-                // echo json_encode($response);
-            } else {
-                // give warnings about failing to insert
-                $response['error'] = TRUE;
-                $response['error_msg'] = "failed insertion";
-
-                // echo json_encode($response);
-            }
-        } else {
-            // give warnings if email is used before
-            $response['error'] = TRUE;
-            $response['error_msg'] = "email is already registred";
-            // echo json_encode($response);
-        }
-    } else {
-        // give warnings unfinished data fillings
-        echo "
-        <script> alert('Some fields are not filled'); </script>
-        ";
+    if ($regis) {
+        header("Location: owner.login.php");
+        exit;
     }
 }
 
@@ -146,58 +115,59 @@ if (isset($_POST['button_signup'])) {
                                             <h4> <img class="pb-2 pe-2" src="../owner/assets/icons/logo.png"
                                                     style="width: 50px; height:50px;" alt="logo">De'Kost</h4>
                                         </div>
-                                        <form class="form-signin" method="POST">
-                                            <p class="fw-bold text-center">CREATE ACCOUNT</p>
+                                        <form class="form-signin" method="POST" enctype="multipart/form-data">
+                                            <p class="fw-bold text-center">CREATE KOST</p>
                                             <div class="form-floating">
-                                                <input type="email" class="form-control" id="floatingInput"
-                                                    placeholder="name@example.com" name="email" autocomplete="off">
-                                                <label for="floatingInput">Email address</label>
+                                                <input type="text" class="form-control" id="floatingInput"
+                                                    placeholder="name@example.com" name="nama-kos" autocomplete="off">
+                                                <label for="floatingInput">Nama</label>
                                             </div>
 
                                             <div class="form-floating">
-                                                <input type="password" class="form-control" id="floatingPassword"
-                                                    placeholder="password" name="password" autocomplete="off">
-                                                <label for="floatingPassword">Password</label>
+                                                <input type="text" class="form-control sign-up-input"
+                                                    id="floatingPassword" placeholder="alamat" name="alamat-kos"
+                                                    autocomplete="off">
+                                                <label for="floatingPassword">Alamat</label>
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" id="floatingInput"
-                                                            placeholder="nama depan" name="nama_depan"
-                                                            autocomplete="off">
-                                                        <label for="floatingInput">First Name</label>
+                                                        <input type="number" class="form-control sign-up-input"
+                                                            id="floatingInput" placeholder="nama depan"
+                                                            name="jmlh-kamar" autocomplete="off">
+                                                        <label for="floatingInput">Jumlah Kamar</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" id="floatingInput"
-                                                            placeholder="nama belakang" name="nama_belakang"
+                                                        <input type="text" class="form-control sign-up-input"
+                                                            id="floatingInput" placeholder="nama belakang" name="harga"
                                                             autocomplete="off">
-                                                        <label for="floatingInput">Last Name</label>
+                                                        <label for="floatingInput">Harga</label>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="floatingAlamat"
-                                                    placeholder="alamat" name="alamat" autocomplete="off">
-                                                <label for="floatingAlamat">Alamat</label>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    name="jenis">
+                                                    <option value="Putra" selected>Putra</option>
+                                                    <option value="Putri">Putri</option>
+                                                    <option value="Campuran">Campuran</option>
+                                                </select>
                                             </div>
 
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control sign-up-input" id="floatingInput"
-                                                    placeholder="NIK" name="nik" autocomplete="off">
-                                                <label for="floatingInput">NIK</label>
+                                            <div class="mt-2">
+                                                <label class="label-upload" style="color:#2155CD;">Upload Foto
+                                                    Kost</label>
+                                                <!-- <hr class="sidebar-divider bg-light"> -->
+                                                <input type="file" class="form-control" id="inputGroupFile02"
+                                                    name="kost-gambar"><br><br>
                                             </div>
 
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control sign-up-input" id="floatingInput"
-                                                    placeholder="NIK" name="no-telepon" autocomplete="off">
-                                                <label for="floatingInput">No.Telp</label>
-                                            </div>
 
                                             <button class="w-100 btn btn-lg btn-primary btn-login mt-4" type="submit"
-                                                name="button_signup">Next
+                                                name="btn-kos-singup">Sign Up
                                             </button>
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <p class="me-2 mt-3 ms-2">Have an account?</p>

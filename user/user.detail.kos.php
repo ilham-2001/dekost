@@ -6,10 +6,12 @@ require('core/init.php');
 
 $kosId = $_GET['q'];
 $kos = getDataFromId("Kost", $kosId);
-// var_dump($kos);
 
 $mapKosAddr = explode(" ", $kos['alamat']);
 $mapKosNama = explode(" ", $kos['nama']);
+
+$floatHarga = (float) $kos['harga'];
+$hargaFormatted = number_format($floatHarga);
 
 if (isset($_POST["btn_submit"])) {
     // cek ketersediaan akun di DB
@@ -17,30 +19,38 @@ if (isset($_POST["btn_submit"])) {
     $password = $_POST['password'];
 
     $verify = verifyLogin($email, $password);
-    // var_dump($verify);
 
     if ($verify) {
         $NIK = getUniqueId($email);
+        $_SESSION['userNIK'] = $NIK;
         $_SESSION['NIK'] = $NIK;
         $_SESSION['login'] = TRUE;
     }
 }
 
 if (isset($_POST['rent-btn'])) {
-    // var_dump($_POST);
     $duration = $_POST['duration'];
     $startDate = $_POST['start-date'];
 
     if (checkRentFillness($startDate, $duration)) {
-        header("Location: user.transaksi.php");
-        exit;
+        $_SESSION['harga'] = (int) $floatHarga;
+        $_SESSION['tgl_mulai'] = $startDate;
+        $_SESSION['durasi'] = $duration;
+        $_SESSION['id_pemilik'] = findKostOwner($kos['nama']);
+
+        $idPemesan = $_SESSION['userNIK'];
+        $durasi = 2628000 * $duration;
+        $time = strtotime($startDate) + $durasi;
+        $endDate = date('Y-m-d', $time);
+        $qualify = addPesanan($idPemesan, $kosId, $startDate, $endDate);
+
+        if ($qualify) {
+            header("Location: user.transaksi.php");
+            exit;
+        }
     }
     echo "Belum terisi penuh";
 }
-// var_dump($_SESSION);
-// var_dump($mapKosAddr);
-
-// var_dump($mapKosNama);
 
 ?>
 
@@ -64,6 +74,8 @@ if (isset($_POST['rent-btn'])) {
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/favicon.ico">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
+    <!-- xzoom -->
+    <link rel="stylesheet" href="../user/assets/js/dist/xzoom.css">
     <title>Detail Kost</title>
 </head>
 
@@ -92,7 +104,7 @@ if (isset($_POST['rent-btn'])) {
         </nav>
     </header>
 
-    <main class="container-fluid">
+    <main class="container">
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -232,10 +244,36 @@ if (isset($_POST['rent-btn'])) {
         </div>
         <section class="display-kos-image">
             <div class="row">
-                <div class="col">
-                    <img class="primary-img" src="assets/images/kamar_kos.jpg" alt="">
+                <div class="col-lg-6 col-md-6 col-sm-12 xzoom-container">
+                    <img class="primary-img img-fluid rounded xzoom" xoriginal="assets/images/kamar_kos.jpg" id="xzoom-default" src="assets/images/kamar_kos.jpg" title="Gambar Kost 1" alt="">
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <a href="assets/images/kamar_kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kamar_kos.jpg" title="Gambar Kost 2" alt="">
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="assets/images/kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg" title="Gambar Kost 3" alt="">
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="assets/images/kamar_kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kamar_kos.jpg" title="Gambar Kost 4" alt="">
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="assets/images/kos.jpg">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg" title="Gambar Kost 5" alt="">
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <!-- kanan -->
+                </div>
+
+                <!-- <div class="col">
                     <div class="row">
                         <div class="col">
                             <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
@@ -246,8 +284,7 @@ if (isset($_POST['rent-btn'])) {
                             <img class="secondary-img" src="assets/images/kamar_kos.jpg" alt="">
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> -->
             </div>
         </section>
 
@@ -318,8 +355,6 @@ if (isset($_POST['rent-btn'])) {
                         <div class="card-body">
                             <h5 class="card-title">
                                 <?php
-                                $floatHarga = (float) $kos['harga'];
-                                $hargaFormatted = number_format($floatHarga);
                                 echo "Rp $hargaFormatted.00";
                                 ?>
                                 <span class="subs-text">/ bulan</span>
@@ -436,15 +471,22 @@ if (isset($_POST['rent-btn'])) {
                     </form>
                 </div>
             </div>
-            <!-- Copyright -->
-            <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
-                2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in
-                Yogyakarta
-            </div>
-        </div>
-    </footer>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+        </footer>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <!-- XZOOM -->
+        <script src="../user/assets/js/dist/xzoom.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.xzoom, .xzoom-gallery').xzoom({
+                    zoomWidth: 500,
+                    zoomHeight: 300,
+                    title: true,
+                    tint: '#333',
+                    Xoffset: 50,
+                })
+            });
+        </script>
 </body>
 
 </html>
