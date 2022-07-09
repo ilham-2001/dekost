@@ -34,7 +34,7 @@ function getDataFromId($table, $id)
 function verifyLogin($email, $password)
 {
     global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM Pemilik WHERE email='$email'");
+    $query = mysqli_query($conn, "SELECT * FROM pemilik WHERE email='$email'");
 
     $verif = mysqli_num_rows($query) ? TRUE : FALSE;
 
@@ -56,7 +56,7 @@ function verifyLogin($email, $password)
 function checkRegistredUser($email)
 {
     global $conn;
-    $query = mysqli_query($conn, "SELECT email from Users WHERE email='$email'");
+    $query = mysqli_query($conn, "SELECT email from users WHERE email='$email'");
 
     $isRegistred = mysqli_num_rows($query) ? TRUE : FALSE;
 
@@ -78,10 +78,10 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $nik, $
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = mysqli_query($conn, "INSERT INTO Pemilik(NIK, nama,  noTelp, email, keypassword, alamat) VALUES('$nik', '$nama', '$noTelepon', '$email', '$password', '$alamat') ");
+    $query = mysqli_query($conn, "INSERT INTO pemilik(NIK, nama,  noTelp, email, keypassword, alamat) VALUES('$nik', '$nama', '$noTelepon', '$email', '$password', '$alamat') ");
 
     if ($query) {
-        $q = mysqli_query($conn, "SELECT * FROM Pemilik WHERE email='$email'");
+        $q = mysqli_query($conn, "SELECT * FROM pemilik WHERE email='$email'");
         $user = mysqli_fetch_assoc($q);
 
         var_dump($user);
@@ -91,53 +91,53 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $nik, $
     return FALSE;
 }
 
-function findMaxHarga()
-{
-    global $conn;
+// function findMaxHarga()
+// {
+//     global $conn;
 
-    $query = mysqli_query($conn, "SELECT `harga` FROM Kost ORDER BY harga DESC LIMIT 0, 1");
-    $maxValue = mysqli_fetch_assoc($query);
+//     $query = mysqli_query($conn, "SELECT `harga` FROM kost ORDER BY harga DESC LIMIT 0, 1");
+//     $maxValue = mysqli_fetch_assoc($query);
 
-    return $maxValue['harga'];
-}
+//     return $maxValue['harga'];
+// }
 
-function findMinHarga()
-{
-    global $conn;
+// function findMinHarga()
+// {
+//     global $conn;
 
-    $query = mysqli_query($conn, "SELECT `harga` FROM Kost ORDER BY harga ASC LIMIT 0, 1");
-    $minValue = mysqli_fetch_assoc($query);
+//     $query = mysqli_query($conn, "SELECT `harga` FROM kost ORDER BY harga ASC LIMIT 0, 1");
+//     $minValue = mysqli_fetch_assoc($query);
 
-    return $minValue['harga'];
-}
+//     return $minValue['harga'];
+// }
 
-function filterSearch($jenis, $minHarga, $maxHarga)
-{
-    global $conn;
-    $retVal = [];
+// function filterSearch($jenis, $minHarga, $maxHarga)
+// {
+//     global $conn;
+//     $retVal = [];
 
-    if (!$minHarga) {
-        $minHarga = findMinHarga() - 1000;
-    }
+//     if (!$minHarga) {
+//         $minHarga = findMinHarga() - 1000;
+//     }
 
-    if (!$maxHarga) {
-        $maxHarga = findMaxHarga() + 1000;
-    }
+//     if (!$maxHarga) {
+//         $maxHarga = findMaxHarga() + 1000;
+//     }
 
-    if (!$jenis && !$minHarga && !$maxHarga) {
-        $query = mysqli_query($conn, "SELECT * FROM Kost");
-    } else if (!$jenis) {
-        $query = mysqli_query($conn, "SELECT * FROM Kost WHERE harga BETWEEN $minHarga AND $maxHarga");
-    } else {
-        $query = mysqli_query($conn, "SELECT * FROM Kost WHERE jenis='$jenis' AND (harga BETWEEN $minHarga AND $maxHarga)");
-    }
+//     if (!$jenis && !$minHarga && !$maxHarga) {
+//         $query = mysqli_query($conn, "SELECT * FROM kost");
+//     } else if (!$jenis) {
+//         $query = mysqli_query($conn, "SELECT * FROM kost WHERE harga BETWEEN $minHarga AND $maxHarga");
+//     } else {
+//         $query = mysqli_query($conn, "SELECT * FROM kost WHERE jenis='$jenis' AND (harga BETWEEN $minHarga AND $maxHarga)");
+//     }
 
-    while ($data = mysqli_fetch_assoc($query)) {
-        array_push($retVal, $data);
-    }
+//     while ($data = mysqli_fetch_assoc($query)) {
+//         array_push($retVal, $data);
+//     }
 
-    return $retVal;
-}
+//     return $retVal;
+// }
 
 function uploadImage($imgURL)
 {
@@ -206,7 +206,7 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
         return FALSE;
     }
 
-    $query = mysqli_query($conn, "INSERT INTO Kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', $harga, '$jenis', '$gambar')");
+    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', $harga, '$jenis', '$gambar')");
 
     if (!$query) {
         return FALSE;
