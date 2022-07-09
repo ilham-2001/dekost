@@ -134,3 +134,65 @@ function filterSearch($jenis, $minHarga, $maxHarga)
 
     return $retVal;
 }
+
+function getUniqueId($email)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `NIK` FROM Users WHERE email='$email'");
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery['NIK'];
+}
+
+function getUserData($nik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `firstName`, `lastName`, `email`, `no_telepon` FROM Users WHERE NIK='$nik'");
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery;
+}
+
+function findKostOwner($nama)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT NIK_Pemilik FROM Kost WHERE nama='$nama'");
+
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery['NIK_Pemilik'];
+}
+
+function getRekeningInfo($nik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT Rekening.noRekening, Pemilik.nama, Rekening.bank FROM Rekening INNER JOIN Pemilik ON Rekening.NIK_Pemilik=Pemilik.NIK WHERE Rekening.NIK_Pemilik='$nik'");
+
+
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery;
+}
+function addPesanan($idPemesan, $idKost, $mulaiSewa, $akhirSewa)
+{
+    global $conn;
+
+    $idPesanan = uniqid();
+    $idPemesan = mysqli_real_escape_string($conn, $idPemesan);
+    $idKost = mysqli_real_escape_string($conn, $idKost);
+    $tglPesanan = date('Y-m-d', time());
+    $mulaiSewa = mysqli_real_escape_string($conn, $mulaiSewa);
+    $akhirSewa = mysqli_real_escape_string($conn, $akhirSewa);
+
+    $query = mysqli_query($conn, "INSERT INTO Pesanan(idPesanan, idPemesan, idKost, tglPemesanan, mulaiSewa, akhirSewa) VALUES ('$idPesanan', '$idPemesan', '$idKost', '$tglPesanan', '$mulaiSewa', '$akhirSewa')");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return TRUE;
+}

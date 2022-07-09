@@ -1,6 +1,8 @@
 <?php
 
+session_start();
 
+echo "<script> console.log('Masuk') </script>";
 
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");

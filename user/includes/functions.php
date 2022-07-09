@@ -8,3 +8,12 @@ function checkCompleteess($email, $password, $nik)
 
     return $isComplete;
 }
+
+function checkRentFillness($startDate, $duration)
+{
+    if ($startDate && $duration) {
+        return TRUE;
+    }
+
+    return FALSE;
+}

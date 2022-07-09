@@ -14,19 +14,16 @@ body {
   left: 43%;
   visibility: hidden;
 }
-
 .alert-on {
   position: absolute;
   left: 68.5%;
   top: 1.5rem;
   visibility: visible;
 }
-
 body {
   font-family: "Montserrat", sans-serif;
   background-color: #fff;
 }
-
 .brand {
   position: relative;
   top: 1rem;
@@ -34,32 +31,25 @@ body {
   font-family: "Montserrat", sans-serif;
   font-family: "Ubuntu", sans-serif;
 }
-
 .brand:hover {
   color: #fff;
 }
-
 .btn {
   border-radius: 1.5rem;
 }
-
 .btn-login {
   margin-top: 5rem;
 }
-
 .carousel-section .carousel {
   margin-top: 0;
 }
-
 .carousel-section {
   width: 40rem;
   margin: 0 auto 0;
 }
-
 .container-fluid {
   padding: 0 0 0 0;
 }
-
 .cr-text {
   margin-top: 10rem;
 }
@@ -69,7 +59,6 @@ body {
   padding: 15px;
   margin: auto;
 }
-
 .form-signin .checkbox {
   font-weight: 400;
 }
@@ -79,23 +68,19 @@ body {
 .form-signin .form-floating:focus-within {
   z-index: 2;
 }
-
 .form-signin input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-
 .form-signin input[type="password"] {
   margin: 10px 0 10px 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
 .form-signin .checkbox {
   text-align: left;
 }
-
 .img {
   position: relative;
   top: 8.5rem;
@@ -112,13 +97,14 @@ body {
   background-color: #fff;
   text-align: center;
 }
-
 .sign-in-img {
   width: 42rem;
   height: 54.6rem;
   background-color: #2155cd;
 }
-
+.sign-up-input {
+  margin-top: 10px;
+}
 .table-container {
   width: 30rem;
   height: 30rem;

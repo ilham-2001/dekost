@@ -1,4 +1,17 @@
 <?php
+require('core/init.php');
+session_start();
+$nik = $_SESSION['userNIK'];
+$idPemilik = $_SESSION['id_pemilik'];
+
+$user = getUserData($nik);
+$durasi = 2628000 * $_SESSION['durasi'];
+$time = strtotime($_SESSION['tgl_mulai']) + $durasi;
+
+$tglAkhir = date('Y-m-d', $time);
+$rekeningPemilik = getRekeningInfo($idPemilik);
+
+$totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
 
 
 ?>
@@ -60,16 +73,17 @@
                         <div class="informasi-pemilik ps-5">
                             <div class="nama-pemilik">
                                 <h4> Pemilik: </h4>
-                                <h6> Fajrun.... ini nama pemilik </h6>
+                                <h6> <?= "$user[firstName] $user[lastName]" ?> </h6>
                             </div>
                             <div class="contact-pemilik">
-                                <h6> 081889785763.....No pemilik </h6>
-                                <h6> fajrun@gmail.com .....Email pemilik </h6>
+                                <h6> <?= $user["no_telepon"] ?></h6>
+                                <h6><?= $user["email"] ?> </h6>
                             </div>
                             <div class="rekening-pemilik mt-3">
                                 <h4> Rekening tujuan: </h4>
-                                <h6 style="color:#2155CD;"> 3211198xxxxxx </h6>
-                                <h6 style="color:#2155CD;"> BNI a.n. Fajrun Shubhi</h6>
+                                <h6 style="color:#2155CD;"> <?= $rekeningPemilik['noRekening']  ?> </h6>
+                                <h6 style="color:#2155CD;"> <?= $rekeningPemilik['bank'] ?> a.n.
+                                    <?= $rekeningPemilik['nama'] ?> </h6>
                             </div>
                         </div>
                         <div class="waktu-pembayaran ms-5 mt-3">
@@ -96,18 +110,27 @@
                                 <tbody>
                                     <tr style="height:60px">
                                         <th>Harga</th>
-                                        <td>: Rp700000.00 / Bulan</td>
+                                        <td colspan="3">: <?php
+                                                            $harga = $_SESSION['harga'];
+                                                            $formattedharga = number_format((float) $harga);
+                                                            echo "Rp. $formattedharga.00"
+
+                                                            ?> / Bulan</td>
                                     </tr>
                                     <tr style="height:60px">
                                         <th>Tanggal Sewa</th>
-                                        <td>: Tgl Mulai</td>
+                                        <td colspan="2">: <?= $_SESSION['tgl_mulai'] ?></td>
                                         <td>s/d</td>
-                                        <td>Tgl Selesai</td>
+                                        <td colspan="2"><?= $tglAkhir ?></td>
                                     </tr>
                                     <tr style="height:60px">
                                         <th>Total Pembayaran</th>
-                                        <td>
-                                            <h6>: Rp700000.00</h6>
+                                        <td colspan="2">
+                                            <h6>: <?php
+                                                    $formattedTotal = number_format((float)$totalPembayaran);
+                                                    echo "Rp. $formattedTotal.00";
+
+                                                    ?></h6>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -115,48 +138,49 @@
                         </div>
                     </div>
                     <div class="pembayaran-bank card mt-4" style="border-radius:30px;">
-                        <h5 class="card-header" style="background-color:#2155CD ; color:#ffffff;">Pilih Metode Pembayaran</h5>
+                        <h5 class="card-header" style="background-color:#2155CD ; color:#ffffff;">Pilih Metode
+                            Pembayaran</h5>
                         <div class="card-body ms-3">
                             <h5 style="font-weight: bold;"> Transfer Bank </h5>
                             <div class="form-check mt-4">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BCAVA">
+                                <label class="form-check-label" for="BCAVA" name="payment-method">
                                     Bank BCA (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="MandiriVA" name="payment-method">
+                                <label class="form-check-label" for="MandiriVA">
                                     Bank Mandiri (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BNIVA">
+                                <label class="form-check-label" for="BNIVA" name="payment-method">
                                     Bank BNI (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BRIVA">
+                                <label class="form-check-label" for="BRIVA" name="payment-method">
                                     Bank BRI (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="BSIVA">
+                                <label class="form-check-label" for="BSIVA" name="payment-method">
                                     Bank Syariah Indonesia (BSI) (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="MegaVA">
+                                <label class="form-check-label" for="MegaVA" name="payment-method">
                                     Bank Mega (inc. Virtual Account)
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="PermataVA" name="payment-method">
+                                <label class="form-check-label" for="PermataVA">
                                     Bank Permata (inc. Virtual Account)
                                 </label>
                             </div>
@@ -227,7 +251,8 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h5 class="text-Black fw-bold mb-3 pt-3">Yogyakarta, Indonesia</h5>
-                    <p class="small text-muted">Jika ada sesuatu hal yang ingin disampaikan silahkan kirimkan pesan kepada kami.</p>
+                    <p class="small text-muted">Jika ada sesuatu hal yang ingin disampaikan silahkan kirimkan pesan
+                        kepada kami.</p>
                     <form action="#">
                         <div class="input-group mb-3">
                             <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -238,7 +263,8 @@
             </div>
             <!-- Copyright -->
             <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
-                2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+                2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in
+                Yogyakarta
             </div>
         </div>
     </footer>
