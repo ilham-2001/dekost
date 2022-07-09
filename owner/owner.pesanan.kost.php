@@ -1,3 +1,15 @@
+<?php
+require('core/init.php');
+
+session_start();
+
+$dataPemesan = getDataPesanan();
+
+// echo "<script> console.log($dataPemesan) </script>";
+// var_dump($dataPemesan);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -183,21 +195,28 @@
                                                 <thead>
                                                     <tr>
                                                         <th></th>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Salary</th>
+                                                        <th>ID Pesanan</th>
+                                                        <th>Nama Pemesan</th>
+                                                        <th>Mulai Sewa</th>
+                                                        <th>Akhir Sewa</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tfoot>
+                                                <tbody>
+                                                    <?php foreach ($dataPemesan as $data) : ?>
                                                     <tr>
-                                                        <th></th>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Salary</th>
+                                                        <td class="dt-control"></td>
+                                                        <td><?= $data['idPesanan'] ?></td>
+                                                        <td><?= "$data[firstName] $data[lastName]" ?></td>
+                                                        <td><?= $data['mulaiSewa'] ?></td>
+                                                        <td><?= $data['akhirSewa'] ?></td>
+                                                        <td><a href=""><button
+                                                                    class="btn btn-success">Accept</button></a> <a
+                                                                href=""><button
+                                                                    class="btn btn-danger">Reject</button></a></td>
                                                     </tr>
-                                                </tfoot>
+                                                    <?php endforeach; ?>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -228,7 +247,7 @@
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/owner/dist/js/hehe.js"></script>
+    <!-- <script src="/owner/dist/js/hehe.js"></script> -->
     <script src="assets/app/js/index.js"></script>
 
     <!-- JS data tabel -->

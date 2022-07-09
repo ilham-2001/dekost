@@ -214,3 +214,21 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
 
     return TRUE;
 }
+
+function getDataPesanan()
+{
+    global $conn;
+    $data = [];
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK");
+
+
+    if ($query) {
+
+        while ($dt = mysqli_fetch_assoc($query)) {
+            array_push($data, $dt);
+        }
+        return $data;
+    }
+
+    return FALSE;
+}
