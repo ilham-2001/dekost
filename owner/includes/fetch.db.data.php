@@ -16,16 +16,17 @@ function getalldata($table)
     return $data_array;
 }
 
+
 function getDataFromId($table, $id)
 {
     global $conn;
 
-    $data_query = mysqli_query($conn, "SELECT * FROM $table WHERE `id`=$id");
+    $data_query = mysqli_query($conn, "SELECT * FROM $table WHERE `NIK`=$id");
 
     $fetched = mysqli_num_rows($data_query) ? TRUE : FALSE;
 
     if (!$fetched) {
-        return;
+        return FALSE;
     }
 
     return mysqli_fetch_assoc($data_query);
@@ -213,4 +214,75 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
     }
 
     return TRUE;
+}
+
+function getDataPesanan($idKost)
+{
+    global $conn;
+    $data = [];
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE idKost='$idKost'");
+
+    if ($query) {
+
+        while ($dt = mysqli_fetch_assoc($query)) {
+            array_push($data, $dt);
+        }
+        // var_dump($data);
+        return $data;
+    }
+
+    return FALSE;
+}
+
+function rejectPemesanan($id)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "DELETE FROM pesanan WHERE `idPesanan`='$id'");
+
+    if ($query) {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+function getUniqueId($email)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT `NIK` FROM pemilik WHERE email='$email'");
+
+    if (!$query) {
+        return FALSE;
+    }
+    $resQuery = mysqli_fetch_assoc($query);
+
+    return $resQuery['NIK'];
+}
+
+function getUniqueIdKostByNIK($nik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT kost.id FROM kost INNER JOIN pemilik ON kost.NIK_Pemilik=pemilik.NIK WHERE pemilik.NIK='$nik'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+
+function countPesanan($idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(idPesanan) as pesanan FROM pesanan WHERE idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
 }

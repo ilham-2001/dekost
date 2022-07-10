@@ -1,3 +1,34 @@
+<?php
+require('core/init.php');
+
+session_start();
+
+$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
+// var_dump($idKost);
+$dataPemesan = getDataPesanan($idKost);
+// var_dump($dataPemesan);
+
+if (isset($_POST['logout-owner-btn'])) {
+    session_unset();
+    session_destroy();
+    header('Location: owner.login.php');
+    exit;
+}
+
+if (isset($_POST['validation-btn'])) {
+    $val = explode(" ", $_POST['validation-btn']);
+
+    if ($val[0] == "accept") {
+        // accept and set to random room
+
+    } else {
+        // reject, delete from data pemesanan 
+        rejectPemesanan($val[1]);
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +80,6 @@
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
-
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="index.php"><i
                                         class="fas fa-fw fa-tachometer-alt me-2"></i>
@@ -100,14 +130,14 @@
                                 <a class="nav-link active" href="owner.pesanan.kost.php"><i
                                         class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
-
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
-
                             <div class="logout">
                                 <li class="nav-item-logout">
-                                    <button class="btn btn-primary" type="submit"><i
-                                            class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    <form method="POST">
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    </form>
                                 </li>
                             </div>
 
@@ -142,7 +172,7 @@
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                                 aria-labelledby="userDropdown">
-                                                <a class="dropdown-item" href="#profile">
+                                                <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
                                                 </a>
@@ -183,21 +213,38 @@
                                                 <thead>
                                                     <tr>
                                                         <th></th>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Salary</th>
+                                                        <th>ID Pesanan</th>
+                                                        <th>Nama Pemesan</th>
+                                                        <th>Mulai Sewa</th>
+                                                        <th>Akhir Sewa</th>
+                                                        <th>Action</th>
+                                                        <th style="display: none;">Tanggal Sewa</th>
                                                     </tr>
                                                 </thead>
-                                                <tfoot>
+                                                <tbody>
+                                                    <?php foreach ($dataPemesan as $data) : ?>
                                                     <tr>
-                                                        <th></th>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Salary</th>
+                                                        <td class="dt-control"></td>
+                                                        <td><?= $data['idPesanan'] ?></td>
+                                                        <td><?= "$data[firstName] $data[lastName]" ?></td>
+                                                        <td><?= $data['mulaiSewa'] ?></td>
+                                                        <td><?= $data['akhirSewa'] ?></td>
+                                                        <td>
+                                                            <form method="POST">
+                                                                <button class="btn btn-success"
+                                                                    value="accept <?= $data['idPesanan'] ?>"
+                                                                    name="validation-btn"
+                                                                    onclick="return confirm('Terima Pesanan?');">Accept</button>
+                                                                <button class="btn btn-danger"
+                                                                    value="reject <?= $data['idPesanan'] ?>"
+                                                                    name="validation-btn"
+                                                                    onclick="return confirm('Tolak dan Hapus Pesanan?');">Reject</button>
+                                                            </form>
+                                                        </td>
+                                                        <td style="display: none;"><?= $data['tglPemesanan'] ?></td>
                                                     </tr>
-                                                </tfoot>
+                                                    <?php endforeach; ?>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -228,7 +275,7 @@
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/owner/dist/js/hehe.js"></script>
+    <!-- <script src="/owner/dist/js/hehe.js"></script> -->
     <script src="assets/app/js/index.js"></script>
 
     <!-- JS data tabel -->

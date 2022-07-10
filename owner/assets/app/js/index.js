@@ -1,6 +1,5 @@
 $(document).ready(function () {
   var table = $("#example").DataTable({
-    ajax: "data/test.txt",
     columns: [
       {
         className: "dt-control",
@@ -9,16 +8,22 @@ $(document).ready(function () {
         defaultContent: "",
       },
       {
-        data: "name",
+        data: "idPesanan",
       },
       {
-        data: "position",
+        data: "namaPemesan",
       },
       {
-        data: "office",
+        data: "mulaiSewa",
       },
       {
-        data: "salary",
+        data: "akhirSewa",
+      },
+      {
+        data: "action",
+      },
+      {
+        data: "tglPemesanan",
       },
     ],
     order: [[1, "asc"]],
@@ -46,18 +51,14 @@ $(document).ready(function () {
       "<tr>" +
       "<td>Full name:</td>" +
       "<td>" +
-      d.name +
+      d.namaPemesan +
       "</td>" +
       "</tr>" +
       "<tr>" +
-      "<td>Extension number:</td>" +
+      "<td>Tanggal Pemesanan:</td>" +
       "<td>" +
-      d.extn +
+      d.tglPemesanan +
       "</td>" +
-      "</tr>" +
-      "<tr>" +
-      "<td>Extra info:</td>" +
-      "<td>And any further details here (images etc)...</td>" +
       "</tr>" +
       "</table>"
     );

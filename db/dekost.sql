@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2022 at 03:03 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Jul 10, 2022 at 10:54 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,17 +29,63 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `fasilitas` (
   `id` int(2) NOT NULL,
-  `nama` varchar(64) NOT NULL,
-  `id_kost` int(6) DEFAULT NULL
+  `nama` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `fasilitas`
 --
 
-INSERT INTO `fasilitas` (`id`, `nama`, `id_kost`) VALUES
-(1, 'AC', 2),
-(2, 'Kamar Mandi Dalam', 2);
+INSERT INTO `fasilitas` (`id`, `nama`) VALUES
+(1, 'AC'),
+(2, 'Kamar Mandi Dalam'),
+(3, 'Wifi'),
+(4, 'Air'),
+(5, 'Listrik'),
+(6, 'Kasur'),
+(7, 'Lemari'),
+(8, 'Meja');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fasil_kost`
+--
+
+CREATE TABLE `fasil_kost` (
+  `id_kost` int(11) NOT NULL,
+  `id_fasil` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fasil_kost`
+--
+
+INSERT INTO `fasil_kost` (`id_kost`, `id_fasil`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(2, 6),
+(2, 7),
+(2, 8),
+(3, 2),
+(3, 3),
+(3, 4),
+(3, 6),
+(3, 7),
+(4, 3),
+(4, 4),
+(4, 5);
 
 -- --------------------------------------------------------
 
@@ -220,8 +266,14 @@ INSERT INTO `users` (`NIK`, `firstName`, `lastName`, `email`, `jenisKelamin`, `k
 -- Indexes for table `fasilitas`
 --
 ALTER TABLE `fasilitas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_kost_id` (`id_kost`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `fasil_kost`
+--
+ALTER TABLE `fasil_kost`
+  ADD PRIMARY KEY (`id_kost`,`id_fasil`),
+  ADD KEY `id_fasil` (`id_fasil`);
 
 --
 -- Indexes for table `kamar`
@@ -301,10 +353,11 @@ ALTER TABLE `penyewaan`
 --
 
 --
--- Constraints for table `fasilitas`
+-- Constraints for table `fasil_kost`
 --
-ALTER TABLE `fasilitas`
-  ADD CONSTRAINT `fk_kost_id` FOREIGN KEY (`id_kost`) REFERENCES `kost` (`id`);
+ALTER TABLE `fasil_kost`
+  ADD CONSTRAINT `fasil_kost_ibfk_1` FOREIGN KEY (`id_kost`) REFERENCES `kost` (`id`),
+  ADD CONSTRAINT `fasil_kost_ibfk_2` FOREIGN KEY (`id_fasil`) REFERENCES `fasilitas` (`id`);
 
 --
 -- Constraints for table `kamar`
