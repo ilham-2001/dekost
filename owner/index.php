@@ -24,22 +24,32 @@ if (!isset($_SESSION['login-admin'])) {
 }
 
 $dataPoints1 = array(
-    array("label" => "2010", "y" => 36.12),
-    array("label" => "2011", "y" => 34.87),
-    array("label" => "2012", "y" => 40.30),
-    array("label" => "2013", "y" => 35.30),
-    array("label" => "2014", "y" => 39.50),
-    array("label" => "2015", "y" => 50.82),
-    array("label" => "2016", "y" => 74.70)
+    array("label" => "Jan", "y" => 36.12),
+    array("label" => "Feb", "y" => 34.87),
+    array("label" => "Mar", "y" => 40.30),
+    array("label" => "Apr", "y" => 35.30),
+    array("label" => "May", "y" => 39.50),
+    array("label" => "Jun", "y" => 50.82),
+    array("label" => "Jul", "y" => 74.70),
+    array("label" => "Aug", "y" => 74.70),
+    array("label" => "Sep", "y" => 74.70),
+    array("label" => "Oct", "y" => 74.70),
+    array("label" => "Nov", "y" => 74.70),
+    array("label" => "Dec", "y" => 74.70)
 );
 $dataPoints2 = array(
-    array("label" => "2010", "y" => 64.61),
-    array("label" => "2011", "y" => 70.55),
-    array("label" => "2012", "y" => 72.50),
-    array("label" => "2013", "y" => 81.30),
-    array("label" => "2014", "y" => 63.60),
-    array("label" => "2015", "y" => 69.38),
-    array("label" => "2016", "y" => 98.70)
+    array("label" => "Jan", "y" => 64.61),
+    array("label" => "Feb", "y" => 70.55),
+    array("label" => "Mar", "y" => 72.50),
+    array("label" => "Apr", "y" => 81.30),
+    array("label" => "May", "y" => 63.60),
+    array("label" => "Jun", "y" => 69.38),
+    array("label" => "Jul", "y" => 98.70),
+    array("label" => "Aug", "y" => 98.70),
+    array("label" => "Sep", "y" => 98.70),
+    array("label" => "Oct", "y" => 98.70),
+    array("label" => "Nov", "y" => 98.70),
+    array("label" => "Dec", "y" => 98.70)
 );
 
 ?>
@@ -312,7 +322,8 @@ $dataPoints2 = array(
                                             <!-- Card Header - Dropdown -->
                                             <div
                                                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                <h6 class="m-0 font-weight-bold text-primary">hhh</h6>
+                                                <h6 class="m-0 font-weight-bold text-primary">Jumlah Keluar/Masuk
+                                                    Penyewa</h6>
                                                 <div class="dropdown no-arrow">
                                                     <a class="dropdown-toggle" href="#" role="button"
                                                         id="dropdownMenuLink" data-toggle="dropdown"
@@ -508,7 +519,7 @@ $dataPoints2 = array(
             animationEnabled: true,
             theme: "light2",
             title: {
-                text: "Average Amount Spent on Real and Artificial X-Mas Trees in U.S."
+                text: "Jumlah Penyewa Kost"
             },
             axisY: {
                 includeZero: true
@@ -521,14 +532,14 @@ $dataPoints2 = array(
             },
             data: [{
                 type: "column",
-                name: "Real Trees",
+                name: "Penyewa Masuk",
                 indexLabel: "{y}",
                 yValueFormatString: "$#0.##",
                 showInLegend: true,
                 dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
             }, {
                 type: "column",
-                name: "Artificial Trees",
+                name: "Penyewa Keluar",
                 indexLabel: "{y}",
                 yValueFormatString: "$#0.##",
                 showInLegend: true,
