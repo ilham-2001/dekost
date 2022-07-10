@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 09, 2022 at 07:37 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Host: 127.0.0.1
+-- Generation Time: Jul 09, 2022 at 03:03 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,30 +24,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Fasilitas`
+-- Table structure for table `fasilitas`
 --
 
-CREATE TABLE `Fasilitas` (
+CREATE TABLE `fasilitas` (
   `id` int(2) NOT NULL,
   `nama` varchar(64) NOT NULL,
   `id_kost` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Fasilitas`
+-- Dumping data for table `fasilitas`
 --
 
-INSERT INTO `Fasilitas` (`id`, `nama`, `id_kost`) VALUES
+INSERT INTO `fasilitas` (`id`, `nama`, `id_kost`) VALUES
 (1, 'AC', 2),
 (2, 'Kamar Mandi Dalam', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Kamar`
+-- Table structure for table `kamar`
 --
 
-CREATE TABLE `Kamar` (
+CREATE TABLE `kamar` (
   `no_kamar` int(3) NOT NULL,
   `id_kost` int(6) DEFAULT NULL,
   `status` varchar(6) DEFAULT NULL,
@@ -56,19 +56,19 @@ CREATE TABLE `Kamar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Kamar`
+-- Dumping data for table `kamar`
 --
 
-INSERT INTO `Kamar` (`no_kamar`, `id_kost`, `status`, `lebar`, `panjang`) VALUES
+INSERT INTO `kamar` (`no_kamar`, `id_kost`, `status`, `lebar`, `panjang`) VALUES
 (1, 2, 'KOSONG', 3, 4);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Kost`
+-- Table structure for table `kost`
 --
 
-CREATE TABLE `Kost` (
+CREATE TABLE `kost` (
   `id` int(6) NOT NULL,
   `alamat` varchar(120) NOT NULL,
   `nama` varchar(60) DEFAULT NULL,
@@ -80,21 +80,22 @@ CREATE TABLE `Kost` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Kost`
+-- Dumping data for table `kost`
 --
 
-INSERT INTO `Kost` (`id`, `alamat`, `nama`, `jumlahKamar`, `NIK_Pemilik`, `harga`, `jenis`, `gambar_preview`) VALUES
+INSERT INTO `kost` (`id`, `alamat`, `nama`, `jumlahKamar`, `NIK_Pemilik`, `harga`, `jenis`, `gambar_preview`) VALUES
 (1, 'Jl. Raya Tajem Gg Manduro No.km 6', 'Kost Ali', 35, NULL, 950000, 'Putra', NULL),
 (2, 'Jl. Kemuning Salam No.52, Sanggrahan, Condongcatur, Kec. Depok', 'Kos Putra Nusantara', 25, NULL, 730000, 'Putra', NULL),
-(3, ' Jl. Raya Manukan, Mladangan', 'Kost Mawar', 21, '1234890723456789', 430000, 'Putri', '62c833dc576a1.jpg');
+(3, ' Jl. Raya Manukan, Mladangan', 'Kost Mawar', 21, '1234890723456789', 430000, 'Putri', '62c833dc576a1.jpg'),
+(4, 'Jl. kaliurang, Krawitan, Umbulmartani, Ngemplak', 'bebas', 10, '12378678362736', 700000, 'Putra', '62c978ced7192.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Pemilik`
+-- Table structure for table `pemilik`
 --
 
-CREATE TABLE `Pemilik` (
+CREATE TABLE `pemilik` (
   `NIK` char(16) NOT NULL,
   `nama` varchar(120) DEFAULT NULL,
   `noTelp` varchar(15) DEFAULT NULL,
@@ -104,23 +105,24 @@ CREATE TABLE `Pemilik` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Pemilik`
+-- Dumping data for table `pemilik`
 --
 
-INSERT INTO `Pemilik` (`NIK`, `nama`, `noTelp`, `alamat`, `email`, `keypassword`) VALUES
+INSERT INTO `pemilik` (`NIK`, `nama`, `noTelp`, `alamat`, `email`, `keypassword`) VALUES
 ('1234123412341234', 'corn wall', '081234561234', 'jl. kaliurang km 12.5', 'corn@gmail.com', '$2y$10$kBiuyx229Si5Ecx23wXqweF4KrxXjHlBr2YIAIs2J1fTokRungcPu'),
 ('1234890723456789', 'dara zara', '091234567890', 'Tanggerang Selatan', 'dara@gmail.com', '$2y$10$WlOtfRF8zfHkEsVGanoP8eFDPCnnfEzQ7AfUNd3W1fRlrcQHRsANq'),
 ('1235908712345678', 'corn wall', '081234567895', 'corn field', 'corn@gmail.com', '$2y$10$gZ1WNbAeRNJSxYdMaBTNFurNAZYBQONLEwKHKkYxSNwPJ3NYN7pH.'),
+('12378678362736', 'budi cek', '081227875674', 'kaliurang', 'cek@gmail.com', '$2y$10$HNqdJ1ZMRFsSQSQwUgY0/OxHU.FCcg8mmF6cmqlRJOL94mcfK1KgS'),
 ('8909186957867890', 'dalas nasyar', '081234567890', 'Pogung, Yogyakarta', 'dalas@gmail.com', '$2y$10$jbo2q/pff0qsf7OY2mWLYufUdEx5WxQbxQOGlF7EWLJ.SOr827msi'),
 ('9856784358681234', 'ilham  Rizqyakbar', '081989096789', 'Sanggrahan, Sleman, Kalasan', 'ilham@gmail.com', '$2y$10$662vGTft3cThKvmWsXdowOH3PGAUhRJtkjsqNscZwcyrPpK6drWmC');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Penyewaan`
+-- Table structure for table `penyewaan`
 --
 
-CREATE TABLE `Penyewaan` (
+CREATE TABLE `penyewaan` (
   `id` int(6) NOT NULL,
   `NIK_penyewa` char(16) DEFAULT NULL,
   `no_kamar` int(3) DEFAULT NULL,
@@ -131,10 +133,10 @@ CREATE TABLE `Penyewaan` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Pesanan`
+-- Table structure for table `pesanan`
 --
 
-CREATE TABLE `Pesanan` (
+CREATE TABLE `pesanan` (
   `idPesanan` varchar(13) NOT NULL,
   `idPemesan` varchar(16) DEFAULT NULL,
   `idKost` int(6) DEFAULT NULL,
@@ -144,38 +146,40 @@ CREATE TABLE `Pesanan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Pesanan`
+-- Dumping data for table `pesanan`
 --
 
-INSERT INTO `Pesanan` (`idPesanan`, `idPemesan`, `idKost`, `tglPemesanan`, `mulaiSewa`, `akhirSewa`) VALUES
-('62c913e8b5fe0', '1989403989087564', 3, '2022-07-09', '2022-07-15', '2022-09-13');
+INSERT INTO `pesanan` (`idPesanan`, `idPemesan`, `idKost`, `tglPemesanan`, `mulaiSewa`, `akhirSewa`) VALUES
+('62c913e8b5fe0', '1989403989087564', 3, '2022-07-09', '2022-07-15', '2022-09-13'),
+('62c97b4a55b57', '1989403989087564', 4, '2022-07-09', '2022-07-09', '2023-07-09'),
+('62c97c153e72e', '1989403989087564', 4, '2022-07-09', '2022-07-09', '2023-07-09');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Rekening`
+-- Table structure for table `rekening`
 --
 
-CREATE TABLE `Rekening` (
+CREATE TABLE `rekening` (
   `NoRekening` varchar(20) NOT NULL,
   `bank` varchar(50) DEFAULT NULL,
   `NIK_Pemilik` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Rekening`
+-- Dumping data for table `rekening`
 --
 
-INSERT INTO `Rekening` (`NoRekening`, `bank`, `NIK_Pemilik`) VALUES
+INSERT INTO `rekening` (`NoRekening`, `bank`, `NIK_Pemilik`) VALUES
 ('2345095482', 'BCA', '1234890723456789');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Review`
+-- Table structure for table `review`
 --
 
-CREATE TABLE `Review` (
+CREATE TABLE `review` (
   `id` int(6) NOT NULL,
   `komen` varchar(512) DEFAULT '',
   `nilai` float NOT NULL,
@@ -187,10 +191,10 @@ CREATE TABLE `Review` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
   `NIK` char(16) NOT NULL,
   `firstName` varchar(60) DEFAULT NULL,
   `lastName` varchar(60) DEFAULT NULL,
@@ -201,10 +205,10 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `Users` (`NIK`, `firstName`, `lastName`, `email`, `jenisKelamin`, `keypassword`, `no_telepon`) VALUES
+INSERT INTO `users` (`NIK`, `firstName`, `lastName`, `email`, `jenisKelamin`, `keypassword`, `no_telepon`) VALUES
 ('1989403989087564', 'Lala', 'Poo', 'lala@gmail.com', 'P', '$2y$10$k6cR1REVbQ3ORdL7GvHIQO7PSND244r0rIAP99r/7HeVhOQWCn1dK', '81245630989'),
 ('9090808070706060', 'admin', 'admin', 'admin@gmail.com', 'L', '$2y$10$dueCV/bVHp1fBacPJ.GEA.las18IGBMTMLnT6WEjvgakf7IWy41.m', '81345678767');
 
@@ -213,67 +217,67 @@ INSERT INTO `Users` (`NIK`, `firstName`, `lastName`, `email`, `jenisKelamin`, `k
 --
 
 --
--- Indexes for table `Fasilitas`
+-- Indexes for table `fasilitas`
 --
-ALTER TABLE `Fasilitas`
+ALTER TABLE `fasilitas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_kost_id` (`id_kost`);
 
 --
--- Indexes for table `Kamar`
+-- Indexes for table `kamar`
 --
-ALTER TABLE `Kamar`
+ALTER TABLE `kamar`
   ADD PRIMARY KEY (`no_kamar`),
   ADD KEY `fk_id_kamar` (`id_kost`);
 
 --
--- Indexes for table `Kost`
+-- Indexes for table `kost`
 --
-ALTER TABLE `Kost`
+ALTER TABLE `kost`
   ADD PRIMARY KEY (`id`),
   ADD KEY `NIK_Pemilik` (`NIK_Pemilik`);
 
 --
--- Indexes for table `Pemilik`
+-- Indexes for table `pemilik`
 --
-ALTER TABLE `Pemilik`
+ALTER TABLE `pemilik`
   ADD PRIMARY KEY (`NIK`);
 
 --
--- Indexes for table `Penyewaan`
+-- Indexes for table `penyewaan`
 --
-ALTER TABLE `Penyewaan`
+ALTER TABLE `penyewaan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `NIK_penyewa` (`NIK_penyewa`),
   ADD KEY `no_kamar` (`no_kamar`);
 
 --
--- Indexes for table `Pesanan`
+-- Indexes for table `pesanan`
 --
-ALTER TABLE `Pesanan`
+ALTER TABLE `pesanan`
   ADD PRIMARY KEY (`idPesanan`),
   ADD KEY `idPemesan` (`idPemesan`),
   ADD KEY `fkKostId` (`idKost`);
 
 --
--- Indexes for table `Rekening`
+-- Indexes for table `rekening`
 --
-ALTER TABLE `Rekening`
+ALTER TABLE `rekening`
   ADD PRIMARY KEY (`NoRekening`),
   ADD KEY `NIK_Pemilik` (`NIK_Pemilik`);
 
 --
--- Indexes for table `Review`
+-- Indexes for table `review`
 --
-ALTER TABLE `Review`
+ALTER TABLE `review`
   ADD PRIMARY KEY (`id`),
   ADD KEY `NIK_Penyewa` (`NIK_Penyewa`),
   ADD KEY `id_kost` (`id_kost`);
 
 --
--- Indexes for table `Users`
+-- Indexes for table `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`NIK`);
 
 --
@@ -281,15 +285,15 @@ ALTER TABLE `Users`
 --
 
 --
--- AUTO_INCREMENT for table `Kost`
+-- AUTO_INCREMENT for table `kost`
 --
-ALTER TABLE `Kost`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `kost`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `Penyewaan`
+-- AUTO_INCREMENT for table `penyewaan`
 --
-ALTER TABLE `Penyewaan`
+ALTER TABLE `penyewaan`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
@@ -297,49 +301,49 @@ ALTER TABLE `Penyewaan`
 --
 
 --
--- Constraints for table `Fasilitas`
+-- Constraints for table `fasilitas`
 --
-ALTER TABLE `Fasilitas`
-  ADD CONSTRAINT `fk_kost_id` FOREIGN KEY (`id_kost`) REFERENCES `Kost` (`id`);
+ALTER TABLE `fasilitas`
+  ADD CONSTRAINT `fk_kost_id` FOREIGN KEY (`id_kost`) REFERENCES `kost` (`id`);
 
 --
--- Constraints for table `Kamar`
+-- Constraints for table `kamar`
 --
-ALTER TABLE `Kamar`
-  ADD CONSTRAINT `fk_id_kamar` FOREIGN KEY (`id_kost`) REFERENCES `Kost` (`id`);
+ALTER TABLE `kamar`
+  ADD CONSTRAINT `fk_id_kamar` FOREIGN KEY (`id_kost`) REFERENCES `kost` (`id`);
 
 --
--- Constraints for table `Kost`
+-- Constraints for table `kost`
 --
-ALTER TABLE `Kost`
-  ADD CONSTRAINT `Kost_ibfk_1` FOREIGN KEY (`NIK_Pemilik`) REFERENCES `Pemilik` (`NIK`);
+ALTER TABLE `kost`
+  ADD CONSTRAINT `Kost_ibfk_1` FOREIGN KEY (`NIK_Pemilik`) REFERENCES `pemilik` (`NIK`);
 
 --
--- Constraints for table `Penyewaan`
+-- Constraints for table `penyewaan`
 --
-ALTER TABLE `Penyewaan`
-  ADD CONSTRAINT `Penyewaan_ibfk_1` FOREIGN KEY (`NIK_penyewa`) REFERENCES `Users` (`NIK`),
-  ADD CONSTRAINT `Penyewaan_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `Kamar` (`no_kamar`);
+ALTER TABLE `penyewaan`
+  ADD CONSTRAINT `Penyewaan_ibfk_1` FOREIGN KEY (`NIK_penyewa`) REFERENCES `users` (`NIK`),
+  ADD CONSTRAINT `Penyewaan_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `kamar` (`no_kamar`);
 
 --
--- Constraints for table `Pesanan`
+-- Constraints for table `pesanan`
 --
-ALTER TABLE `Pesanan`
-  ADD CONSTRAINT `Pesanan_ibfk_1` FOREIGN KEY (`idPemesan`) REFERENCES `Users` (`NIK`),
-  ADD CONSTRAINT `fkKostId` FOREIGN KEY (`idKost`) REFERENCES `Kost` (`id`);
+ALTER TABLE `pesanan`
+  ADD CONSTRAINT `Pesanan_ibfk_1` FOREIGN KEY (`idPemesan`) REFERENCES `users` (`NIK`),
+  ADD CONSTRAINT `fkKostId` FOREIGN KEY (`idKost`) REFERENCES `kost` (`id`);
 
 --
--- Constraints for table `Rekening`
+-- Constraints for table `rekening`
 --
-ALTER TABLE `Rekening`
-  ADD CONSTRAINT `Rekening_ibfk_1` FOREIGN KEY (`NIK_Pemilik`) REFERENCES `Pemilik` (`NIK`);
+ALTER TABLE `rekening`
+  ADD CONSTRAINT `Rekening_ibfk_1` FOREIGN KEY (`NIK_Pemilik`) REFERENCES `pemilik` (`NIK`);
 
 --
--- Constraints for table `Review`
+-- Constraints for table `review`
 --
-ALTER TABLE `Review`
-  ADD CONSTRAINT `Review_ibfk_1` FOREIGN KEY (`NIK_Penyewa`) REFERENCES `Users` (`NIK`),
-  ADD CONSTRAINT `Review_ibfk_2` FOREIGN KEY (`id_kost`) REFERENCES `Kost` (`id`);
+ALTER TABLE `review`
+  ADD CONSTRAINT `Review_ibfk_1` FOREIGN KEY (`NIK_Penyewa`) REFERENCES `users` (`NIK`),
+  ADD CONSTRAINT `Review_ibfk_2` FOREIGN KEY (`id_kost`) REFERENCES `kost` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
