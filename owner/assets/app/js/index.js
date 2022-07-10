@@ -25,6 +25,9 @@ $(document).ready(function () {
       {
         data: "tglPemesanan",
       },
+      {
+        data: "totalPembayaran",
+      },
     ],
     order: [[1, "asc"]],
   });
@@ -46,6 +49,14 @@ $(document).ready(function () {
   /* Formatting function for row details - modify as you need */
   function format(d) {
     // `d` is the original data object for the row
+
+    const moneyFormat = new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    });
+
+    const totalPembayaran = moneyFormat.format(d.totalPembayaran);
+
     return (
       '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
       "<tr>" +
@@ -58,6 +69,12 @@ $(document).ready(function () {
       "<td>Tanggal Pemesanan:</td>" +
       "<td>" +
       d.tglPemesanan +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      "<td>Total Pembayaran:</td>" +
+      "<td>" +
+      `${totalPembayaran}` +
       "</td>" +
       "</tr>" +
       "</table>"

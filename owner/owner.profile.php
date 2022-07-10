@@ -16,6 +16,11 @@ $data = getDataFromId("pemilik", $id);
 
 // var_dump($data);
 
+if (!isset($_SESSION['login-admin'])) {
+    header("Location: owner.login.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
