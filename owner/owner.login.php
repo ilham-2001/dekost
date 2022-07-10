@@ -4,19 +4,16 @@ require('core/init.php');
 
 session_start();
 
-var_dump($_POST);
-
-
 if (isset($_POST["btn_submit"])) {
     // cek ketersediaan akun di DB
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $_SESSION['id_pemilik'] = getUniqueId($email);
 
     $verify = verifyLogin($email, $password);
     echo "<script> console.log('Masuk') </script>";
     if ($verify) {
         $_SESSION['login-admin'] = true;
-        var_dump($_POST);
         header('Location: index.php');
         exit;
     }

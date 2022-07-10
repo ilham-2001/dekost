@@ -1,3 +1,23 @@
+<?php
+require('core/init.php');
+
+session_start();
+
+if (isset($_POST['logout-owner-btn'])) {
+    session_unset();
+    session_destroy();
+    header('Location: owner.login.php');
+    exit;
+}
+
+$id = $_SESSION['id_pemilik'];
+
+$data = getDataFromId("pemilik", $id);
+
+// var_dump($data);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +58,8 @@
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
+                                href="index.php">
                                 <div class="sidebar-brand-icon">
                                     <img src="../owner/assets/icons/logo.png" alt="#logo">
                                 </div>
@@ -49,7 +70,8 @@
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -60,25 +82,31 @@
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                            aria-controls="panelsStayOpen-collapseOne">
                                             <i class="fa-solid fa-database me-3"></i>
                                             Master Data
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link" href="owner.data.kost.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
+                                                <a class="nav-link" href="owner.data.kamar.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kamar</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+                                                <a class="nav-link" href="owner.data.penyewa.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</a>
                                             </li>
                                         </div>
                                     </div>
@@ -89,14 +117,18 @@
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
                             <div class="logout">
                                 <li class="nav-item-logout">
-                                    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    <form method="POST">
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    </form>
                                 </li>
                             </div>
 
@@ -108,19 +140,23 @@
                                 <!-- Topbar -->
                                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
                                     <!-- Sidebar Toggle (Topbar) -->
-                                    <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
+                                    <button id="sidebarToggleTop" onclick="myFunction()"
+                                        class="btn btn-link rounded-circle d-sm-none mr-3">
                                         <i class="fa fa-bars"></i>
                                     </button>
                                     <!-- Topbar Navbar -->
                                     <ul class="navbar-nav ms-auto me-4">
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
+                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
+                                                    height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
@@ -141,45 +177,47 @@
                                     <div class="card shadow">
                                         <div class="card-header" style="background-color:#2155CD ;">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
-                                                <h1 class="h3 mb-0 text-gray-800 fw-bold text-white">Profile Pemilik</h1>
+                                                <h1 class="h3 mb-0 text-gray-800 fw-bold text-white">Profile Pemilik
+                                                </h1>
                                             </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-5">
-                                                    <img class="img-fluid" src="../owner/assets/app/images/profile.jpg" height="400" width="400" alt="profile">
+                                                    <img class="img-fluid" src="../owner/assets/app/images/profile.jpg"
+                                                        height="400" width="400" alt="profile">
                                                 </div>
                                                 <div class="col-12 col-sm-12 col-md-7" style="overflow:auto ;">
                                                     <table class="table">
                                                         <tbody>
                                                             <tr style="height:60px">
                                                                 <th>NIK</th>
-                                                                <td> : 12908xxxxxxxxx</td>
+                                                                <td> : <?= $data['NIK'] ?></td>
                                                             </tr>
                                                             <tr style="height:60px">
                                                                 <th>Nama </th>
-                                                                <td> : Fajrun Shubhi</td>
+                                                                <td> : <?= $data['nama'] ?></td>
                                                             </tr>
                                                             <tr style="height:60px">
                                                                 <th>No. Telp </th>
-                                                                <td> : 082338987587</td>
+                                                                <td> : <?= $data['noTelp'] ?></td>
                                                             </tr>
                                                             <tr style="height:60px">
                                                                 <th>Alamat </th>
-                                                                <td> : JL Kaliurang KM14......................................</td>
+                                                                <td> : <?= $data['alamat'] ?></td>
                                                             </tr>
                                                             <tr style="height:60px">
                                                                 <th>Email</th>
-                                                                <td> : Jrunss@gmail.com</td>
+                                                                <td> : <?= $data['email'] ?></td>
                                                             </tr>
-                                                            <tr style="height:60px">
+                                                            <!-- <tr style="height:60px">
                                                                 <th>Username</th>
                                                                 <td> : Fajrun Shubhi</td>
-                                                            </tr>
-                                                            <tr style="height:60px">
+                                                            </tr> -->
+                                                            <!-- <tr style="height:60px">
                                                                 <th>Password</th>
                                                                 <td> : 1234567890</td>
-                                                            </tr>
+                                                            </tr> -->
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -207,19 +245,19 @@
     </div>
     </div>
     <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
+    function myFunction() {
+        var x = document.getElementById("side-nav");
+        var y = document.getElementById("side-nav1");
+        var a = document.getElementById("main-content-header");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            y.style.display = "none";
+        } else {
+            x.style.display = "block";
+            y.style.display = "block";
+            a.style.width = "none";
         }
+    }
     </script>
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>

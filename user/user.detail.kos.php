@@ -5,7 +5,7 @@ session_start();
 require('core/init.php');
 
 $kosId = $_GET['q'];
-$kos = getDataFromId("Kost", $kosId);
+$kos = getDataFromId("kost", $kosId);
 
 $mapKosAddr = explode(" ", $kos['alamat']);
 $mapKosNama = explode(" ", $kos['nama']);
@@ -289,7 +289,7 @@ if (isset($_POST['rent-btn'])) {
                         <?php
                         global $conn;
                         $fasilitas = [];
-                        $query = mysqli_query($conn, "SELECT Fasilitas.nama FROM Fasilitas INNER JOIN Kost ON Fasilitas.id_kost=Kost.id");
+                        $query = mysqli_query($conn, "SELECT fasilitas.nama FROM fasilitas INNER JOIN kost ON fasilitas.id_kost=kost.id");
 
                         while ($resQuery = mysqli_fetch_assoc($query)) {
                             array_push($fasilitas, $resQuery);
@@ -442,6 +442,10 @@ if (isset($_POST['rent-btn'])) {
                 </div>
             </div>
     </footer>
+    <!-- Copyright -->
+    <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
+        2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+    </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <!-- XZOOM -->

@@ -34,7 +34,7 @@ function getDataFromId($table, $id)
 function verifyLogin($email, $password)
 {
     global $conn;
-    $query = mysqli_query($conn, "SELECT * FROM Users WHERE email='$email'");
+    $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
 
     $verif = mysqli_num_rows($query) ? TRUE : FALSE;
 
@@ -55,7 +55,7 @@ function verifyLogin($email, $password)
 function checkRegistredUser($email)
 {
     global $conn;
-    $query = mysqli_query($conn, "SELECT email from Users WHERE email='$email'");
+    $query = mysqli_query($conn, "SELECT email from users WHERE email='$email'");
 
     $isRegistred = mysqli_num_rows($query) ? TRUE : FALSE;
 
@@ -75,10 +75,10 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = mysqli_query($conn, "INSERT INTO Users(NIK, firstName, lastName, email, jenisKelamin, keypassword) VALUES('$nik', '$nama_depan', '$nama_belakang', '$email', '$jenis_kelamin', '$password') ");
+    $query = mysqli_query($conn, "INSERT INTO users(NIK, firstName, lastName, email, jenisKelamin, keypassword) VALUES('$nik', '$nama_depan', '$nama_belakang', '$email', '$jenis_kelamin', '$password') ");
 
     if ($query) {
-        $q = mysqli_query($conn, "SELECT * FROM Users WHERE email='$email'");
+        $q = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
         $user = mysqli_fetch_assoc($q);
 
         return $user;
@@ -91,7 +91,7 @@ function findMaxHarga()
 {
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT `harga` FROM Kost ORDER BY harga DESC LIMIT 0, 1");
+    $query = mysqli_query($conn, "SELECT `harga` FROM kost ORDER BY harga DESC LIMIT 0, 1");
     $maxValue = mysqli_fetch_assoc($query);
 
     return $maxValue['harga'];
@@ -101,7 +101,7 @@ function findMinHarga()
 {
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT `harga` FROM Kost ORDER BY harga ASC LIMIT 0, 1");
+    $query = mysqli_query($conn, "SELECT `harga` FROM kost ORDER BY harga ASC LIMIT 0, 1");
     $minValue = mysqli_fetch_assoc($query);
 
     return $minValue['harga'];
@@ -121,11 +121,11 @@ function filterSearch($jenis, $minHarga, $maxHarga)
     }
 
     if (!$jenis && !$minHarga && !$maxHarga) {
-        $query = mysqli_query($conn, "SELECT * FROM Kost");
+        $query = mysqli_query($conn, "SELECT * FROM kost");
     } else if (!$jenis) {
-        $query = mysqli_query($conn, "SELECT * FROM Kost WHERE harga BETWEEN $minHarga AND $maxHarga");
+        $query = mysqli_query($conn, "SELECT * FROM kost WHERE harga BETWEEN $minHarga AND $maxHarga");
     } else {
-        $query = mysqli_query($conn, "SELECT * FROM Kost WHERE jenis='$jenis' AND (harga BETWEEN $minHarga AND $maxHarga)");
+        $query = mysqli_query($conn, "SELECT * FROM kost WHERE jenis='$jenis' AND (harga BETWEEN $minHarga AND $maxHarga)");
     }
 
     while ($data = mysqli_fetch_assoc($query)) {
@@ -139,7 +139,7 @@ function getUniqueId($email)
 {
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT `NIK` FROM Users WHERE email='$email'");
+    $query = mysqli_query($conn, "SELECT `NIK` FROM users WHERE email='$email'");
     $resQuery = mysqli_fetch_assoc($query);
 
     return $resQuery['NIK'];
@@ -149,7 +149,7 @@ function getUserData($nik)
 {
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT `firstName`, `lastName`, `email`, `no_telepon` FROM Users WHERE NIK='$nik'");
+    $query = mysqli_query($conn, "SELECT `firstName`, `lastName`, `email`, `no_telepon` FROM users WHERE NIK='$nik'");
     $resQuery = mysqli_fetch_assoc($query);
 
     return $resQuery;
@@ -159,7 +159,7 @@ function findKostOwner($nama)
 {
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT NIK_Pemilik FROM Kost WHERE nama='$nama'");
+    $query = mysqli_query($conn, "SELECT NIK_Pemilik FROM kost WHERE nama='$nama'");
 
     $resQuery = mysqli_fetch_assoc($query);
 
@@ -170,7 +170,7 @@ function getRekeningInfo($nik)
 {
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT Rekening.noRekening, Pemilik.nama, Rekening.bank FROM Rekening INNER JOIN Pemilik ON Rekening.NIK_Pemilik=Pemilik.NIK WHERE Rekening.NIK_Pemilik='$nik'");
+    $query = mysqli_query($conn, "SELECT rekening.noRekening, pemilik.nama, rekening.bank FROM rekening INNER JOIN pemilik ON rekening.NIK_Pemilik=pemilik.NIK WHERE rekening.NIK_Pemilik='$nik'");
 
 
     $resQuery = mysqli_fetch_assoc($query);
@@ -188,7 +188,7 @@ function addPesanan($idPemesan, $idKost, $mulaiSewa, $akhirSewa)
     $mulaiSewa = mysqli_real_escape_string($conn, $mulaiSewa);
     $akhirSewa = mysqli_real_escape_string($conn, $akhirSewa);
 
-    $query = mysqli_query($conn, "INSERT INTO Pesanan(idPesanan, idPemesan, idKost, tglPemesanan, mulaiSewa, akhirSewa) VALUES ('$idPesanan', '$idPemesan', '$idKost', '$tglPesanan', '$mulaiSewa', '$akhirSewa')");
+    $query = mysqli_query($conn, "INSERT INTO pesanan(idPesanan, idPemesan, idKost, tglPemesanan, mulaiSewa, akhirSewa) VALUES ('$idPesanan', '$idPemesan', '$idKost', '$tglPesanan', '$mulaiSewa', '$akhirSewa')");
 
     if (!$query) {
         return FALSE;

@@ -1,3 +1,14 @@
+<?php
+
+if (isset($_POST['logout-owner-btn'])) {
+    session_unset();
+    session_destroy();
+    header('Location: owner.login.php');
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,7 +107,9 @@
                             <hr class="sidebar-divider mt-2 bg-light">
                             <div class="logout">
                                 <li class="nav-item-logout">
-                                    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    <form method="POST">
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    </form>
                                 </li>
                             </div>
 
@@ -138,7 +151,7 @@
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Data Kost</h1>
-                                                <button class="tambah-data-kost float-right">Tambah Data Kost</button>
+                                                <a href="owner.kelola.data.kost.php" class="tambah-data-kost float-right" style="text-decoration:none ;"> <i class="fa-solid fa-plus me-2"></i>Tambah Data Kost</a>
                                             </div>
                                         </div>
                                         <div class="card-body">
