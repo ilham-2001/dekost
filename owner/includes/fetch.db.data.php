@@ -252,6 +252,10 @@ function getUniqueId($email)
     global $conn;
 
     $query = mysqli_query($conn, "SELECT `NIK` FROM pemilik WHERE email='$email'");
+
+    if (!$query) {
+        return FALSE;
+    }
     $resQuery = mysqli_fetch_assoc($query);
 
     return $resQuery['NIK'];

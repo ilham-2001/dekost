@@ -299,7 +299,7 @@ if (!isset($_SESSION['login-admin'])) {
                                             <!-- Card Body -->
                                             <div class="card-body">
                                                 <div class="chart-area">
-                                                    <canvas id="myAreaChart"></canvas>
+                                                    <canvas id="myChart"></canvas>
                                                 </div>
                                             </div>
                                         </div>
@@ -462,7 +462,26 @@ if (!isset($_SESSION['login-admin'])) {
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/owner/dist/js/hehe.js"></script>
+    <!-- <script src="/owner/dist/js/hehe.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <script>
+    new Chart("myChart", {
+        type: "bar",
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Penambahan Penyewa (Tiap Bulan)",
+                backgroundColor: ["#3e95cd", "#3e95cd", "#3e95cd",
+                    "#3e95cd", "#3e95cd", "#3e95cd", "#3e95cd",
+                    "#3e95cd", "#3e95cd", "#3e95cd", "#3e95cd", "#3e95cd"
+                ],
+                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+            }]
+        },
+    });
+    </script>
 
     </body>
 
