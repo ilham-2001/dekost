@@ -1,3 +1,14 @@
+<?php
+
+if (isset($_POST['logout-owner-btn'])) {
+    session_unset();
+    session_destroy();
+    header('Location: owner.login.php');
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,7 +107,9 @@
                             <hr class="sidebar-divider mt-2 bg-light">
                             <div class="logout">
                                 <li class="nav-item-logout">
-                                    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    <form method="POST">
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    </form>
                                 </li>
                             </div>
 

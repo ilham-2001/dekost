@@ -3,12 +3,53 @@
 require('core/init.php');
 session_start();
 
-echo "<script> console.log('Masuk') </script>";
+$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
+
+// var_dump($idKost);
+
+$countPesanan = countPesanan($idKost)['pesanan'];
+// var_dump($countPesanan);
+
+if (isset($_POST['logout-owner-btn'])) {
+    session_unset();
+    session_destroy();
+    header('Location: owner.login.php');
+    exit;
+}
 
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+
+$dataPoints1 = array(
+    array("label" => "Jan", "y" => 36.12),
+    array("label" => "Feb", "y" => 34.87),
+    array("label" => "Mar", "y" => 40.30),
+    array("label" => "Apr", "y" => 35.30),
+    array("label" => "May", "y" => 39.50),
+    array("label" => "Jun", "y" => 50.82),
+    array("label" => "Jul", "y" => 74.70),
+    array("label" => "Aug", "y" => 74.70),
+    array("label" => "Sep", "y" => 74.70),
+    array("label" => "Oct", "y" => 74.70),
+    array("label" => "Nov", "y" => 74.70),
+    array("label" => "Dec", "y" => 74.70)
+);
+$dataPoints2 = array(
+    array("label" => "Jan", "y" => 64.61),
+    array("label" => "Feb", "y" => 70.55),
+    array("label" => "Mar", "y" => 72.50),
+    array("label" => "Apr", "y" => 81.30),
+    array("label" => "May", "y" => 63.60),
+    array("label" => "Jun", "y" => 69.38),
+    array("label" => "Jul", "y" => 98.70),
+    array("label" => "Aug", "y" => 98.70),
+    array("label" => "Sep", "y" => 98.70),
+    array("label" => "Oct", "y" => 98.70),
+    array("label" => "Nov", "y" => 98.70),
+    array("label" => "Dec", "y" => 98.70)
+);
 
 ?>
 
@@ -30,13 +71,14 @@ if (!isset($_SESSION['login-admin'])) {
     <link href="../owner/assets/app/css/bootstrap.min.css" rel="stylesheet">
     <!--  CSS File -->
     <link href="../owner/dist/css/index.css" rel="stylesheet"">
+    <link href=" assets/app/css/style.css" rel="stylesheet"">
 </head>
 <body>
     <!-- PAGE WRAPPER -->
     <div class=" wrapper">
     <div class="container-fluid">
         <!-- navbar header -->
-        <nav class="navbar navbar-light fixed-top">
+        <nav class="navbar navbar-light ">
             <div class="container-fluid justify-content-center">
                 <h4 class="navbar-header text-white">
                     Selamat Datang di Sistem Informasi Kostan | DEKOST
@@ -108,7 +150,10 @@ if (!isset($_SESSION['login-admin'])) {
 
                         <div class="logout">
                             <li class="nav-item-logout">
-                                <button class="btn btn-primary" type="submit"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                <form method="POST">
+                                    <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                            class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                </form>
                             </li>
                         </div>
 
@@ -134,7 +179,8 @@ if (!isset($_SESSION['login-admin'])) {
                                             <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
                                         </a>
                                         <!-- Dropdown - User Information -->
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
                                             <a class="dropdown-item" href="owner.profile.php">
                                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                 Profile
@@ -159,9 +205,11 @@ if (!isset($_SESSION['login-admin'])) {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                            hmm</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                                                        <div
+                                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                            Jumlah Kost</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">(count data
+                                                            kos)</div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -177,9 +225,11 @@ if (!isset($_SESSION['login-admin'])) {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                            Y</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">1m</div>
+                                                        <div
+                                                            class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                            JUmlah Kamar</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">(count data
+                                                            kamar)</div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -195,13 +245,15 @@ if (!isset($_SESSION['login-admin'])) {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                            hi
+                                                        <div
+                                                            class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                            Jumlah Penghuni
                                                         </div>
                                                         <div class="row no-gutters align-items-center">
                                                             <div class="col-auto">
-                                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                                    2</div>
+                                                                <div
+                                                                    class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                                    (count data penyewa)</div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="progress progress-sm mr-2">
@@ -220,20 +272,25 @@ if (!isset($_SESSION['login-admin'])) {
 
                                     <!-- Pending Requests Card Example -->
                                     <div class="col-xl-3 col-md-6 mb-4">
-                                        <div class="card border-left-warning shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                            T</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <a href="owner.pesanan.kost.php">
+                                            <div class="card border-left-warning shadow h-100 py-2">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <div
+                                                                class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                Pesanan Menunggu</div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                <?= $countPesanan  ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -244,8 +301,10 @@ if (!isset($_SESSION['login-admin'])) {
                                     <div class="col-xl-8 col-lg-7">
                                         <div class="card shadow mb-4">
                                             <!-- Card Header - Dropdown -->
-                                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                <h6 class="m-0 font-weight-bold text-primary">hhh</h6>
+                                            <div
+                                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                <h6 class="m-0 font-weight-bold text-primary">Jumlah Keluar/Masuk
+                                                    Penyewa</h6>
                                                 <div class="dropdown no-arrow">
                                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -262,7 +321,8 @@ if (!isset($_SESSION['login-admin'])) {
                                             <!-- Card Body -->
                                             <div class="card-body">
                                                 <div class="chart-area">
-                                                    <canvas id="myAreaChart"></canvas>
+                                                    <!-- <canvas id="myChart"></canvas> -->
+                                                    <div id="myChart" style="height: 370px; width: 100%;"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -404,7 +464,58 @@ if (!isset($_SESSION['login-admin'])) {
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/owner/dist/js/hehe.js"></script>
+    <!-- <script src="/owner/dist/js/hehe.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="assets/app/js/canvasjs.min.js"></script>
+
+    <script>
+    window.onload = function() {
+
+        var chart = new CanvasJS.Chart("myChart", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Jumlah Penyewa Kost"
+            },
+            axisY: {
+                includeZero: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "center",
+                horizontalAlign: "right",
+                itemclick: toggleDataSeries
+            },
+            data: [{
+                type: "column",
+                name: "Penyewa Masuk",
+                indexLabel: "{y}",
+                yValueFormatString: "$#0.##",
+                showInLegend: true,
+                dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
+            }, {
+                type: "column",
+                name: "Penyewa Keluar",
+                indexLabel: "{y}",
+                yValueFormatString: "$#0.##",
+                showInLegend: true,
+                dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+            }]
+        });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+
+    }
+    </script>
 
     </body>
 
