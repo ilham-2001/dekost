@@ -274,40 +274,42 @@ if (isset($_POST['button_signup'])) {
                                 <img src="assets/images/owl1.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tips Bangun Pagi Rutin</b></h5>
-                            <p class="text-center p-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam
-                                temporibus quidem magni qui doloribus quasi natus inventore nisi velit minima.</p>
+                            <p class="text-center p-4">Atur jadwal tidur,  Mulailah atur jadwal tidurmu dari sekarang. Kamu harus menargetkan diri untuk tidur 
+                                lebih awal serta durasi waktunya yaitu sekitar 7-9 jam. Meski pada hari libur pun tetap saja lakukan jadwal tersebut agar 
+                                dapat membiasakan diri untuk selalu bangun pagi</p>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl2.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tips Cepat Lulus</b></h5>
-                            <p class="text-center p-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam
-                                temporibus quidem magni qui doloribus quasi natus inventore nisi velit minima.</p>
+                            <p class="text-center p-4">Membuat target IPK tiap semester, buat target IPK tiap semester besaran IPK menjadi penentu jumlah 
+                                SKS yang bisa kamu ambil di semester berikutnya. Semakin besar IPK, semakin banyak pula SKS yang bisa kamu ambil.</p>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl3.jpg" alt="">
                             </div>
-                            <h5 class="mb-0 text-center"><b>Tempat Wisata Rekomendasi</b></h5>
-                            <p class="text-center p-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam
-                                temporibus quidem magni qui doloribus quasi natus inventore nisi velit minima.</p>
+                            <h5 class="mb-0 text-center"><b>Tempat Mencari Kost Terbaik</b></h5>
+                            <p class="text-center p-4">Ketahui fasilitas kost yang benar-benar penting,misalnya sudah tersedia kasur, lemari, dan internet, 
+                                karena beberapa kost murah hanya menawarkan kamar kosongan saja. Fokus pada fasilitas yang kamu butuhkan, bukan yang kamu inginkan.</p>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl4.jpg" alt="">
                             </div>
-                            <h5 class="mb-0 text-center"><b>Tips Belajar</b></h5>
-                            <p class="text-center p-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam
-                                temporibus quidem magni qui doloribus quasi natus inventore nisi velit minima.</p>
+                            <h5 class="mb-0 text-center"><b>Tips Belajar Efektif</b></h5>
+                            <p class="text-center p-4">Menyusun target belajar, karena memiliki target waktu untuk menguasai materi 
+                                pelajaran tertentu akan membuat anda tertantang. Karena itu, susunlah jadwal dan bagi waktu belajar dengan baik. 
+                                Bila berhasil mencapai target, berilah diri Anda hadiah kecil misal membeli camilan favorit.</p>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl5.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tips Menghemat ala Anak Kos</b></h5>
-                            <p class="text-center p-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam
-                                temporibus quidem magni qui doloribus quasi natus inventore nisi velit minima.</p>
+                            <p class="text-center p-4">Mencatat setiap pengeluaran penting untuk 
+                                mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.</p>
                         </div>
                     </div>
                 </div>
@@ -320,11 +322,8 @@ if (isset($_POST['button_signup'])) {
                     <img src="assets/images/bed.jpg" alt="">
                 </div>
                 <div class="col ">
-                    <h3>Cari Kos dengan mudah dan Terpecaya</h3>
-                    <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis nostrum quidem similique
-                        soluta
-                        distinctio autem adipisci deleniti rem amet perferendis libero porro, ducimus optio velit quasi
-                        explicabo consequatur nemo veritatis
+                    <h3>Anda bingung mencari kost tapi tidak di lokasi?</h3>
+                    <p> Tenang!! DeKost solusinya, anda bisa mencari kos dimanapun dan kapanpun tanpa harus datang ke lokasi.
                     </p>
                 </div>
             </div>
@@ -333,11 +332,8 @@ if (isset($_POST['button_signup'])) {
         <section class="content-section">
             <div class="row">
                 <div class="col ">
-                    <h3>Cari Kos di mana saja, kapan saja</h3>
-                    <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis nostrum quidem similique
-                        soluta
-                        distinctio autem adipisci deleniti rem amet perferendis libero porro, ducimus optio velit quasi
-                        explicabo consequatur nemo veritatis
+                    <h3>Ingin tahu apa saja yang tersedia di DeKost?</h3>
+                    <p> Fast Response 24/7, Foto Properti Akurat, Foto Area & Informasi lengkap
                     </p>
                 </div>
                 <div class="col">
