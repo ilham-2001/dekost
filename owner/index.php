@@ -1,8 +1,15 @@
 <?php
 
+require('core/init.php');
+
 session_start();
 
-echo "<script> console.log('Masuk') </script>";
+$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
+
+// var_dump($idKost);
+
+$countPesanan = countPesanan($idKost)['pesanan'];
+// var_dump($countPesanan);
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
@@ -15,6 +22,25 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+
+$dataPoints1 = array(
+    array("label" => "2010", "y" => 36.12),
+    array("label" => "2011", "y" => 34.87),
+    array("label" => "2012", "y" => 40.30),
+    array("label" => "2013", "y" => 35.30),
+    array("label" => "2014", "y" => 39.50),
+    array("label" => "2015", "y" => 50.82),
+    array("label" => "2016", "y" => 74.70)
+);
+$dataPoints2 = array(
+    array("label" => "2010", "y" => 64.61),
+    array("label" => "2011", "y" => 70.55),
+    array("label" => "2012", "y" => 72.50),
+    array("label" => "2013", "y" => 81.30),
+    array("label" => "2014", "y" => 63.60),
+    array("label" => "2015", "y" => 69.38),
+    array("label" => "2016", "y" => 98.70)
+);
 
 ?>
 
@@ -36,13 +62,14 @@ if (!isset($_SESSION['login-admin'])) {
     <link href="../owner/assets/app/css/bootstrap.min.css" rel="stylesheet">
     <!--  CSS File -->
     <link href="../owner/dist/css/index.css" rel="stylesheet"">
+    <link href=" assets/app/css/style.css" rel="stylesheet"">
 </head>
 <body>
     <!-- PAGE WRAPPER -->
     <div class=" wrapper">
     <div class="container-fluid">
         <!-- navbar header -->
-        <nav class="navbar navbar-light fixed-top">
+        <nav class="navbar navbar-light ">
             <div class="container-fluid justify-content-center">
                 <h4 class="navbar-header text-white">
                     Selamat Datang di Sistem Informasi Kostan | DEKOST
@@ -252,21 +279,25 @@ if (!isset($_SESSION['login-admin'])) {
 
                                     <!-- Pending Requests Card Example -->
                                     <div class="col-xl-3 col-md-6 mb-4">
-                                        <div class="card border-left-warning shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div
-                                                            class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                            T</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <a href="owner.pesanan.kost.php">
+                                            <div class="card border-left-warning shadow h-100 py-2">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <div
+                                                                class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                Pesanan Menunggu</div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                <?= $countPesanan  ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -299,7 +330,8 @@ if (!isset($_SESSION['login-admin'])) {
                                             <!-- Card Body -->
                                             <div class="card-body">
                                                 <div class="chart-area">
-                                                    <canvas id="myChart"></canvas>
+                                                    <!-- <canvas id="myChart"></canvas> -->
+                                                    <div id="myChart" style="height: 370px; width: 100%;"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -465,22 +497,54 @@ if (!isset($_SESSION['login-admin'])) {
     <!-- <script src="/owner/dist/js/hehe.js"></script> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="assets/app/js/canvasjs.min.js"></script>
 
     <script>
-    new Chart("myChart", {
-        type: "bar",
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: "Penambahan Penyewa (Tiap Bulan)",
-                backgroundColor: ["#3e95cd", "#3e95cd", "#3e95cd",
-                    "#3e95cd", "#3e95cd", "#3e95cd", "#3e95cd",
-                    "#3e95cd", "#3e95cd", "#3e95cd", "#3e95cd", "#3e95cd"
-                ],
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    window.onload = function() {
+
+        var chart = new CanvasJS.Chart("myChart", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Average Amount Spent on Real and Artificial X-Mas Trees in U.S."
+            },
+            axisY: {
+                includeZero: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "center",
+                horizontalAlign: "right",
+                itemclick: toggleDataSeries
+            },
+            data: [{
+                type: "column",
+                name: "Real Trees",
+                indexLabel: "{y}",
+                yValueFormatString: "$#0.##",
+                showInLegend: true,
+                dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
+            }, {
+                type: "column",
+                name: "Artificial Trees",
+                indexLabel: "{y}",
+                yValueFormatString: "$#0.##",
+                showInLegend: true,
+                dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
             }]
-        },
-    });
+        });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+
+    }
     </script>
 
     </body>

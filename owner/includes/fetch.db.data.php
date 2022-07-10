@@ -216,18 +216,18 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
     return TRUE;
 }
 
-function getDataPesanan()
+function getDataPesanan($idKost)
 {
     global $conn;
     $data = [];
-    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK");
-
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE idKost='$idKost'");
 
     if ($query) {
 
         while ($dt = mysqli_fetch_assoc($query)) {
             array_push($data, $dt);
         }
+        // var_dump($data);
         return $data;
     }
 
@@ -259,4 +259,30 @@ function getUniqueId($email)
     $resQuery = mysqli_fetch_assoc($query);
 
     return $resQuery['NIK'];
+}
+
+function getUniqueIdKostByNIK($nik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT kost.id FROM kost INNER JOIN pemilik ON kost.NIK_Pemilik=pemilik.NIK WHERE pemilik.NIK='$nik'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+
+function countPesanan($idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(idPesanan) as pesanan FROM pesanan WHERE idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
 }

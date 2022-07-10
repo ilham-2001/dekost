@@ -3,7 +3,10 @@ require('core/init.php');
 
 session_start();
 
-$dataPemesan = getDataPesanan();
+$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
+// var_dump($idKost);
+$dataPemesan = getDataPesanan($idKost);
+// var_dump($dataPemesan);
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
