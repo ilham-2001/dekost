@@ -140,10 +140,6 @@ if (isset($_POST['logout-owner-btn'])) {
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
                                                 </a>
-                                                <a class="dropdown-item" href="#setting">
-                                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                                    Settings
-                                                </a>
                                             </div>
                                         </li>
                                     </ul>

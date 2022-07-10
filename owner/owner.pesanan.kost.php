@@ -80,7 +80,6 @@ if (isset($_POST['validation-btn'])) {
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
-
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="index.php"><i
                                         class="fas fa-fw fa-tachometer-alt me-2"></i>
@@ -131,10 +130,8 @@ if (isset($_POST['validation-btn'])) {
                                 <a class="nav-link active" href="owner.pesanan.kost.php"><i
                                         class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
-
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
-
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <form method="POST">
