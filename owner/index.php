@@ -1,7 +1,6 @@
 <?php
 
 require('core/init.php');
-
 session_start();
 
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
