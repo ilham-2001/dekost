@@ -30,9 +30,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/favicon.ico">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
@@ -44,9 +42,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -72,8 +68,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                             <h3 class="text-center">Ini nama kost</h3>
                         </div>
                         <div class="gambar text-center mb-3">
-                            <img src="../user/assets/images/kamar_kos.jpg" alt="gambar kost" class="img-kost img-fluid"
-                                width="450" height="300">
+                            <img src="../user/assets/images/kamar_kos.jpg" alt="gambar kost" class="img-kost img-fluid" width="450" height="300">
                         </div>
                         <div class="informasi-pemilik ps-5">
                             <div class="nama-pemilik">
@@ -103,8 +98,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                         <hr class="sidebar-divider mt-1 bg-light">
                         <form action="" class="mb-3 ms-5 me-5">
                             <input type="file" class="form-control" id="inputGroupFile02"><br><br>
-                            <input type="submit" value="Konfirmasi Pembayaran"
-                                style="background-color: #2155CD; border:none; color:#ffffff;padding:10px 60px; border-radius:30px;">
+                            <input type="submit" value="Konfirmasi Pembayaran" style="background-color: #2155CD; border:none; color:#ffffff;padding:10px 60px; border-radius:30px;">
                         </form>
                     </section>
                 </div>
@@ -155,8 +149,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="MandiriVA"
-                                    name="payment-method">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="MandiriVA" name="payment-method">
                                 <label class="form-check-label" for="MandiriVA">
                                     Bank Mandiri (inc. Virtual Account)
                                 </label>
@@ -186,8 +179,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                                 </label>
                             </div>
                             <div class="form-check mt-3">
-                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="PermataVA"
-                                    name="payment-method">
+                                <input class="form-check-input me-2" type="radio" name="flexRadioDefault" id="PermataVA" name="payment-method">
                                 <label class="form-check-label" for="PermataVA">
                                     Bank Permata (inc. Virtual Account)
                                 </label>
@@ -203,8 +195,7 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2"
-                            width="50" height="50" alt="logo"> Dekost</h5>
+                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
                     <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
                     <ul class="list-unstyled text-muted">
                         <li><a href="#tentangkami">Tentang Kami</a></li>
@@ -264,21 +255,19 @@ $totalPembayaran = $_SESSION['harga'] * $_SESSION['durasi'];
                         kepada kami.</p>
                     <form action="#">
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" placeholder="Recipient's username"
-                                aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-primary" id="button-addon2" type="button"><i
-                                    class="fas fa-paper-plane"></i></button>
+                            <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </form>
                 </div>
             </div>
-            <!-- Copyright -->
-            <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
-                2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in
-                Yogyakarta
-            </div>
         </div>
     </footer>
+    <!-- Copyright -->
+    <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
+        2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in
+        Yogyakarta
+    </div>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/popper.min.js"></script>

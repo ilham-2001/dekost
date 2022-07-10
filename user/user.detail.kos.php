@@ -442,6 +442,10 @@ if (isset($_POST['rent-btn'])) {
                 </div>
             </div>
     </footer>
+    <!-- Copyright -->
+    <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
+        2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+    </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <!-- XZOOM -->

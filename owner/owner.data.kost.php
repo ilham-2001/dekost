@@ -138,7 +138,7 @@
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Data Kost</h1>
-                                                <button class="tambah-data-kost float-right">Tambah Data Kost</button>
+                                                <a href="owner.kelola.data.kost.php" class="tambah-data-kost float-right" style="text-decoration:none ;"> <i class="fa-solid fa-plus me-2"></i>Tambah Data Kost</a>
                                             </div>
                                         </div>
                                         <div class="card-body">

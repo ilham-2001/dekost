@@ -1,5 +1,6 @@
 <?php
 
+require('core/init.php');
 session_start();
 
 echo "<script> console.log('Masuk') </script>";

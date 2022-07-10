@@ -5,15 +5,100 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/icon/favicon.ico">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
+    <title>Profile Penyewa</title>
 </head>
 
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.php">De'Kost</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="user.carikos.php">Cari Kos</a>
+                        </li>
+                    </ul>
+                    <?php if (!isset($_SESSION['login'])) : ?>
+                        <!-- <form class="d-flex" method="POST"> -->
+                        <button class="btn btn-outline-primary btn-nav" type="submit" name="signin" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In</button>
+                        <!-- <button class="btn btn-outline-primary btn-nav" type="submit" name="signup">Sign Up</button> -->
+                        <!-- </form> -->
+                    <?php else : ?>
+                        <form class="d-flex" method="POST">
+                            <button class="btn btn-outline-primary btn-nav" type="submit" name="logout">Log Out</button>
+                        </form>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </nav>
+    </header>
     <main>
+        <div class="container mb-5">
+            <!-- DataTales -->
+            <div class="card shadow w-100">
+                <div class="card-header" style="background-color:#2155CD ;">
+                    <div class="d-flex justify-content-between mb-2 mt-2">
+                        <h1 class="h3 mb-0 text-gray-800 fw-bold text-white">Profile Penyewa</h1>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-5">
+                            <img class="img-fluid" src="../owner/assets/app/images/profile.jpg" height="400" width="400" alt="profile">
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-7" style="overflow:auto ;">
+                            <table class="table">
+                                <tbody>
+                                    <tr style="height:60px">
+                                        <th>NIK</th>
+                                        <td> : 12908xxxxxxxxx</td>
+                                    </tr>
+                                    <tr style="height:60px">
+                                        <th>Nama </th>
+                                        <td> : Fajrun Shubhi</td>
+                                    </tr>
+                                    <tr style="height:60px">
+                                        <th>Jenis Kelamin </th>
+                                        <td> : Laki-Laki</td>
+                                    </tr>
+                                    <tr style="height:60px">
+                                        <th>Email </th>
+                                        <td> : Fajrun@gmail.com</td>
+                                    </tr>
+                                    <tr style="height:60px">
+                                        <th>Username</th>
+                                        <td> : Jrunss</td>
+                                    </tr>
+                                    <tr style="height:60px">
+                                        <th>Password</th>
+                                        <td> : fajrun1234567890</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
-    <footer class="w-100 py-4 flex-shrink-0">
+    <footer class="w-100 py-4 flex-shrink-0" style="margin-top:130px ;">
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
@@ -82,12 +167,11 @@
                     </form>
                 </div>
             </div>
-            <!-- Copyright -->
-            <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
-                2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
-            </div>
-        </div>
     </footer>
+    <!-- Copyright -->
+    <div class="text-center p-3 text-white fw-bold mt-3" style="background-color: #2155cd;">
+        2022 © Copryright <a class="text-white" href="#dekost.com">DEKOST</a> - All rights reserved - Made in Yogyakarta
+    </div>
 
 </body>
 
