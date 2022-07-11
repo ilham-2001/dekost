@@ -7,8 +7,8 @@ session_start();
 var_dump($_SESSION);
 
 if (isset($_POST['btn-kos-singup'])) {
-    var_dump($_POST);
-    var_dump($_FILES);
+    // var_dump($_POST);
+    // var_dump($_FILES);
 
     $namaKos = $_POST['nama-kos'];
     $alamatKos = $_POST['alamat-kos'];
@@ -19,8 +19,9 @@ if (isset($_POST['btn-kos-singup'])) {
     $gambar = $_FILES['kost-gambar'];
 
     $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik);
+    $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
 
-    if ($regis) {
+    if ($regis['isSuccess'] && $kamarGenereated) {
         header("Location: owner.login.php");
         exit;
     }

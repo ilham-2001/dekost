@@ -177,7 +177,7 @@ function getRekeningInfo($nik)
 
     return $resQuery;
 }
-function addPesanan($idPemesan, $idKost, $mulaiSewa, $akhirSewa)
+function addPesanan($idPemesan, $idKost, $mulaiSewa, $akhirSewa, $totalPembayaran)
 {
     global $conn;
 
@@ -188,7 +188,7 @@ function addPesanan($idPemesan, $idKost, $mulaiSewa, $akhirSewa)
     $mulaiSewa = mysqli_real_escape_string($conn, $mulaiSewa);
     $akhirSewa = mysqli_real_escape_string($conn, $akhirSewa);
 
-    $query = mysqli_query($conn, "INSERT INTO pesanan(idPesanan, idPemesan, idKost, tglPemesanan, mulaiSewa, akhirSewa) VALUES ('$idPesanan', '$idPemesan', '$idKost', '$tglPesanan', '$mulaiSewa', '$akhirSewa')");
+    $query = mysqli_query($conn, "INSERT INTO pesanan(idPesanan, idPemesan, idKost, tglPemesanan, mulaiSewa, akhirSewa, totalPembayaran) VALUES ('$idPesanan', '$idPemesan', '$idKost', '$tglPesanan', '$mulaiSewa', '$akhirSewa', $totalPembayaran)");
 
     if (!$query) {
         return FALSE;

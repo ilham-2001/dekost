@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 10, 2022 at 10:54 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Host: localhost
+-- Generation Time: Jul 11, 2022 at 02:53 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -94,19 +94,59 @@ INSERT INTO `fasil_kost` (`id_kost`, `id_fasil`) VALUES
 --
 
 CREATE TABLE `kamar` (
-  `no_kamar` int(3) NOT NULL,
   `id_kost` int(6) DEFAULT NULL,
   `status` varchar(6) DEFAULT NULL,
   `lebar` float DEFAULT NULL,
-  `panjang` float DEFAULT NULL
+  `panjang` float DEFAULT NULL,
+  `idKamar` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kamar`
 --
 
-INSERT INTO `kamar` (`no_kamar`, `id_kost`, `status`, `lebar`, `panjang`) VALUES
-(1, 2, 'KOSONG', 3, 4);
+INSERT INTO `kamar` (`id_kost`, `status`, `lebar`, `panjang`, `idKamar`) VALUES
+(5, 'KOSONG', 3, 4, '62cb6b0bce83e'),
+(5, 'KOSONG', 3, 4, '62cb6b0bcfb3b'),
+(5, 'KOSONG', 3, 4, '62cb6b0bd0e70'),
+(5, 'KOSONG', 3, 4, '62cb6b0bd468f'),
+(5, 'KOSONG', 3, 4, '62cb6b0bd595f'),
+(5, 'KOSONG', 3, 4, '62cb6b0bd6fa2'),
+(5, 'KOSONG', 3, 4, '62cb6b0bd84c0'),
+(5, 'KOSONG', 3, 4, '62cb6b0bd99cc'),
+(5, 'KOSONG', 3, 4, '62cb6b0bdae42'),
+(5, 'KOSONG', 3, 4, '62cb6b0bdc3ab'),
+(5, 'KOSONG', 3, 4, '62cb6b0bdd8fd'),
+(5, 'KOSONG', 3, 4, '62cb6b0bded87'),
+(5, 'KOSONG', 3, 4, '62cb6b0be02a6'),
+(5, 'KOSONG', 3, 4, '62cb6b0be1736'),
+(5, 'KOSONG', 3, 4, '62cb6b0be2a5b'),
+(5, 'KOSONG', 3, 4, '62cb6b0be3c5b'),
+(5, 'KOSONG', 3, 4, '62cb6b0be4ea0'),
+(5, 'KOSONG', 3, 4, '62cb6b0be612d'),
+(5, 'KOSONG', 3, 4, '62cb6b0be7349'),
+(5, 'KOSONG', 3, 4, '62cb6b0be84d9'),
+(3, 'KOSONG', 3, 4, '62cb6bb97d831'),
+(3, 'KOSONG', 3, 4, '62cb6bb9807c8'),
+(3, 'KOSONG', 3, 4, '62cb6bb983217'),
+(3, 'KOSONG', 3, 4, '62cb6bb9868e2'),
+(3, 'KOSONG', 3, 4, '62cb6bb98905d'),
+(3, 'KOSONG', 3, 4, '62cb6bb98cdfa'),
+(3, 'KOSONG', 3, 4, '62cb6bb98e245'),
+(3, 'KOSONG', 3, 4, '62cb6bb98f107'),
+(3, 'KOSONG', 3, 4, '62cb6bb98ffc5'),
+(3, 'KOSONG', 3, 4, '62cb6bb9922b8'),
+(3, 'KOSONG', 3, 4, '62cb6bb993545'),
+(3, 'KOSONG', 3, 4, '62cb6bb9947f3'),
+(3, 'KOSONG', 3, 4, '62cb6bb9959af'),
+(3, 'KOSONG', 3, 4, '62cb6bb996c62'),
+(3, 'KOSONG', 3, 4, '62cb6bb997ecc'),
+(3, 'KOSONG', 3, 4, '62cb6bb99923e'),
+(3, 'KOSONG', 3, 4, '62cb6bb99a3da'),
+(3, 'KOSONG', 3, 4, '62cb6bb99b858'),
+(3, 'KOSONG', 3, 4, '62cb6bb99cc94'),
+(3, 'KOSONG', 3, 4, '62cb6bb99e105'),
+(3, 'KOSONG', 3, 4, '62cb6bb99f5a6');
 
 -- --------------------------------------------------------
 
@@ -133,7 +173,8 @@ INSERT INTO `kost` (`id`, `alamat`, `nama`, `jumlahKamar`, `NIK_Pemilik`, `harga
 (1, 'Jl. Raya Tajem Gg Manduro No.km 6', 'Kost Ali', 35, NULL, 950000, 'Putra', NULL),
 (2, 'Jl. Kemuning Salam No.52, Sanggrahan, Condongcatur, Kec. Depok', 'Kos Putra Nusantara', 25, NULL, 730000, 'Putra', NULL),
 (3, ' Jl. Raya Manukan, Mladangan', 'Kost Mawar', 21, '1234890723456789', 430000, 'Putri', '62c833dc576a1.jpg'),
-(4, 'Jl. kaliurang, Krawitan, Umbulmartani, Ngemplak', 'bebas', 10, '12378678362736', 700000, 'Putra', '62c978ced7192.jpg');
+(4, 'Jl. kaliurang, Krawitan, Umbulmartani, Ngemplak', 'bebas', 10, '12378678362736', 700000, 'Putra', '62c978ced7192.jpg'),
+(5, 'Cost Putra Sadewa Pugeran, Maguwoharjo, Depok, Sleman', 'Kost Sadewa', 20, '8907134586971234', 560000, 'Putra', '62cb6b0bcd1c1.jpg');
 
 -- --------------------------------------------------------
 
@@ -159,6 +200,7 @@ INSERT INTO `pemilik` (`NIK`, `nama`, `noTelp`, `alamat`, `email`, `keypassword`
 ('1234890723456789', 'dara zara', '091234567890', 'Tanggerang Selatan', 'dara@gmail.com', '$2y$10$WlOtfRF8zfHkEsVGanoP8eFDPCnnfEzQ7AfUNd3W1fRlrcQHRsANq'),
 ('1235908712345678', 'corn wall', '081234567895', 'corn field', 'corn@gmail.com', '$2y$10$gZ1WNbAeRNJSxYdMaBTNFurNAZYBQONLEwKHKkYxSNwPJ3NYN7pH.'),
 ('12378678362736', 'budi cek', '081227875674', 'kaliurang', 'cek@gmail.com', '$2y$10$HNqdJ1ZMRFsSQSQwUgY0/OxHU.FCcg8mmF6cmqlRJOL94mcfK1KgS'),
+('8907134586971234', 'ilham Rizqyakbar', '081323465789', 'Sanggrahan, Sleman, Yogyakarta', 'ilham@gmail.com', '$2y$10$a4D5EWpUzq7kyXp8GGvtfO.PjZcFqAzwamZdUOC0P7FAQN0/agwrG'),
 ('8909186957867890', 'dalas nasyar', '081234567890', 'Pogung, Yogyakarta', 'dalas@gmail.com', '$2y$10$jbo2q/pff0qsf7OY2mWLYufUdEx5WxQbxQOGlF7EWLJ.SOr827msi'),
 ('9856784358681234', 'ilham  Rizqyakbar', '081989096789', 'Sanggrahan, Sleman, Kalasan', 'ilham@gmail.com', '$2y$10$662vGTft3cThKvmWsXdowOH3PGAUhRJtkjsqNscZwcyrPpK6drWmC');
 
@@ -171,9 +213,9 @@ INSERT INTO `pemilik` (`NIK`, `nama`, `noTelp`, `alamat`, `email`, `keypassword`
 CREATE TABLE `penyewaan` (
   `id` int(6) NOT NULL,
   `NIK_penyewa` char(16) DEFAULT NULL,
-  `no_kamar` int(3) DEFAULT NULL,
   `tannggal_mulai` date NOT NULL,
-  `tanggal_akhir` date NOT NULL
+  `tanggal_akhir` date NOT NULL,
+  `idKamar` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -188,17 +230,16 @@ CREATE TABLE `pesanan` (
   `idKost` int(6) DEFAULT NULL,
   `tglPemesanan` date DEFAULT NULL,
   `mulaiSewa` date DEFAULT NULL,
-  `akhirSewa` date DEFAULT NULL
+  `akhirSewa` date DEFAULT NULL,
+  `totalPembayaran` bigint(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pesanan`
 --
 
-INSERT INTO `pesanan` (`idPesanan`, `idPemesan`, `idKost`, `tglPemesanan`, `mulaiSewa`, `akhirSewa`) VALUES
-('62c913e8b5fe0', '1989403989087564', 3, '2022-07-09', '2022-07-15', '2022-09-13'),
-('62c97b4a55b57', '1989403989087564', 4, '2022-07-09', '2022-07-09', '2023-07-09'),
-('62c97c153e72e', '1989403989087564', 4, '2022-07-09', '2022-07-09', '2023-07-09');
+INSERT INTO `pesanan` (`idPesanan`, `idPemesan`, `idKost`, `tglPemesanan`, `mulaiSewa`, `akhirSewa`, `totalPembayaran`) VALUES
+('62cb746a0c739', '1989403989087564', 3, '2022-07-11', '2022-07-11', '2023-07-11', 5160000);
 
 -- --------------------------------------------------------
 
@@ -279,7 +320,7 @@ ALTER TABLE `fasil_kost`
 -- Indexes for table `kamar`
 --
 ALTER TABLE `kamar`
-  ADD PRIMARY KEY (`no_kamar`),
+  ADD PRIMARY KEY (`idKamar`),
   ADD KEY `fk_id_kamar` (`id_kost`);
 
 --
@@ -301,7 +342,7 @@ ALTER TABLE `pemilik`
 ALTER TABLE `penyewaan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `NIK_penyewa` (`NIK_penyewa`),
-  ADD KEY `no_kamar` (`no_kamar`);
+  ADD KEY `penyewaan` (`idKamar`);
 
 --
 -- Indexes for table `pesanan`
@@ -340,7 +381,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `kost`
 --
 ALTER TABLE `kost`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `penyewaan`
@@ -376,7 +417,7 @@ ALTER TABLE `kost`
 --
 ALTER TABLE `penyewaan`
   ADD CONSTRAINT `Penyewaan_ibfk_1` FOREIGN KEY (`NIK_penyewa`) REFERENCES `users` (`NIK`),
-  ADD CONSTRAINT `Penyewaan_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `kamar` (`no_kamar`);
+  ADD CONSTRAINT `penyewaan` FOREIGN KEY (`idKamar`) REFERENCES `kamar` (`idKamar`);
 
 --
 -- Constraints for table `pesanan`
