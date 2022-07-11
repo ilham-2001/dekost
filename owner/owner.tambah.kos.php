@@ -3,11 +3,14 @@ session_start();
 
 require('core/init.php');
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 if (isset($_POST['btn-kos-singup'])) {
     // var_dump($_POST);
     // var_dump($_FILES);
+
+
+    var_dump($_POST);
 
     $namaKos = $_POST['nama-kos'];
     $alamatKos = $_POST['alamat-kos'];

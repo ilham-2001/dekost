@@ -26,11 +26,15 @@ if (isset($_POST['btn-kos-singup'])) {
     $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik);
     $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
 
-    if ($regis['isSuccess'] && $kamarGenereated) {
+    if ($regis['isSuccess'] && $kamarGenereated && !$_SESSION['login-admin']) {
         header("Location: owner.login.php");
+        exit;
+    } else if ($regis['isSuccess'] && $kamarGenereated && $_SESSION['login-admin']) {
+        header("Location: owner.data.kost.php");
         exit;
     }
 }
+
 
 ?>
 
@@ -148,10 +152,13 @@ if (isset($_POST['btn-kos-singup'])) {
                                                     <div class="form-floating">
                                                         <select class="form-select" aria-label="Default select example" name="nama-bank">
                                                             <option selected>Pilih Bank</option>
-                                                            <option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia</option>
+                                                            <option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia
+                                                            </option>
                                                             <option value="Bank Mandiri">Bank Mandiri</option>
-                                                            <option value="Bank Negara Indonesia">Bank Negara Indonesia</option>
-                                                            <option value="Bank Syariah Indonesia">Bank Syariah Indonesia</option>
+                                                            <option value="Bank Negara Indonesia">Bank Negara Indonesia
+                                                            </option>
+                                                            <option value="Bank Syariah Indonesia">Bank Syariah
+                                                                Indonesia</option>
                                                             <option value="Bank Central Asia">Bank Central Asia</option>
                                                             <option value="Bank BPD DIY">Bank BPD DIY</option>
                                                         </select>
