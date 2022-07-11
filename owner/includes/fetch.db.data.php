@@ -295,6 +295,19 @@ function countPesanan($idKost)
     return mysqli_fetch_assoc($query);
 }
 
+function countDataKamar($idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(idKamar) as kamar FROM kamar WHERE id_kost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+
 function insertKamarData($idKost, $lebar, $panjang)
 {
     global $conn;

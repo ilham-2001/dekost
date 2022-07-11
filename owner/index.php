@@ -8,6 +8,7 @@ $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 // $kamarGenereated = generateKamar(21, 3, 3, 4);
 
 $countPesanan = countPesanan($idKost)['pesanan'];
+$countKamar = countDataKamar($idKost)['kamar'];
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
@@ -249,8 +250,8 @@ $dataPoints2 = array(
                                                         <div
                                                             class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                             JUmlah Kamar</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">(count data
-                                                            kamar)</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                            <?= $countKamar ?></div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
