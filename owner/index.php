@@ -5,10 +5,9 @@ session_start();
 
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 
-// var_dump($idKost);
+// $kamarGenereated = generateKamar(21, 3, 3, 4);
 
 $countPesanan = countPesanan($idKost)['pesanan'];
-// var_dump($countPesanan);
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
@@ -21,6 +20,16 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+
+$dataPoints = array(
+    array("label" => "Food + Drinks", "y" => 590),
+    array("label" => "Activities and Entertainments", "y" => 261),
+    array("label" => "Health and Fitness", "y" => 158),
+    array("label" => "Shopping & Misc", "y" => 72),
+    array("label" => "Transportation", "y" => 191),
+    array("label" => "Rent", "y" => 573),
+    array("label" => "Travel Insurance", "y" => 126)
+);
 
 $dataPoints1 = array(
     array("label" => "Jan", "y" => 36.12),
@@ -371,7 +380,9 @@ $dataPoints2 = array(
                                             <!-- Card Body -->
                                             <div class="card-body">
                                                 <div class="chart-pie pt-4 pb-2">
-                                                    <canvas id="myPieChart"></canvas>
+                                                    <!-- <canvas id="myPieChart"></canvas> -->
+                                                    <div id="pieChartContainer" style="height: 370px; width: 100%;">
+                                                    </div>
                                                 </div>
                                                 <div class="mt-4 text-center small">
                                                     <span class="mr-2">
@@ -551,6 +562,27 @@ $dataPoints2 = array(
             }
             chart.render();
         }
+
+        var pieChart = new CanvasJS.Chart("pieChartContainer", {
+            animationEnabled: true,
+            exportEnabled: true,
+            title: {
+                text: "Average Expense Per Day  in Thai Baht"
+            },
+            subtitles: [{
+                text: "Currency Used: Thai Baht (฿)"
+            }],
+            data: [{
+                type: "pie",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - #percent%",
+                yValueFormatString: "฿#,##0",
+                dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+            }]
+        });
+        pieChart.render();
 
     }
     </script>
