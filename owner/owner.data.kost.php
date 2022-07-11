@@ -173,26 +173,26 @@ $dataKost = getDataKost($id);
                                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
                                                             <th>Harga</th>
                                                             <th>Jenis</th>
-                                                            <th>Jumlah Kamar</th>
+                                                            <th>Kamar</th>
+                                                            <th>Fasilitas</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                            <th></th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
                                                             <th>Harga</th>
                                                             <th>Jenis</th>
                                                             <th>Jumlah Kamar</th>
+                                                            <th>Fasilitas</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
@@ -200,16 +200,16 @@ $dataKost = getDataKost($id);
                                                     <tbody>
                                                         <?php foreach ($dataKost as $data) : ?>
                                                             <tr>
-                                                                <td></td>
                                                                 <td> <?= $data['id'] ?></td>
                                                                 <td> <?= $data['nama'] ?></td>
                                                                 <td> <?= $data['alamat'] ?></td>
-                                                                <td> <?= $data['harga'] ?></td>
+                                                                <td> <?= "Rp" . $data['harga'] ?></td>
                                                                 <td> <?= $data['jenis'] ?></td>
                                                                 <td> <?= $data['jumlahKamar'] ?></td>
+                                                                <td> <?= $data['fasilitas'] ?></td>
                                                                 <td> <?= $data['gambar_preview'] ?></td>
                                                                 <td>
-                                                                    <button class="btn btn-success"> Edit </button>
+                                                                    <button class="btn btn-success text-center mb-2"> Edit </button>
                                                                     <button class="btn btn-danger"> Hapus </button>
                                                                 </td>
                                                             </tr>
