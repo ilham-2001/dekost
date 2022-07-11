@@ -228,7 +228,7 @@ function getDataPesanan($idKost)
 {
     global $conn;
     $data = [];
-    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE idKost='$idKost'");
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran, pesanan.idPemesan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE idKost='$idKost'");
 
     if ($query) {
 
@@ -363,3 +363,43 @@ function getOwnerKostDataKamar($id)
 
 //     return $resQuery['id'];
 // }
+
+function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT idKamar from kamar WHERE status='KOSONG'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    $arr = [];
+    while ($data = mysqli_fetch_assoc($query)) {
+        array_push($arr, $data);
+    }
+
+    $idKamar = $arr[array_rand($arr, 1)]['idKamar'];
+    // var_dump($idKamar);
+
+    $kamarQuery = mysqli_query($conn, "INSERT INTO penyewaan(`NIK_Penyewa`, `tannggal_mulai`, `tanggal_akhir`, `idKamar`) VALUE ('$idPenyewa', '$tglMulai', '$tglAkhir', '$idKamar')");
+
+    if (!$kamarQuery) {
+        return FALSE;
+    }
+
+    return mysqli_affected_rows($conn) > 0;
+}
+
+function getInfoPesananById($idPesanan)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT idPemesan, mulaiSewa, akhirSewa FROM pesanan WHERE idPesanan='$idPesanan'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}

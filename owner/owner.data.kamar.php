@@ -233,8 +233,14 @@ if (!isset($_SESSION['login-admin'])) {
                                                             </td>
                                                             <td>ini gambar</td>
                                                             <td>
-                                                                <button>edit</button>
-                                                                <button>hapus</button>
+                                                                <form method="POST">
+                                                                    <button class="btn btn-success" value="accept"
+                                                                        name="validation-btn"
+                                                                        onclick="return confirm('Terima Pesanan?');">Accept</button>
+                                                                    <button class="btn btn-danger" value="reject"
+                                                                        name="validation-btn"
+                                                                        onclick="return confirm('Tolak dan Hapus Pesanan?');">Reject</button>
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                         <?php $num++; ?>

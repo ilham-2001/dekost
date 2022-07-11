@@ -3,6 +3,13 @@ require('core/init.php');
 
 session_start();
 
+
+if (!isset($_SESSION['login-admin'])) {
+    header("Location: owner.login.php");
+    exit;
+}
+
+
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 // var_dump($idKost);
 $dataPemesan = getDataPesanan($idKost);
@@ -17,20 +24,19 @@ if (isset($_POST['logout-owner-btn'])) {
 
 if (isset($_POST['validation-btn'])) {
     $val = explode(" ", $_POST['validation-btn']);
+    // var_dump($val);
 
     if ($val[0] == "accept") {
         // accept and set to random room
-
+        $pesananUser = getInfoPesananById($val[1]);
+        // var_dump($pesananUser);
+        setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa']);
     } else {
         // reject, delete from data pemesanan 
         rejectPemesanan($val[1]);
     }
 }
 
-if (!isset($_SESSION['login-admin'])) {
-    header("Location: owner.login.php");
-    exit;
-}
 
 ?>
 
@@ -62,7 +68,7 @@ if (!isset($_SESSION['login-admin'])) {
     <div class=" wrapper">
         <div class="container-fluid">
             <!-- navbar header -->
-            <nav class="navbar navbar-light fixed-top">
+            <nav class="navbar navbar-light">
                 <div class="container-fluid justify-content-center">
                     <h4 class="navbar-header text-white">
                         Selamat Datang di Sistem Informasi Kostan | DEKOST
@@ -238,11 +244,11 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <td>
                                                             <form method="POST">
                                                                 <button class="btn btn-success"
-                                                                    value="accept <?= $data['idPesanan'] ?>"
+                                                                    value="accept <?= "$data[idPesanan]" ?>"
                                                                     name="validation-btn"
                                                                     onclick="return confirm('Terima Pesanan?');">Accept</button>
                                                                 <button class="btn btn-danger"
-                                                                    value="reject <?= $data['idPesanan'] ?>"
+                                                                    value="reject <?= "$data[idPesanan]" ?>"
                                                                     name="validation-btn"
                                                                     onclick="return confirm('Tolak dan Hapus Pesanan?');">Reject</button>
                                                             </form>
