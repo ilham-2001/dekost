@@ -1,5 +1,15 @@
 <?php
+require('core/init.php');
+
 session_start();
+
+$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
+
+$dataKamar = getOwnerKostDataKamar($idKost);
+
+// var_dump($dataKamar);
+
+$num = 1;
 
 
 if (isset($_POST['logout-owner-btn'])) {
@@ -195,7 +205,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
-                                                    <tfoot>
+                                                    <!-- <tfoot>
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>ID Kamar</th>
@@ -207,15 +217,16 @@ if (!isset($_SESSION['login-admin'])) {
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
-                                                    </tfoot>
+                                                    </tfoot> -->
                                                     <tbody>
+                                                        <?php foreach ($dataKamar as $data) : ?>
                                                         <tr>
-                                                            <td>1</td>
-                                                            <td>KM001</td>
-                                                            <td>Kost serba ada</td>
-                                                            <td>Fajrun Shubhi</td>
-                                                            <td>Rp1.000.000</td>
-                                                            <td>Laki-Laki</td>
+                                                            <td><?= $num ?></td>
+                                                            <td><?= $data['idKamar'] ?></td>
+                                                            <td><?= $data['id_kost'] ?></td>
+                                                            <td><?= $data['lebar'] ?></td>
+                                                            <td><?= $data['panjang'] ?></td>
+                                                            <td><?= $data['status'] ?></td>
                                                             <td>Kamar mandi dalam,
                                                                 AC,
                                                                 TV, dll?
@@ -226,7 +237,9 @@ if (!isset($_SESSION['login-admin'])) {
                                                                 <button>hapus</button>
                                                             </td>
                                                         </tr>
-                                                        <tr>
+                                                        <?php $num++; ?>
+                                                        <?php endforeach; ?>
+                                                        <!-- <tr>
                                                             <td>2</td>
                                                             <td>KM003</td>
                                                             <td>Kost sempurna</td>
@@ -259,7 +272,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                                 <button>edit</button>
                                                                 <button>hapus</button>
                                                             </td>
-                                                        </tr>
+                                                        </tr> -->
                                                     </tbody>
                                                 </table>
                                             </div>

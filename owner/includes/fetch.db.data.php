@@ -213,7 +213,15 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
         return FALSE;
     }
 
-    return TRUE;
+    $idKosQuery = mysqli_query($conn, "SELECT id FROM kost WHERE nama='$namaKos'");
+
+    if (!$idKosQuery) {
+        return FALSE;
+    }
+
+    $idKos = mysqli_fetch_assoc($idKosQuery);
+
+    return ["isSuccess" => TRUE, "idKost" => $idKos['id']];
 }
 
 function getDataPesanan($idKost)
@@ -286,3 +294,72 @@ function countPesanan($idKost)
 
     return mysqli_fetch_assoc($query);
 }
+
+function countDataKamar($idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(idKamar) as kamar FROM kamar WHERE id_kost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+
+function insertKamarData($idKost, $lebar, $panjang)
+{
+    global $conn;
+
+    $idKamar = uniqid();
+    $status = "KOSONG";
+
+    $query = mysqli_query($conn, "INSERT INTO kamar(`id_kost`, `status`, `lebar`, `panjang`, `idKamar`) VALUES ('$idKost', '$status', '$lebar', '$panjang', '$idKamar')");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+function generateKamar($jumlahKamar, $idKost, $lebar, $panjang)
+{
+    for ($i = 0; $i < $jumlahKamar; $i++) {
+        $valid = insertKamarData($idKost, $lebar, $panjang);
+
+        if (!$valid) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+function getOwnerKostDataKamar($id)
+{
+    global $conn;
+
+    $data_array = [];
+    $data_query = mysqli_query($conn, "SELECT * FROM kamar WHERE id_kost='$id'");
+
+    while ($data = mysqli_fetch_assoc($data_query)) {
+        array_push($data_array, $data);
+    }
+
+    return $data_array;
+}
+
+// function getUniqueIdKost($idPemilik)
+// {
+//     global $conn;
+
+//     $query = mysqli_query($conn, "SELECT id FROM kost WHERE NIK_Pemilik=$idPemilik'");
+
+//     if (!$query) {
+//         return FALSE;
+//     }
+//     $resQuery = mysqli_fetch_assoc($query);
+
+//     return $resQuery['id'];
+// }
