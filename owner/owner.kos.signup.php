@@ -15,6 +15,11 @@ if (isset($_POST['btn-kos-singup'])) {
     $jumlahKamarKos = $_POST['jmlh-kamar'];
     $hargaKos = $_POST['harga'];
     $jenisKos = $_POST['jenis'];
+    // $namabank = $_POST['nama-bank'];
+    // $rekening = $_POST['rekening'];
+    // $fasilitas = $_POST['fasilitas'];
+
+
     $idPemilik = $_SESSION['NIK'];
     $gambar = $_FILES['kost-gambar'];
 
@@ -162,29 +167,29 @@ if (isset($_POST['btn-kos-singup'])) {
                                             <div class="fasilitas">
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <input type="checkbox" id="ac" name="ac" value="AC">
+                                                        <input type="checkbox" id="ac" name="fasilitas" value="AC">
                                                         <label for="ac"> AC </label><br>
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="checkbox" id="tv" name="tv" value="TV">
+                                                        <input type="checkbox" id="tv" name="fasilitas" value="TV">
                                                         <label for="tv"> TV</label><br>
                                                     </div>
                                                     <div class="col-5">
-                                                        <input type="checkbox" id="kmdalam" name="kmdalam" value="Kamar Mandi Dalam">
+                                                        <input type="checkbox" id="kmdalam" name="fasilitas" value="Kamar Mandi Dalam">
                                                         <label for="kmdalam"> KM Dalam</label><br>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <input type="checkbox" id="kasur" name="kasur" value="Kasur">
+                                                        <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
                                                         <label for="kasur"> Kasur </label><br>
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="checkbox" id="meja" name="meja" value="Meja">
+                                                        <input type="checkbox" id="meja" name="fasilitas" value="Meja">
                                                         <label for="meja"> Meja</label><br>
                                                     </div>
                                                     <div class="col-5">
-                                                        <input type="checkbox" id="lemari" name="lemari" value="Lemari">
+                                                        <input type="checkbox" id="lemari" name="fasilitas" value="Lemari">
                                                         <label for="lemari"> Lemari</label><br>
                                                     </div>
                                                 </div>
