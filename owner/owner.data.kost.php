@@ -1,6 +1,17 @@
 <?php
 session_start();
 
+require('core/init.php');
+
+$nikAkun = $_SESSION["id_pemilik"];
+
+global $conn;
+
+$pemilik = mysqli_query($conn, "SELECT * FROM pemilik WHERE NIK='$nikAkun'");
+$dataPemilik = mysqli_fetch_assoc($pemilik);
+$kost = mysqli_query($conn, "SELECT * FROM kost WHERE NIK_Pemilik = $nikAkun");
+$dataKost = $kost -> fetch_array();
+
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -11,6 +22,26 @@ if (isset($_POST['logout-owner-btn'])) {
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
+}
+
+if(isset($_POST["edit"])){
+    $nama = $_POST["nama"];
+    $alamat = $_POST["alamat"];
+    $jmlKamar = $_POST["jmlKamar"];
+    // var_dump($_GET);
+    $id = $_POST["id"];
+    
+    $query = "UPDATE kost SET 
+                nama = '$nama',
+                alamat = '$alamat',
+                jumlahKamar = '$jmlKamar',
+            WHERE id = '$id'";
+    mysqli_query($conn, $query);
+
+    if(mysqli_affected_rows($conn) > 0){
+        echo "<script> document.location.href = 'owner.data.kost.php'; </script>";
+    };
+
 }
 
 ?>
@@ -32,7 +63,7 @@ if (!isset($_SESSION['login-admin'])) {
     <!-- CSS Bootstrap -->
     <link href="../owner/assets/app/css/bootstrap.min.css" rel="stylesheet">
     <!--  CSS File -->
-    <link href="../owner/dist/css/index.css" rel="stylesheet"">
+    <link href="../owner/dist/css/index.css" rel="stylesheet">
     <!-- CSS Data Tabel -->
     <link rel=" stylesheet" type="text/css" href="../owner/dist/css/datatables.min.css">
 </head>
@@ -42,21 +73,20 @@ if (!isset($_SESSION['login-admin'])) {
     <div class=" wrapper">
         <div class="container-fluid">
             <!-- navbar header -->
-            <nav class="navbar navbar-light fixed-top">
+            <!-- <nav class="navbar navbar-light fixed-top">
                 <div class="container-fluid justify-content-center">
                     <h4 class="navbar-header text-white">
                         Selamat Datang di Sistem Informasi Kostan | DEKOST
                     </h4>
                 </div>
-            </nav>
+            </nav> -->
             <!--  CONTENT -->
             <div class="content mt-5">
                 <div class="row">
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
-                                href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
                                 <div class="sidebar-brand-icon">
                                     <img src="../owner/assets/icons/logo.png" alt="#logo">
                                 </div>
@@ -67,8 +97,7 @@ if (!isset($_SESSION['login-admin'])) {
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i
-                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -79,31 +108,25 @@ if (!isset($_SESSION['login-admin'])) {
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                                            aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                             <i class="fa-solid fa-database me-3"></i>
                                             Master Data
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="panelsStayOpen-headingOne">
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="owner.data.kost.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link active" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kamar.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Kamar</a>
+                                                <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.penyewa.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+                                                <a class="nav-link" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
                                             </li>
                                         </div>
                                     </div>
@@ -114,8 +137,7 @@ if (!isset($_SESSION['login-admin'])) {
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" href="owner.pesanan.kost.php"><i
-                                        class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
 
                             <!-- Divider -->
@@ -123,8 +145,7 @@ if (!isset($_SESSION['login-admin'])) {
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <form method="POST">
-                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
-                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
                                     </form>
                                 </li>
                             </div>
@@ -137,23 +158,20 @@ if (!isset($_SESSION['login-admin'])) {
                                 <!-- Topbar -->
                                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
                                     <!-- Sidebar Toggle (Topbar) -->
-                                    <button id="sidebarToggleTop" onclick="myFunction()"
-                                        class="btn btn-link rounded-circle d-sm-none mr-3">
+                                    <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
                                         <i class="fa fa-bars"></i>
                                     </button>
                                     <!-- Topbar Navbar -->
                                     <ul class="navbar-nav ms-auto me-4">
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
-                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/logo.png">
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
+
                                             </a>
                                             <!-- Dropdown - User Information -->
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                                aria-labelledby="userDropdown">
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
@@ -170,25 +188,21 @@ if (!isset($_SESSION['login-admin'])) {
                                     <div class="card shadow">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
-                                                <h1 class="h3 mb-0 text-gray-800"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Kost</h1>
-                                                <a href="owner.kelola.data.kost.php"
-                                                    class="tambah-data-kost float-right" style="text-decoration:none ;">
+                                                <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Data Kost</h1>
+                                                <a href="owner.tambah.kos.php" class="tambah-data-kost float-right" style="text-decoration:none ;">
                                                     <i class="fa-solid fa-plus me-2"></i>Tambah Data Kost</a>
                                             </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table table-bordered" id="dataTable" width="100%"
-                                                    cellspacing="0">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>ID Kost</th>
-                                                            <th>Nama Pemilik</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
-                                                            <th>Nilai</th>
+                                                            <th>Fasilitas</th>
                                                             <th>Jumlah Kamar</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
@@ -198,58 +212,67 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>ID Kost</th>
-                                                            <th>Nama Pemilik</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
-                                                            <th>Nilai</th>
+                                                            <th>Fasilitas</th>
                                                             <th>Jumlah Kamar</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>K00421</td>
-                                                            <td>Fajrun Shubhi</td>
-                                                            <td>Kost serba ada</td>
-                                                            <td>Jalan Kaliurang KM 14</td>
-                                                            <td>nilai?</td>
-                                                            <td>2</td>
-                                                            <td>ini gambar</td>
-                                                            <td>
-                                                                <button>edit</button>
-                                                                <button>hapus</button>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>K00422</td>
-                                                            <td>Jruns</td>
-                                                            <td>Kost sempurna</td>
-                                                            <td>Jalan Kaliurang KM 0</td>
-                                                            <td>nilai?</td>
-                                                            <td>1</td>
-                                                            <td>ini gambar</td>
-                                                            <td>
-                                                                <button>edit</button>
-                                                                <button>hapus</button>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>K00424</td>
-                                                            <td>Fajrun</td>
-                                                            <td>Kost eaa</td>
-                                                            <td>Jalan kaliurang KM 7</td>
-                                                            <td>nilai?</td>
-                                                            <td>0</td>
-                                                            <td>ini gambar</td>
-                                                            <td>
-                                                                <button>edit</button>
-                                                                <button>hapus</button>
-                                                            </td>
-                                                        </tr>
+                                                        <form action="" method="POST">
+                                                        <?php
+                                                            if(empty($dataKost["id"])){
+                                                                echo "<tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                    </tr>";
+                                                            }
+                                                            else{
+                                                                $nomor = 1;
+                                                                $kost = mysqli_query($conn, "SELECT * FROM kost WHERE NIK_Pemilik = $nikAkun");
+                                                                while($dataKost = $kost -> fetch_array()){
+                                                                    $idKost = $dataKost["id"];
+                                                                    $fasilitas = mysqli_query($conn, "SELECT nama FROM fasilitas WHERE id = ANY(SELECT id_fasil FROM fasil_kost WHERE id_kost = $idKost)");
+                                                                    $allFasilitas = "";
+                                                                    $i = 0;
+                                                                    while($fasil = $fasilitas -> fetch_array()){
+                                                                        $nama = $fasil["nama"];
+                                                                        if($i>0){
+                                                                            $allFasilitas = $allFasilitas . ", " . $nama;
+                                                                        } else{$allFasilitas = $nama;}
+                                                                        $i++;
+                                                                    }
+                                                                    echo "<tr>
+                                                                            <td>".$nomor."</td>
+                                                                            <td>".$idKost."</td>
+                                                                            <td>".$dataKost["nama"]."</td>
+                                                                            <td>".$dataKost["alamat"]."</td>
+                                                                            <td>".$allFasilitas."</td>
+                                                                            <td>".$dataKost["jumlahKamar"]."</td>
+                                                                            <td>".$dataKost["gambar_preview"]."</td>
+                                                                            <td>
+                                                                                <button class='btn btn-primary'>edit</button>
+                                                                                <button class='btn btn-primary'>hapus</button>
+                                                                            </td>
+                                                                        </tr>";
+                                                                    $nomor++;
+                                                                } // <a href='owner.data.kost.php?idKost=$idKost'>
+                                                                // <button type='submit' name='edit' class='btn btn-primary'>edit</button>
+                                                            // </a>
+                                                            // <a href='owner.data.kost.php?idKost=$idKost'>
+                                                                // <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
+                                                        // </a>
+                                                            }
+                                                        ?>
+                                                        </form>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -277,19 +300,19 @@ if (!isset($_SESSION['login-admin'])) {
     </div>
     </div>
     <script>
-    function myFunction() {
-        var x = document.getElementById("side-nav");
-        var y = document.getElementById("side-nav1");
-        var a = document.getElementById("main-content-header");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-            y.style.display = "none";
-        } else {
-            x.style.display = "block";
-            y.style.display = "block";
-            a.style.width = "none";
+        function myFunction() {
+            var x = document.getElementById("side-nav");
+            var y = document.getElementById("side-nav1");
+            var a = document.getElementById("main-content-header");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+                y.style.display = "none";
+            } else {
+                x.style.display = "block";
+                y.style.display = "block";
+                a.style.width = "none";
+            }
         }
-    }
     </script>
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
