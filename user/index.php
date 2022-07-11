@@ -483,18 +483,7 @@ mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.";
 
     <!-- Alert saat salah password atau username -->
     <?php if (isset($_POST['btn_submit'])) : ?>
-    <script type="text/javascript">
-    let isVerify = "<?= $verify; ?>"
-    let alert = $(".alert-danger")
-    console.log(isVerify);
-
-    if (!isVerify) {
-        alert.addClass('alert-on');
-        setTimeout(() => {
-            alert.removeClass('alert-on');
-        }, 2500);
-    }
-    </script>
+    <script src="assets/js/alert.js"></script>
     <?php endif; ?>
 
 </body>
