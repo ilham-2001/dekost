@@ -228,7 +228,7 @@ function getDataPesanan($idKost)
 {
     global $conn;
     $data = [];
-    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran, pesanan.idPemesan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE idKost='$idKost'");
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran, pesanan.idPemesan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE pesanan.idKost='$idKost'");
 
     if ($query) {
 
@@ -364,7 +364,7 @@ function getOwnerKostDataKamar($id)
 //     return $resQuery['id'];
 // }
 
-function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir)
+function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost)
 {
     global $conn;
 
@@ -382,11 +382,13 @@ function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir)
     $idKamar = $arr[array_rand($arr, 1)]['idKamar'];
     // var_dump($idKamar);
 
-    $kamarQuery = mysqli_query($conn, "INSERT INTO penyewaan(`NIK_Penyewa`, `tannggal_mulai`, `tanggal_akhir`, `idKamar`) VALUE ('$idPenyewa', '$tglMulai', '$tglAkhir', '$idKamar')");
+    $kamarQuery = mysqli_query($conn, "INSERT INTO penyewaan(`NIK_Penyewa`, `tannggal_mulai`, `tanggal_akhir`, `idKamar`, `idKost`) VALUE ('$idPenyewa', '$tglMulai', '$tglAkhir', '$idKamar', '$idKost')");
 
     if (!$kamarQuery) {
         return FALSE;
     }
+
+    mysqli_query($conn, "UPDATE kamar SET `status`='TERISI' WHERE `idKamar`='$idKamar'");
 
     return mysqli_affected_rows($conn) > 0;
 }
@@ -402,4 +404,18 @@ function getInfoPesananById($idPesanan)
     }
 
     return mysqli_fetch_assoc($query);
+}
+
+function getDataPenyewaanyId($idKost)
+{
+    global $conn;
+
+    $data_array = [];
+    $data_query = mysqli_query($conn, "SELECT * FROM penyewaan WHERE idKost='$idKost'");
+
+    while ($data = mysqli_fetch_assoc($data_query)) {
+        array_push($data_array, $data);
+    }
+
+    return $data_array;
 }

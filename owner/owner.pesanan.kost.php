@@ -30,7 +30,7 @@ if (isset($_POST['validation-btn'])) {
         // accept and set to random room
         $pesananUser = getInfoPesananById($val[1]);
         // var_dump($pesananUser);
-        setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa']);
+        setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa'], $idKost);
     } else {
         // reject, delete from data pemesanan 
         rejectPemesanan($val[1]);
@@ -68,7 +68,7 @@ if (isset($_POST['validation-btn'])) {
     <div class=" wrapper">
         <div class="container-fluid">
             <!-- navbar header -->
-            <nav class="navbar navbar-light">
+            <nav class="navbar navbar-light fixed-top">
                 <div class="container-fluid justify-content-center">
                     <h4 class="navbar-header text-white">
                         Selamat Datang di Sistem Informasi Kostan | DEKOST
