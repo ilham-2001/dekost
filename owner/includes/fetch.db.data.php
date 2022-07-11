@@ -242,6 +242,24 @@ function getDataPesanan($idKost)
     return FALSE;
 }
 
+function getDataKost($nik)
+{
+    global $conn;
+    $data = [];
+    $query = mysqli_query($conn, "SELECT id, alamat, nama, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview FROM kost WHERE NIK_Pemilik='$nik'");
+    if ($query) {
+
+        while ($dt = mysqli_fetch_assoc($query)) {
+            array_push($data, $dt);
+        }
+        // var_dump($data);
+        return $data;
+    }
+
+    return FALSE;
+}
+
+
 function rejectPemesanan($id)
 {
     global $conn;
@@ -274,6 +292,18 @@ function getUniqueIdKostByNIK($nik)
     global $conn;
 
     $query = mysqli_query($conn, "SELECT kost.id FROM kost INNER JOIN pemilik ON kost.NIK_Pemilik=pemilik.NIK WHERE pemilik.NIK='$nik'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+
+function countDataKos($nik)
+{
+    global $conn;
+    $query = mysqli_query($conn, "SELECT COUNT(id) as kost FROM kost WHERE NIK_Pemilik='$nik'");
 
     if (!$query) {
         return FALSE;
@@ -334,6 +364,18 @@ function generateKamar($jumlahKamar, $idKost, $lebar, $panjang)
         }
     }
     return TRUE;
+}
+
+function countPenghuniKost($nik)
+{
+    global $conn;
+    $query = mysqli_query($conn, "SELECT COUNT(id) as id_penghuni FROM penyewaan WHERE NIK_penyewa='$nik'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
 }
 
 function getOwnerKostDataKamar($id)
