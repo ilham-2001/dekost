@@ -9,6 +9,9 @@ $dataKamar = getOwnerKostDataKamar($idKost);
 
 // var_dump($dataKamar);
 
+$num = 1;
+
+
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -218,7 +221,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                     <tbody>
                                                         <?php foreach ($dataKamar as $data) : ?>
                                                         <tr>
-                                                            <td>1</td>
+                                                            <td><?= $num ?></td>
                                                             <td><?= $data['idKamar'] ?></td>
                                                             <td><?= $data['id_kost'] ?></td>
                                                             <td><?= $data['lebar'] ?></td>
@@ -234,6 +237,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                                 <button>hapus</button>
                                                             </td>
                                                         </tr>
+                                                        <?php $num++; ?>
                                                         <?php endforeach; ?>
                                                         <!-- <tr>
                                                             <td>2</td>
