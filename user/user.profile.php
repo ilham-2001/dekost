@@ -1,3 +1,41 @@
+<?php
+
+session_start();
+
+require('core/init.php');
+
+$nikAkun = $_SESSION["userNIK"];
+
+global $conn;
+
+if(isset($_POST["update"])){
+    $nik = $_POST["nik"];
+    $namaDepan = $_POST["namaDepan"];
+    $namaBelakang = $_POST["namaBelakang"];
+    $jk = $_POST["jk"];
+    $email = $_POST["email"];
+    $pass = $_POST["pass"];
+
+    $query = "UPDATE users SET 
+                NIK = '$nik',
+                email = '$email',
+                firstName = '$namaDepan',
+                lastName = '$namaBelakang',
+                jenisKelamin = '$jk',
+                keypassword = '$pass'
+            WHERE NIK = $nik";
+    mysqli_query($conn, $query);
+
+    if(mysqli_affected_rows($conn) > 0){
+        echo "<script> document.location.href = 'user.profile.php'; </script>";
+    };
+
+}
+
+$user = mysqli_query($conn, "SELECT * FROM users WHERE NIK='$nikAkun'");
+$dataUser = mysqli_fetch_assoc($user);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +81,21 @@
                         <form class="d-flex" method="POST">
                             <button class="btn btn-outline-primary btn-nav" type="submit" name="logout">Log Out</button>
                         </form>
+                        <ul class="navbar-nav me-4">
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>Ini Nama Pemilik Kost</span>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="user.profile.php">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
                     <?php endif; ?>
                 </div>
             </div>
@@ -63,34 +116,47 @@
                             <img class="img-fluid" src="../owner/assets/app/images/profile.jpg" height="400" width="400" alt="profile">
                         </div>
                         <div class="col-12 col-sm-12 col-md-7" style="overflow:auto ;">
+                        <form action="" method="POST">    
                             <table class="table">
                                 <tbody>
                                     <tr style="height:60px">
                                         <th>NIK</th>
-                                        <td> : 12908xxxxxxxxx</td>
+                                        <td> : </td>
+                                        <td><input type="text" id="nik" name="nik" value="<?= $dataUser["NIK"] ?>"></td>
                                     </tr>
                                     <tr style="height:60px">
-                                        <th>Nama </th>
-                                        <td> : Fajrun Shubhi</td>
+                                        <th>Nama Depan</th>
+                                        <td> : </td>
+                                        <td><input type="text" id="nama" name="namaDepan" value="<?= $dataUser["firstName"]?>">
+                                    </tr>
+                                    <tr style="height:60px">
+                                        <th>Nama Belakang</th>
+                                        <td> : </td>
+                                        <td><input type="text" id="nama" name="namaBelakang" value="<?= $dataUser["lastName"] ?>">
                                     </tr>
                                     <tr style="height:60px">
                                         <th>Jenis Kelamin </th>
-                                        <td> : Laki-Laki</td>
+                                        <td> : </td>
+                                        <td><input type="text" id="jk" name="jk" value="<?= $dataUser["jenisKelamin"] ?>">
                                     </tr>
                                     <tr style="height:60px">
                                         <th>Email </th>
-                                        <td> : Fajrun@gmail.com</td>
+                                        <td> : </td>
+                                        <td><input type="text" id="email" name="email" value="<?= $dataUser["email"] ?>">
                                     </tr>
-                                    <tr style="height:60px">
+                                    <!-- <tr style="height:60px">
                                         <th>Username</th>
                                         <td> : Jrunss</td>
-                                    </tr>
+                                    </tr> -->
                                     <tr style="height:60px">
                                         <th>Password</th>
-                                        <td> : fajrun1234567890</td>
+                                        <td> : </td>
+                                        <td><input type="text" id="pass" name="pass" value="<?= $dataUser["keypassword"] ?>">
                                     </tr>
                                 </tbody>
                             </table>
+                            <button type="submit" name="update" class="btn btn-primary">Update</button>
+                        </form>
                         </div>
                     </div>
                 </div>

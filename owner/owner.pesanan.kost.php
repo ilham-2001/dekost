@@ -27,6 +27,11 @@ if (isset($_POST['validation-btn'])) {
     }
 }
 
+if (!isset($_SESSION['login-admin'])) {
+    header("Location: owner.login.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -219,6 +224,7 @@ if (isset($_POST['validation-btn'])) {
                                                         <th>Akhir Sewa</th>
                                                         <th>Action</th>
                                                         <th style="display: none;">Tanggal Sewa</th>
+                                                        <th style="display: none;">Total Pembayaran</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -242,6 +248,7 @@ if (isset($_POST['validation-btn'])) {
                                                             </form>
                                                         </td>
                                                         <td style="display: none;"><?= $data['tglPemesanan'] ?></td>
+                                                        <td style="display: none;"><?= $data['totalPembayaran'] ?></td>
                                                     </tr>
                                                     <?php endforeach; ?>
                                                 </tbody>
