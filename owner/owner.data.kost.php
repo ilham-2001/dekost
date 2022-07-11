@@ -20,6 +20,20 @@ $data = getDataFromId("pemilik", $id);
 // get data kost by NIK
 $dataKost = getDataKost($id);
 
+// hapus data kost beserta value di foreign key nya
+if (isset($_GET['hapus'])) {
+    $idKost = $_GET['hapus'];
+    echo $idKost;
+    // var_dump($idKost);
+    deleteDataKost($idKost);
+    echo "<script> 
+            alert('Data kost berhasil dihapus!');
+            document.location.href = 'owner.data.kost.php';
+        </script>
+    ";
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -209,8 +223,8 @@ $dataKost = getDataKost($id);
                                                                 <td> <?= $data['fasilitas'] ?></td>
                                                                 <td> <?= $data['gambar_preview'] ?></td>
                                                                 <td>
-                                                                    <button class="btn btn-success text-center mb-2"> Edit </button>
-                                                                    <button class="btn btn-danger"> Hapus </button>
+                                                                    <a href="" class="btn-edit btn btn-success text-center mb-2"> Edit </a>
+                                                                    <a href="owner.data.kost.php?hapus= <?= $data['id'] ?>" class="hapus btn btn-danger" onclick="javascript: return confirm('Apakah anda yakin akan hapus data kost?')">Hapus</a>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -240,21 +254,7 @@ $dataKost = getDataKost($id);
         </div>
     </div>
     </div>
-    <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
-        }
-    </script>
+
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 

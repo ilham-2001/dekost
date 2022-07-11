@@ -393,6 +393,14 @@ function getOwnerKostDataKamar($id)
     return $data_array;
 }
 
+function deleteDataKost($idKost)
+{
+    global $conn;
+    $query = mysqli_query($conn, "DELETE FROM kost WHERE id='$idKost'");
+    if (!$query) {
+        return FALSE;
+    }
+}
 // function getUniqueIdKost($idPemilik)
 // {
 //     global $conn;
