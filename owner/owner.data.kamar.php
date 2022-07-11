@@ -204,24 +204,30 @@ if (!isset($_SESSION['login-admin'])) {
                                                     </tfoot> -->
                                                     <tbody>
                                                         <?php foreach ($dataKamar as $data) : ?>
-                                                            <tr>
-                                                                <td><?= $num ?></td>
-                                                                <td><?= $data['idKamar'] ?></td>
-                                                                <td><?= $data['id_kost'] ?></td>
-                                                                <td><?= $data['lebar'] ?></td>
-                                                                <td><?= $data['panjang'] ?></td>
-                                                                <td><?= $data['status'] ?></td>
-                                                                <td>Kamar mandi dalam,
-                                                                    AC,
-                                                                    TV, dll?
-                                                                </td>
-                                                                <td>ini gambar</td>
-                                                                <td>
-                                                                    <button class="btn btn-success">edit</button>
-                                                                    <button class="btn btn-danger">hapus</button>
-                                                                </td>
-                                                            </tr>
-                                                            <?php $num++; ?>
+                                                        <tr>
+                                                            <td><?= $num ?></td>
+                                                            <td><?= $data['idKamar'] ?></td>
+                                                            <td><?= $data['id_kost'] ?></td>
+                                                            <td><?= $data['lebar'] ?></td>
+                                                            <td><?= $data['panjang'] ?></td>
+                                                            <td><?= $data['status'] ?></td>
+                                                            <td>Kamar mandi dalam,
+                                                                AC,
+                                                                TV, dll?
+                                                            </td>
+                                                            <td>ini gambar</td>
+                                                            <td>
+                                                                <form method="POST">
+                                                                    <button class="btn btn-success" value="accept"
+                                                                        name="validation-btn"
+                                                                        onclick="return confirm('Terima Pesanan?');">Accept</button>
+                                                                    <button class="btn btn-danger" value="reject"
+                                                                        name="validation-btn"
+                                                                        onclick="return confirm('Tolak dan Hapus Pesanan?');">Reject</button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                        <?php $num++; ?>
                                                         <?php endforeach; ?>
                                                         <!-- <tr>
                                                             <td>2</td>
