@@ -63,8 +63,7 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
-                                href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
                                 <div class="sidebar-brand-icon">
                                     <img src="../owner/assets/icons/logo.png" alt="#logo">
                                 </div>
@@ -75,8 +74,7 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i
-                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -105,12 +103,14 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                                             <li class="nav-item">
                                                 <a class="nav-link" href="owner.data.kamar.php"><i
                                                         class="fa-solid fa-database me-3"></i>Data Kamar</a>
+
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="owner.data.penyewa.php"><i
                                                         class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+
                                             </li>
                                         </div>
                                     </div>
@@ -123,6 +123,7 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                             <li class="nav-item">
                                 <a class="nav-link" href="owner.pesanan.kost.php"><i
                                         class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+
                             </li>
 
                             <!-- Divider -->
@@ -133,6 +134,7 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                                     <form method="POST">
                                         <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
                                                 class="fa-solid fa-power-off me-2"></i>Log Out</button>
+
                                     </form>
                                 </li>
                             </div>
@@ -152,6 +154,7 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                                     <!-- Sidebar Toggle (Topbar) -->
                                     <button id="sidebarToggleTop" onclick="myFunction()"
                                         class="btn btn-link rounded-circle d-sm-none mr-3">
+
                                         <i class="fa fa-bars"></i>
                                     </button>
 
@@ -186,6 +189,7 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i
                                                         class="fa-solid fa-database me-3"></i>Data Penyewa</h1>
+
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -293,19 +297,19 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
 
     </div>
     <script>
-    function myFunction() {
-        var x = document.getElementById("side-nav");
-        var y = document.getElementById("side-nav1");
-        var a = document.getElementById("main-content-header");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-            y.style.display = "none";
-        } else {
-            x.style.display = "block";
-            y.style.display = "block";
-            a.style.width = "none";
+        function myFunction() {
+            var x = document.getElementById("side-nav");
+            var y = document.getElementById("side-nav1");
+            var a = document.getElementById("main-content-header");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+                y.style.display = "none";
+            } else {
+                x.style.display = "block";
+                y.style.display = "block";
+                a.style.width = "none";
+            }
         }
-    }
     </script>
 
     <!-- <script src="../owner/assets/app/js/bootstrap.min.js"></script> -->
