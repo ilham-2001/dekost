@@ -27,7 +27,7 @@ $id = $_SESSION['id_pemilik'];
 $data = getDataFromId("pemilik", $id);
 
 // get data kost by NIK
-$dataKost = getDataKost($id);
+// $dataKost = getDataKost($id);
 
 // hapus data kost beserta value di foreign key nya
 if (isset($_GET['hapus'])) {
@@ -91,13 +91,13 @@ if (isset($_POST["edit"])) {
     <div class=" wrapper">
         <div class="container-fluid">
             <!-- navbar header -->
-            <nav class="navbar navbar-light fixed-top">
+            <!-- <nav class="navbar navbar-light fixed-top">
                 <div class="container-fluid justify-content-center">
                     <h4 class="navbar-header text-white">
                         Selamat Datang di Sistem Informasi Kostan | DEKOST
                     </h4>
                 </div>
-            </nav>
+            </nav> -->
             <!--  CONTENT -->
             <div class="content mt-5">
                 <div class="row">
@@ -198,7 +198,6 @@ if (isset($_POST["edit"])) {
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-
                                                     height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
@@ -257,6 +256,7 @@ if (isset($_POST["edit"])) {
                                                     <tbody>
                                                         <form action="" method="POST">
                                                             <?php
+                                                            // var_dump($dataKost["id"]);
                                                             if (empty($dataKost["id"])) {
                                                                 echo "<tr>
                                                                         <td></td>
