@@ -18,6 +18,8 @@ if (!isset($_SESSION['login-admin'])) {
 $nikAkun = $_SESSION["id_pemilik"];
 $dataPemilik = getDataPemilik($nikAkun);
 
+var_dump($nikAkun);
+
 $currentDate = date("Y-m-d'", time());
 $currentYear = explode("-", $currentDate)[0];
 
@@ -26,8 +28,8 @@ $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 // $kamarGenereated = generateKamar(21, 3, 3, 4);
 
 $countPesanan = countPesanan($idKost)['pesanan'];
-$countKamar = countDataKamar($nikAkun);
-var_dump($countKamar);
+$countKamar = countDataKamar($nikAkun)['kamar'];
+// var_dump($countKamar);
 
 // get count data kost tiap owner 
 $id = $_SESSION['id_pemilik'];
@@ -157,38 +159,46 @@ $dataPoints2 = array(
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
 
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2 active"></i>
-                                Dashboard
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="index.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2 active"></i>
+                                    Dashboard
+                                </a>
+                            </li>
 
-                        <!-- Divider -->
-                        <hr class="sidebar-divider mt-2 bg-light">
+                            <!-- Divider -->
+                            <hr class="sidebar-divider mt-2 bg-light">
 
-                        <div class="accordion" id="accordionPanelsStayOpenExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                        <i class="fa-solid fa-database me-3"></i>
-                                        Master Data
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                                    <div class="accordion-body">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
-                                        </li>
-                                        <!-- Divider -->
-                                        <hr class="sidebar-divider mt-2 bg-light">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
-                                        </li>
-                                        <!-- Divider -->
-                                        <hr class="sidebar-divider mt-2 bg-light">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
-                                        </li>
+                            <div class="accordion" id="accordionPanelsStayOpenExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                            aria-controls="panelsStayOpen-collapseOne">
+                                            <i class="fa-solid fa-database me-3"></i>
+                                            Master Data
+                                        </button>
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="panelsStayOpen-headingOne">
+                                        <div class="accordion-body">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="owner.data.kost.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                            </li>
+                                            <!-- Divider -->
+                                            <hr class="sidebar-divider mt-2 bg-light">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="owner.data.kamar.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kamar</a>
+                                            </li>
+                                            <!-- Divider -->
+                                            <hr class="sidebar-divider mt-2 bg-light">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="owner.data.penyewa.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+                                            </li>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -196,77 +206,54 @@ $dataPoints2 = array(
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                            </li>
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
 
-                        <div class="logout">
-                            <li class="nav-item-logout">
-                                <form method="POST">
-                                    <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
-                                </form>
-                            </li>
-                        </div>
+                            <div class="logout">
+                                <li class="nav-item-logout">
+                                    <form method="POST">
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                    </form>
+                                </li>
+                            </div>
 
-                    </ul>
-                </div>
-                <div class="main-content-header col-sm-8 col-md-9 col-lg-9 col-xxl-10" id="main-content-header">
-                    <!-- Content Wrapper -->
-                    <div id="content-wrapper" class="d-flex flex-column">
-                        <!-- Main Content -->
-                        <div id="main-content">
-                            <!-- Topbar -->
-                            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
-                                <!-- Sidebar Toggle (Topbar) -->
-                                <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
-                                    <i class="fa fa-bars"></i>
-                                </button>
-                                <!-- Topbar Navbar -->
-                                <ul class="navbar-nav ms-auto me-4">
-                                    <!-- Nav Item - User Information -->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span><?= $data['nama'] ?><span>
-                                                    <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
-                                        </a>
-                                        <!-- Dropdown - User Information -->
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                            <a class="dropdown-item" href="owner.profile.php">
-                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                                Profile
+                        </ul>
+                    </div>
+                    <div class="main-content-header col-sm-8 col-md-9 col-lg-9 col-xxl-10" id="main-content-header">
+                        <!-- Content Wrapper -->
+                        <div id="content-wrapper" class="d-flex flex-column">
+                            <!-- Main Content -->
+                            <div id="main-content">
+                                <!-- Topbar -->
+                                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
+                                    <!-- Sidebar Toggle (Topbar) -->
+                                    <button id="sidebarToggleTop" onclick="myFunction()"
+                                        class="btn btn-link rounded-circle d-sm-none mr-3">
+                                        <i class="fa fa-bars"></i>
+                                    </button>
+                                    <!-- Topbar Navbar -->
+                                    <ul class="navbar-nav ms-auto me-4">
+                                        <!-- Nav Item - User Information -->
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
+                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span><?= $data['nama'] ?><span>
+                                                        <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
+                                                            height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </nav>
-
-                            <!-- Begin Page Content -->
-                            <div class="container-fluid">
-                                <!-- Page Heading -->
-                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                                </div>
-
-                                <!-- Content Row -->
-                                <div class="row">
-                                    <!-- Earnings (Monthly) Card Example -->
-                                    <div class="col-xl-3 col-md-6 mb-4">
-                                        <div class="card border-left-primary shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                            Jumlah Kost</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                            <?= $countDataKost ?></div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                                    </div>
-                                                </div>
+                                            <!-- Dropdown - User Information -->
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
+                                                <a class="dropdown-item" href="owner.profile.php">
+                                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Profile
+                                                </a>
                                             </div>
                                         </li>
                                     </ul>
@@ -279,43 +266,42 @@ $dataPoints2 = array(
                                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                                     </div>
 
-                                    <!-- Earnings (Monthly) Card Example -->
-                                    <div class="col-xl-3 col-md-6 mb-4">
-                                        <div class="card border-left-success shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                            JUmlah Kamar</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                            <?= $countKamar ?></div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    <!-- Content Row -->
+                                    <div class="row">
+                                        <!-- Earnings (Monthly) Card Example -->
+                                        <div class="col-xl-3 col-md-6 mb-4">
+                                            <div class="card border-left-primary shadow h-100 py-2">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <div
+                                                                class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                                Jumlah Kost</div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                <?= $countDataKost ?></div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    <!-- Earnings (Monthly) Card Example -->
-                                    <div class="col-xl-3 col-md-6 mb-4">
-                                        <div class="card border-left-info shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                            Jumlah Penghuni
+                                        <!-- Earnings (Monthly) Card Example -->
+                                        <div class="col-xl-3 col-md-6 mb-4">
+                                            <div class="card border-left-success shadow h-100 py-2">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <div
+                                                                class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                                Jumlah Kamar</div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                <?= $countKamar ?></div>
                                                         </div>
-                                                        <div class="row no-gutters align-items-center">
-                                                            <div class="col-auto">
-                                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                                    <?= $countPenghuni ?></div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="progress progress-sm mr-2">
-                                                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -328,10 +314,24 @@ $dataPoints2 = array(
                                                 <div class="card-body">
                                                     <div class="row no-gutters align-items-center">
                                                         <div class="col mr-2">
-                                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                Pesanan Menunggu</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                                <?= $countPesanan  ?>
+                                                            <div
+                                                                class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                                Jumlah Penghuni
+                                                            </div>
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div
+                                                                        class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                                        <?= $countPenghuni ?></div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="progress progress-sm mr-2">
+                                                                        <div class="progress-bar bg-info"
+                                                                            role="progressbar" style="width: 50%"
+                                                                            aria-valuenow="50" aria-valuemin="0"
+                                                                            aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-auto">
@@ -342,26 +342,24 @@ $dataPoints2 = array(
                                             </div>
                                         </div>
 
-                                <!-- Content Row -->
-
-                                <div class="row">
-                                    <!-- Area Chart -->
-                                    <div class="col-xl-8 col-lg-7">
-                                        <div class="card shadow mb-4">
-                                            <!-- Card Header - Dropdown -->
-                                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                <h6 class="m-0 font-weight-bold text-primary">Jumlah Keluar/Masuk
-                                                    Penyewa</h6>
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                                        <div class="dropdown-header">Dropdown Header:</div>
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <!-- Pending Requests Card Example -->
+                                        <div class="col-xl-3 col-md-6 mb-4">
+                                            <a href="owner.pesanan.kost.php">
+                                                <div class="card border-left-warning shadow h-100 py-2">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div
+                                                                    class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                    Pesanan Menunggu</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    <?= $countPesanan  ?>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </a>
@@ -548,19 +546,19 @@ $dataPoints2 = array(
         </div>
     </div>
     <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
+    function myFunction() {
+        var x = document.getElementById("side-nav");
+        var y = document.getElementById("side-nav1");
+        var a = document.getElementById("main-content-header");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            y.style.display = "none";
+        } else {
+            x.style.display = "block";
+            y.style.display = "block";
+            a.style.width = "none";
         }
+    }
     </script>
 
     <!-- <script src="../owner/assets/app/js/bootstrap.min.js"></script> -->
@@ -574,72 +572,72 @@ $dataPoints2 = array(
     <script src="assets/app/js/canvasjs.min.js"></script>
 
     <script>
-        window.onload = function() {
+    window.onload = function() {
 
-            var chart = new CanvasJS.Chart("myChart", {
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: "Jumlah Penyewa Tahun <?= $currentYear ?>"
-                },
-                axisY: {
-                    includeZero: true
-                },
-                legend: {
-                    cursor: "pointer",
-                    verticalAlign: "center",
-                    horizontalAlign: "right",
-                    itemclick: toggleDataSeries
-                },
-                data: [{
-                    type: "column",
-                    name: "Penyewa Masuk",
-                    indexLabel: "{y}",
-                    // yValueFormatString: "$#0.##",
-                    showInLegend: true,
-                    dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
-                }, {
-                    type: "column",
-                    name: "Penyewa Keluar",
-                    indexLabel: "{y}",
-                    // yValueFormatString: "$#0.##",
-                    showInLegend: true,
-                    dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
-                }]
-            });
-            chart.render();
+        var chart = new CanvasJS.Chart("myChart", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Jumlah Penyewa Tahun <?= $currentYear ?>"
+            },
+            axisY: {
+                includeZero: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "center",
+                horizontalAlign: "right",
+                itemclick: toggleDataSeries
+            },
+            data: [{
+                type: "column",
+                name: "Penyewa Masuk",
+                indexLabel: "{y}",
+                // yValueFormatString: "$#0.##",
+                showInLegend: true,
+                dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
+            }, {
+                type: "column",
+                name: "Penyewa Keluar",
+                indexLabel: "{y}",
+                // yValueFormatString: "$#0.##",
+                showInLegend: true,
+                dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+            }]
+        });
+        chart.render();
 
-            function toggleDataSeries(e) {
-                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                } else {
-                    e.dataSeries.visible = true;
-                }
-                chart.render();
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
             }
-
-            var pieChart = new CanvasJS.Chart("pieChartContainer", {
-                animationEnabled: true,
-                exportEnabled: true,
-                title: {
-                    text: "Kos dengan minat terbanyak "
-                },
-                subtitles: [{
-                    text: "Jumlah penyewa kos "
-                }],
-                data: [{
-                    type: "pie",
-                    showInLegend: "true",
-                    legendText: "{label}",
-                    indexLabelFontSize: 16,
-                    indexLabel: "{label} - #percent%",
-                    // yValueFormatString: "฿#,##0",
-                    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-                }]
-            });
-            pieChart.render();
-
+            chart.render();
         }
+
+        var pieChart = new CanvasJS.Chart("pieChartContainer", {
+            animationEnabled: true,
+            exportEnabled: true,
+            title: {
+                text: "Kos dengan minat terbanyak "
+            },
+            subtitles: [{
+                text: "Jumlah penyewa kos "
+            }],
+            data: [{
+                type: "pie",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - #percent%",
+                // yValueFormatString: "฿#,##0",
+                dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+            }]
+        });
+        pieChart.render();
+
+    }
     </script>
 
 </body>
