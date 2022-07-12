@@ -4,7 +4,6 @@ require('core/init.php');
 
 session_start();
 
-var_dump($_SESSION);
 
 if (isset($_POST['btn-kos-singup'])) {
     // var_dump($_POST);
@@ -15,21 +14,21 @@ if (isset($_POST['btn-kos-singup'])) {
     $jumlahKamarKos = $_POST['jmlh-kamar'];
     $hargaKos = $_POST['harga'];
     $jenisKos = $_POST['jenis'];
-    // $namabank = $_POST['nama-bank'];
-    // $rekening = $_POST['rekening'];
+    $namabank = $_POST['nama-bank'];
+    $rekening = $_POST['rekening'];
     // $fasilitas = $_POST['fasilitas'];
 
-
-    $idPemilik = $_SESSION['NIK'];
+    $idPemilik = $_SESSION['id_pemilik'];
     $gambar = $_FILES['kost-gambar'];
-
     $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik);
     $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
+    $rekeningGenerated = generateRekening($namabank, $rekening, $idPemilik);
 
-    if ($regis['isSuccess'] && $kamarGenereated && !$_SESSION['login-admin']) {
+    // var_dump($kamarGenereated);
+    if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && !$_SESSION['login-admin']) {
         header("Location: owner.login.php");
         exit;
-    } else if ($regis['isSuccess'] && $kamarGenereated && $_SESSION['login-admin']) {
+    } else if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && $_SESSION['login-admin']) {
         header("Location: owner.data.kost.php");
         exit;
     }
