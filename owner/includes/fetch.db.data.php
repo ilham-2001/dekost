@@ -192,7 +192,7 @@ function uploadImage($imgURL)
     return $newName;
 }
 
-function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, $idPemilik)
+function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, $idPemilik, $fasilitas)
 {
     global $conn;
 
@@ -201,13 +201,14 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
     $harga = mysqli_real_escape_string($conn, $harga);
     $jenis = mysqli_real_escape_string($conn, $jenis);
     $alamat = mysqli_real_escape_string($conn, $alamat);
+    $fasilitas = mysqli_real_escape_string($conn, $fasilitas);
     $gambar = uploadImage($gambar);
 
     if (!$gambar) {
         return FALSE;
     }
 
-    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', $harga, '$jenis', '$gambar')");
+    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview, fasilitas) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', $harga, '$jenis', '$gambar', '$fasilitas')");
 
     if (!$query) {
         return FALSE;
@@ -242,6 +243,24 @@ function getDataPesanan($idKost)
     return FALSE;
 }
 
+function getDataKost($nik)
+{
+    global $conn;
+    $data = [];
+    $query = mysqli_query($conn, "SELECT id, alamat, nama, jumlahKamar, NIK_Pemilik, harga, jenis, fasilitas, gambar_preview FROM kost WHERE NIK_Pemilik='$nik'");
+    if ($query) {
+
+        while ($dt = mysqli_fetch_assoc($query)) {
+            array_push($data, $dt);
+        }
+        // var_dump($data);
+        return $data;
+    }
+
+    return FALSE;
+}
+
+
 function rejectPemesanan($id)
 {
     global $conn;
@@ -274,6 +293,18 @@ function getUniqueIdKostByNIK($nik)
     global $conn;
 
     $query = mysqli_query($conn, "SELECT kost.id FROM kost INNER JOIN pemilik ON kost.NIK_Pemilik=pemilik.NIK WHERE pemilik.NIK='$nik'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+
+function countDataKos($nik)
+{
+    global $conn;
+    $query = mysqli_query($conn, "SELECT COUNT(id) as kost FROM kost WHERE NIK_Pemilik='$nik'");
 
     if (!$query) {
         return FALSE;
@@ -329,10 +360,48 @@ function generateKamar($jumlahKamar, $idKost, $lebar, $panjang)
     for ($i = 0; $i < $jumlahKamar; $i++) {
         $valid = insertKamarData($idKost, $lebar, $panjang);
 
+        echo $valid;
+
         if (!$valid) {
             return FALSE;
         }
     }
+    return TRUE;
+}
+
+function countPenghuniKost($nik)
+{
+    global $conn;
+    $query = mysqli_query($conn, "SELECT COUNT(id) as id_penghuni FROM penyewaan WHERE NIK_penyewa='$nik'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['id_penghuni'];
+}
+
+function getDataPemilik($nikAkun)
+{
+
+    global $conn;
+
+    $pemilik = mysqli_query($conn, "SELECT * FROM pemilik WHERE NIK='$nikAkun'");
+    $dataPemilik = mysqli_fetch_assoc($pemilik);
+
+    return $dataPemilik;
+}
+
+function generateRekening($namaBank, $rekening, $nikPemilik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "INSERT INTO rekening(`NoRekening`, `bank`, `NIK_Pemilik`) VALUES ('$rekening', '$namaBank', '$nikPemilik')");
+
+    if (!$query) {
+        return FALSE;
+    }
+
     return TRUE;
 }
 
@@ -350,6 +419,14 @@ function getOwnerKostDataKamar($id)
     return $data_array;
 }
 
+function deleteDataKost($idKost)
+{
+    global $conn;
+    $query = mysqli_query($conn, "DELETE FROM kost WHERE id='$idKost'");
+    if (!$query) {
+        return FALSE;
+    }
+}
 // function getUniqueIdKost($idPemilik)
 // {
 //     global $conn;
@@ -364,7 +441,7 @@ function getOwnerKostDataKamar($id)
 //     return $resQuery['id'];
 // }
 
-function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost)
+function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost, $idPesanan)
 {
     global $conn;
 
@@ -390,7 +467,13 @@ function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost)
 
     mysqli_query($conn, "UPDATE kamar SET `status`='TERISI' WHERE `idKamar`='$idKamar'");
 
-    return mysqli_affected_rows($conn) > 0;
+    $query = mysqli_query($conn, "DELETE FROM pesanan WHERE `idPesanan`='$idPesanan'");
+
+    if ($query) {
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 function getInfoPesananById($idPesanan)
@@ -406,7 +489,7 @@ function getInfoPesananById($idPesanan)
     return mysqli_fetch_assoc($query);
 }
 
-function getDataPenyewaanyId($idKost)
+function getDataPenyewaanById($idKost)
 {
     global $conn;
 
@@ -418,4 +501,30 @@ function getDataPenyewaanyId($idKost)
     }
 
     return $data_array;
+}
+
+function getSewaMasukByBulan($bulan, $idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(id) as jumlah_penyewa FROM penyewaan WHERE (tannggal_mulai BETWEEN '2022-$bulan-01' AND '2022-$bulan-31') AND idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_penyewa'];
+}
+
+function getSewaKeluarByBulan($bulan, $idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(id) as jumlah_penyewa FROM penyewaan WHERE (tanggal_akhir BETWEEN '2022-$bulan-01' AND '2022-$bulan-31') AND idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_penyewa'];
 }

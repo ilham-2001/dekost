@@ -1,9 +1,8 @@
 <?php
-require('core/init.php');
 session_start();
 
-$nikAkun = $_SESSION["id_pemilik"];
-$dataPemilik = getDataPemilik($nikAkun);
+require('core/init.php');
+
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -15,15 +14,6 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
-// get username
-$id = $_SESSION['id_pemilik'];
-$data = getDataFromId("pemilik", $id);
-
-$num = 1;
-$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
-$dataPenyewa = getDataPenyewaanById($idKost);
-
-// var_dump($dataPenyewa);
 
 ?>
 
@@ -85,6 +75,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
+
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -96,19 +87,17 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link active" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
-
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
-
+                                                <a class="nav-link" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
                                             </li>
                                         </div>
                                     </div>
@@ -118,28 +107,16 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
-                        </li>
-
-                        <!-- Divider -->
-                        <hr class="sidebar-divider mt-2 bg-light">
-
-                        <div class="logout">
-                            <li class="nav-item-logout">
-                                <form method="POST">
-                                    <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
-                                </form>
+                            <li class="nav-item">
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
 
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
-
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <form method="POST">
                                         <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
-
                                     </form>
                                 </li>
                             </div>
@@ -147,21 +124,14 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                         </ul>
                     </div>
                     <div class="main-content-header col-sm-8 col-md-9 col-lg-9 col-xxl-10" id="main-content-header">
-                        <!-- Content Wrapper -->
                         <div id="content-wrapper" class="d-flex flex-column">
-
-                            <!-- Main Content -->
                             <div id="main-content">
-
                                 <!-- Topbar -->
                                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
-
                                     <!-- Sidebar Toggle (Topbar) -->
                                     <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
-
                                         <i class="fa fa-bars"></i>
                                     </button>
-
                                     <!-- Topbar Navbar -->
                                     <ul class="navbar-nav ms-auto me-4">
                                         <!-- Nav Item - User Information -->
@@ -184,116 +154,124 @@ $dataPenyewa = getDataPenyewaanById($idKost);
 
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
-
                                     <div class="card shadow">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
-                                                <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Data Penyewa</h1>
-
+                                                <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Edit Data Kost</h1>
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No.</th>
-                                                            <th>Nama Penyewa</th>
-                                                            <th>Nama Kost</th>
-                                                            <th>No Kamar</th>
-                                                            <th>Mulai Sewa</th>
-                                                            <th>Akhir Sewa</th>
-                                                            <th>No Telp</th>
-                                                            <th>Bukti Pembayaran</th>
-                                                            <th>Aksi</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <!-- <tfoot>
-                                                        <tr>
-                                                            <th>No.</th>
-                                                            <th>Nama Penyewa</th>
-                                                            <th>Nama Kost</th>
-                                                            <th>No Kamar</th>
-                                                            <th>Mulai Sewa</th>
-                                                            <th>Akhir Sewa</th>
-                                                            <th>No Telp</th>
-                                                            <th>Bukti Pembayaran</th>
-                                                            <th>Aksi</th>
-                                                        </tr>
-                                                    </tfoot> -->
+                                        <div class="card-body ps-5">
+                                            <form class="form-edit-kos" method="POST" enctype="multipart/form-data">
+                                                <table class="table table-borderless">
                                                     <tbody>
-                                                        <?php foreach ($dataPenyewa as $penyewa) : ?>
-                                                            <tr>
-                                                                <td><?= $num ?></td>
-                                                                <td><?= $penyewa['NIK_penyewa'] ?></td>
-                                                                <td>kos ada</td>
-                                                                <td>2</td>
-                                                                <td><?= $penyewa['tannggal_mulai'] ?></td>
-                                                                <td><?= $penyewa['tanggal_akhir'] ?></td>
-                                                                <td>083778765378</td>
-                                                                <td>gambar</td>
-                                                                <td>
-                                                                    <button class="btn btn-success">edit</button>
-                                                                    <button class="btn btn-danger">hapus</button>
-                                                                </td>
-                                                            </tr>
-                                                            <?php $num++; ?>
-                                                        <?php endforeach; ?>
-                                                        <!-- <tr>
-                                                            <td>1</td>
-                                                            <td>budi</td>
-                                                            <td>kos ada</td>
-                                                            <td>2</td>
-                                                            <td>tgl masuk</td>
-                                                            <td>tgl keluar</td>
-                                                            <td>083778765378</td>
-                                                            <td>gambar</td>
+                                                        <tr style="height:60px">
+                                                            <th><label for="nama">Nama</label></th>
+                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="nama" placeholder="Nama kost..." name="nama-kos" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th><label for="Alamat">Alamat</label></th>
+                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="alamat" placeholder="Alamat..." name="alamat-kos" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th><label for="jumlahkamar">Jumlah Kamar</label> </th>
+                                                            <td> : <input style="border-radius: 10px;" type="number" class="form pt-1 w-50" id="jumlahkamar" placeholder="Jumlah Kamar" name="jumlahkamar" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th><label for="harga">Harga</label></th>
+                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="harga" placeholder="Harga..." name="harga" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th>Kategori</th>
+                                                            <td> : <select class="form w-60" aria-label="Default select example" name="jenis">
+                                                                    <option value="Putra" selected>Putra</option>
+                                                                    <option value="Putri">Putri</option>
+                                                                    <option value="Campuran">Campuran</option>
+                                                                </select></td>
+                                                        </tr>
+                                                        <tr style="height:60px ;">
+                                                            <th>Fasilitas</th>
                                                             <td>
-                                                                <button class="btn btn-success">edit</button>
-                                                                <button class="btn btn-danger">hapus</button>
+                                                                <div class="fasilitas">
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="ac" name="fasilitas" value="AC">
+                                                                            <label for="ac"> AC </label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="tv" name="fasilitas" value="Kamar Mandi Dalam">
+                                                                            <label for="tv"> Kamar Mandi Dalam</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="wifi" name="fasilitas" value="Wifi">
+                                                                            <label for="kmdalam"> Wifi</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="air" name="fasilitas" value="Air">
+                                                                            <label for="kasur"> Air </label><br>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="listrik" name="fasilitas" value="Listrik">
+                                                                            <label for="meja"> Listrik</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
+                                                                            <label for="kasur"> Kasur </label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="lemari" name="fasilitas" value="Lemari">
+                                                                            <label for="lemari"> Lemari</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="meja" name="fasilitas" value="Meja">
+                                                                            <label for="kasur"> Meja </label><br>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>1</td>
-                                                            <td>budi</td>
-                                                            <td>kos ada</td>
-                                                            <td>2</td>
-                                                            <td>tgl masuk</td>
-                                                            <td>tgl keluar</td>
-                                                            <td>083778765378</td>
-                                                            <td>gambar</td>
-                                                            <td>
-                                                                <button class="btn btn-success">edit</button>
-                                                                <button class="btn btn-danger">hapus</button>
+                                                            <th>Gambar</th>
+                                                            <td> :
+                                                                <label class="label-upload" style="color:#2155CD;">Upload Foto
+                                                                    Kost</label>
+                                                                <input type="file" class="form-control w-50" id="inputGroupFile02" name="kost-gambar"><br><br>
                                                             </td>
-                                                        </tr> -->
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>
+                                                                <button style="width: 50%; border-radius:10px;" class=" btn btn-primary" type="submit" name="btn-edit-kos">Edit Data Kost
+                                                                </button>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
 
-
                                 </div>
-                                <!-- /.container-fluid -->
                             </div>
-                            <!-- End of Main Content -->
-
-                            <!-- Footer -->
-                            <footer class="sticky-footer bg-white fixed-bottom">
-                                <div class="container">
-                                    <div class="copyright text-center">
-                                        <span>Copyright &copy; Kolektif Team 2022</span>
-                                    </div>
-                                </div>
-                            </footer>
-                            <!-- End of Footer -->
                         </div>
+
+                        <!-- Footer -->
+                        <footer class="sticky-footer bg-white fixed-bottom">
+                            <div class="container">
+                                <div class="copyright text-center">
+                                    <span>Copyright &copy; Kolektif Team 2022</span>
+                                </div>
+                            </div>
+                        </footer>
+                        <!-- End of Footer -->
                     </div>
+                    <!-- End of Content Wrapper -->
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
     <script>
         function myFunction() {
@@ -310,13 +288,12 @@ $dataPenyewa = getDataPenyewaanById($idKost);
             }
         }
     </script>
-
-    <!-- <script src="../owner/assets/app/js/bootstrap.min.js"></script> -->
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="/owner/dist/js/hehe.js"></script>
+
     <!-- JS data tabel -->
     <script src="../owner/dist/js/datatables.min.js"></script>
     <script src="../owner/dist/js/dataTabel.js"></script>
