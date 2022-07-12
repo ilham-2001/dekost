@@ -47,6 +47,8 @@ $dataPenyewa = getDataPenyewaanById($idKost);
     <link href="../owner/dist/css/index.css" rel="stylesheet"">
     <!-- CSS Data Tabel -->
     <link rel=" stylesheet" type="text/css" href="../owner/dist/css/datatables.min.css">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>
