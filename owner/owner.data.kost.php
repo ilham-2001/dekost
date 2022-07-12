@@ -88,7 +88,7 @@ if (isset($_POST["edit"])) {
                             <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
                                 href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/logo.png" alt="#logo">
+                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -179,7 +179,7 @@ if (isset($_POST["edit"])) {
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span>Ini Nama Pemilik Kost</span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/logo.png">
+                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
 
                                             </a>
                                             <!-- Dropdown - User Information -->

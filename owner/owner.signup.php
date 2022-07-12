@@ -72,7 +72,7 @@ if (isset($_POST['button_signup'])) {
     <link rel="stylesheet" href="assets/app/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/app/css/custom.style.css">
     <!-- Favicon -->
-    <link rel="icon" href="assets/icon/favicon.ico">
+    <link rel="icon" href="assets/icon/DeKost.png">
 </head>
 
 <body>
@@ -133,7 +133,7 @@ if (isset($_POST['button_signup'])) {
                                 <div class="col-lg-6">
                                     <div class="card-body p-md-5">
                                         <div class="text-center">
-                                            <h4> <img class="pb-2 pe-2" src="../owner/assets/icons/logo.png" style="width: 50px; height:50px;" alt="logo">De'Kost</h4>
+                                            <h4> <img class="pb-2 pe-2" src="../owner/assets/icons/DeKost2.png" style="width: 50px; height:50px;" alt="logo">De'Kost</h4>
                                         </div>
                                         <form class="form-signin" method="POST">
                                             <p class="fw-bold text-center">CREATE ACCOUNT</p>

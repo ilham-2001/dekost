@@ -53,7 +53,7 @@ $dataUser = mysqli_fetch_assoc($user);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" href="assets/icon/favicon.ico">
+    <link rel="icon" href="assets/icon/DeKost.png">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
     <title>Profile Penyewa</title>
 </head>
@@ -168,7 +168,7 @@ $dataUser = mysqli_fetch_assoc($user);
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
+                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/DeKost2.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
                     <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
                     <ul class="list-unstyled text-muted">
                         <li><a href="#tentangkami">Tentang Kami</a></li>
