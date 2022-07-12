@@ -247,7 +247,7 @@ function getDataKost($nik)
 {
     global $conn;
     $data = [];
-    $query = mysqli_query($conn, "SELECT id, alamat, nama, jumlahKamar, NIK_Pemilik, harga, jenis, fasilitas, gambar_preview FROM kost WHERE NIK_Pemilik='$nik'");
+    $query = mysqli_query($conn, "SELECT id, alamat, nama, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview FROM kost WHERE NIK_Pemilik='$nik'");
     if ($query) {
 
         while ($dt = mysqli_fetch_assoc($query)) {
