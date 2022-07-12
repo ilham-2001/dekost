@@ -37,6 +37,8 @@ if (!isset($_SESSION['login-admin'])) {
     <link href="../owner/dist/css/index.css" rel="stylesheet"">
     <!-- CSS Data Tabel -->
     <link rel=" stylesheet" type="text/css" href="../owner/dist/css/datatables.min.css">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>
@@ -57,7 +59,8 @@ if (!isset($_SESSION['login-admin'])) {
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
+                                href="index.php">
                                 <div class="sidebar-brand-icon">
                                     <img src="../owner/assets/icons/logo.png" alt="#logo">
                                 </div>
@@ -68,7 +71,8 @@ if (!isset($_SESSION['login-admin'])) {
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -79,25 +83,31 @@ if (!isset($_SESSION['login-admin'])) {
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                            aria-controls="panelsStayOpen-collapseOne">
                                             <i class="fa-solid fa-database me-3"></i>
                                             Master Data
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link active" href="owner.data.kost.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
+                                                <a class="nav-link" href="owner.data.kamar.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kamar</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+                                                <a class="nav-link" href="owner.data.penyewa.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</a>
                                             </li>
                                         </div>
                                     </div>
@@ -108,7 +118,8 @@ if (!isset($_SESSION['login-admin'])) {
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
 
                             <!-- Divider -->
@@ -116,7 +127,8 @@ if (!isset($_SESSION['login-admin'])) {
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <form method="POST">
-                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
                                     </form>
                                 </li>
                             </div>
@@ -129,19 +141,23 @@ if (!isset($_SESSION['login-admin'])) {
                                 <!-- Topbar -->
                                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
                                     <!-- Sidebar Toggle (Topbar) -->
-                                    <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
+                                    <button id="sidebarToggleTop" onclick="myFunction()"
+                                        class="btn btn-link rounded-circle d-sm-none mr-3">
                                         <i class="fa fa-bars"></i>
                                     </button>
                                     <!-- Topbar Navbar -->
                                     <ul class="navbar-nav ms-auto me-4">
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
+                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
+                                                    height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
@@ -157,7 +173,8 @@ if (!isset($_SESSION['login-admin'])) {
                                     <div class="card shadow">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
-                                                <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Edit Data Kost</h1>
+                                                <h1 class="h3 mb-0 text-gray-800"><i
+                                                        class="fa-solid fa-database me-3"></i>Edit Data Kost</h1>
                                             </div>
                                         </div>
                                         <div class="card-body ps-5">
@@ -166,23 +183,36 @@ if (!isset($_SESSION['login-admin'])) {
                                                     <tbody>
                                                         <tr style="height:60px">
                                                             <th><label for="nama">Nama</label></th>
-                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="nama" placeholder="Nama kost..." name="nama-kos" autocomplete="off"></td>
+                                                            <td> : <input style="border-radius: 10px;" type="text"
+                                                                    class="form pt-1 w-50" id="nama"
+                                                                    placeholder="Nama kost..." name="nama-kos"
+                                                                    autocomplete="off"></td>
                                                         </tr>
                                                         <tr style="height:60px">
                                                             <th><label for="Alamat">Alamat</label></th>
-                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="alamat" placeholder="Alamat..." name="alamat-kos" autocomplete="off"></td>
+                                                            <td> : <input style="border-radius: 10px;" type="text"
+                                                                    class="form pt-1 w-50" id="alamat"
+                                                                    placeholder="Alamat..." name="alamat-kos"
+                                                                    autocomplete="off"></td>
                                                         </tr>
                                                         <tr style="height:60px">
                                                             <th><label for="jumlahkamar">Jumlah Kamar</label> </th>
-                                                            <td> : <input style="border-radius: 10px;" type="number" class="form pt-1 w-50" id="jumlahkamar" placeholder="Jumlah Kamar" name="jumlahkamar" autocomplete="off"></td>
+                                                            <td> : <input style="border-radius: 10px;" type="number"
+                                                                    class="form pt-1 w-50" id="jumlahkamar"
+                                                                    placeholder="Jumlah Kamar" name="jumlahkamar"
+                                                                    autocomplete="off"></td>
                                                         </tr>
                                                         <tr style="height:60px">
                                                             <th><label for="harga">Harga</label></th>
-                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="harga" placeholder="Harga..." name="harga" autocomplete="off"></td>
+                                                            <td> : <input style="border-radius: 10px;" type="text"
+                                                                    class="form pt-1 w-50" id="harga"
+                                                                    placeholder="Harga..." name="harga"
+                                                                    autocomplete="off"></td>
                                                         </tr>
                                                         <tr style="height:60px">
                                                             <th>Kategori</th>
-                                                            <td> : <select class="form w-60" aria-label="Default select example" name="jenis">
+                                                            <td> : <select class="form w-60"
+                                                                    aria-label="Default select example" name="jenis">
                                                                     <option value="Putra" selected>Putra</option>
                                                                     <option value="Putri">Putri</option>
                                                                     <option value="Campuran">Campuran</option>
@@ -194,37 +224,47 @@ if (!isset($_SESSION['login-admin'])) {
                                                                 <div class="fasilitas">
                                                                     <div class="row">
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="ac" name="fasilitas" value="AC">
+                                                                            <input type="checkbox" id="ac"
+                                                                                name="fasilitas" value="AC">
                                                                             <label for="ac"> AC </label><br>
                                                                         </div>
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="tv" name="fasilitas" value="Kamar Mandi Dalam">
-                                                                            <label for="tv"> Kamar Mandi Dalam</label><br>
+                                                                            <input type="checkbox" id="tv"
+                                                                                name="fasilitas"
+                                                                                value="Kamar Mandi Dalam">
+                                                                            <label for="tv"> Kamar Mandi
+                                                                                Dalam</label><br>
                                                                         </div>
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="wifi" name="fasilitas" value="Wifi">
+                                                                            <input type="checkbox" id="wifi"
+                                                                                name="fasilitas" value="Wifi">
                                                                             <label for="kmdalam"> Wifi</label><br>
                                                                         </div>
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="air" name="fasilitas" value="Air">
+                                                                            <input type="checkbox" id="air"
+                                                                                name="fasilitas" value="Air">
                                                                             <label for="kasur"> Air </label><br>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="listrik" name="fasilitas" value="Listrik">
+                                                                            <input type="checkbox" id="listrik"
+                                                                                name="fasilitas" value="Listrik">
                                                                             <label for="meja"> Listrik</label><br>
                                                                         </div>
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
+                                                                            <input type="checkbox" id="kasur"
+                                                                                name="fasilitas" value="Kasur">
                                                                             <label for="kasur"> Kasur </label><br>
                                                                         </div>
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="lemari" name="fasilitas" value="Lemari">
+                                                                            <input type="checkbox" id="lemari"
+                                                                                name="fasilitas" value="Lemari">
                                                                             <label for="lemari"> Lemari</label><br>
                                                                         </div>
                                                                         <div class="col-3">
-                                                                            <input type="checkbox" id="meja" name="fasilitas" value="Meja">
+                                                                            <input type="checkbox" id="meja"
+                                                                                name="fasilitas" value="Meja">
                                                                             <label for="kasur"> Meja </label><br>
                                                                         </div>
                                                                     </div>
@@ -234,15 +274,19 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <tr>
                                                             <th>Gambar</th>
                                                             <td> :
-                                                                <label class="label-upload" style="color:#2155CD;">Upload Foto
+                                                                <label class="label-upload"
+                                                                    style="color:#2155CD;">Upload Foto
                                                                     Kost</label>
-                                                                <input type="file" class="form-control w-50" id="inputGroupFile02" name="kost-gambar"><br><br>
+                                                                <input type="file" class="form-control w-50"
+                                                                    id="inputGroupFile02" name="kost-gambar"><br><br>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td></td>
                                                             <td>
-                                                                <button style="width: 50%; border-radius:10px;" class=" btn btn-primary" type="submit" name="btn-edit-kos">Edit Data Kost
+                                                                <button style="width: 50%; border-radius:10px;"
+                                                                    class=" btn btn-primary" type="submit"
+                                                                    name="btn-edit-kos">Edit Data Kost
                                                                 </button>
                                                             </td>
                                                             <td></td>
@@ -274,19 +318,19 @@ if (!isset($_SESSION['login-admin'])) {
     </div>
     </div>
     <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
+    function myFunction() {
+        var x = document.getElementById("side-nav");
+        var y = document.getElementById("side-nav1");
+        var a = document.getElementById("main-content-header");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            y.style.display = "none";
+        } else {
+            x.style.display = "block";
+            y.style.display = "block";
+            a.style.width = "none";
         }
+    }
     </script>
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>

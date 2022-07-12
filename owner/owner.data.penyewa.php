@@ -15,6 +15,10 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+
+if (isset($_POST['manipulate-btn'])) {
+    $eventData = explode(" ", $_POST['manipulate-btn']);
+}
 // get username
 $id = $_SESSION['id_pemilik'];
 $data = getDataFromId("pemilik", $id);
@@ -47,6 +51,8 @@ $dataPenyewa = getDataPenyewaanById($idKost);
     <link href="../owner/dist/css/index.css" rel="stylesheet"">
     <!-- CSS Data Tabel -->
     <link rel=" stylesheet" type="text/css" href="../owner/dist/css/datatables.min.css">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>
@@ -223,9 +229,13 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                                 <td>083778765378</td>
                                                                 <td>gambar</td>
                                                                 <td>
-                                                                    <button class="btn btn-success">edit</button>
-                                                                    <button class="btn btn-danger">hapus</button>
-                                                                </td>
+                                                                  <form method="POST">
+                                                                      <button class="btn btn-success" value="edit"
+                                                                          name="manipulate-btn">edit</button>
+                                                                      <button class="btn btn-danger" value="delete"
+                                                                          name="manipulate-btn">hapus</button>
+                                                                  </form>
+                                                              </td>
                                                             </tr>
                                                             <?php $num++; ?>
                                                         <?php endforeach; ?>

@@ -35,9 +35,11 @@ if (isset($_POST["btn_submit"])) {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
-    <!-- Favicon -->
-    <link rel="icon" href="assets/icon/DeKost.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
+        rel="stylesheet">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>

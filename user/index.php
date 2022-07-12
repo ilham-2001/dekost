@@ -26,8 +26,6 @@ if (isset($_POST["btn_submit"])) {
         header('Location: index.php');
         exit;
     }
-
- 
 }
 
 $response = ['error' => FALSE];
@@ -39,6 +37,7 @@ if (isset($_POST['button_signup'])) {
     $password = $_POST['password'];
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $nik = $_POST['nik'];
+    $noTelp = $_POST['noTelp'];
 
     $isComplete = checkCompleteess($email, $password, $nik);
 
@@ -48,7 +47,7 @@ if (isset($_POST['button_signup'])) {
 
         if (!$isRegistred) {
             // make account if email is not set yet in the database
-            $regis = registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik);
+            $regis = registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik, $noTelp);
 
             if ($regis) {
                 // regis is success 
@@ -80,7 +79,7 @@ if (isset($_POST['button_signup'])) {
 
 $teks1 = "Atur jadwal tidur,  Mulailah atur jadwal tidurmu dari sekarang. Kamu harus menargetkan diri untuk tidur 
 lebih awal serta durasi waktunya yaitu sekitar 7-9 jam. Meski pada hari libur pun tetap saja lakukan jadwal tersebut agar 
-dapat membiasakan diri untuk selalu bangun pagi";   
+dapat membiasakan diri untuk selalu bangun pagi";
 $teks2 = "Membuat target IPK tiap semester, buat target IPK tiap semester besaran IPK menjadi penentu jumlah 
 SKS yang bisa kamu ambil di semester berikutnya. Semakin besar IPK, semakin banyak pula SKS yang bisa kamu ambil.";
 $teks3 = "Ketahui fasilitas kost yang benar-benar penting,misalnya sudah tersedia kasur, lemari, dan internet, 
@@ -247,7 +246,7 @@ mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.";
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form class="form-signin" method="POST">
-                                <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72"
+                                    <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72"
                                         height="57">
 
                                     <div class="form-floating">
@@ -278,6 +277,12 @@ mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.";
                                         <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
                                             name="nik" autocomplete="off">
                                         <label for="floatingInput">NIK</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
+                                            name="noTelp" autocomplete="off">
+                                        <label for="floatingInput">No.Telepon</label>
                                     </div>
 
                                     <div class="form-check">
@@ -319,55 +324,55 @@ mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.";
                                 <img src="assets/images/owl1.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tips Bangun Pagi Rutin</b></h5>
-                            <?php if (strlen($teks1) > 100):?>
+                            <?php if (strlen($teks1) > 100) : ?>
                             <p class="text-center p-4"><?= substr($teks1, 0, 97) . " ..." ?></p>
-                            <?php else:?>
+                            <?php else : ?>
                             <p class="text-center p-4"><?= $teks1 ?></p>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl2.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tips Cepat Lulus</b></h5>
-                            <?php if (strlen($teks2) > 100):?>
+                            <?php if (strlen($teks2) > 100) : ?>
                             <p class="text-center p-4"><?= substr($teks2, 0, 97) . " ..." ?></p>
-                            <?php else:?>
+                            <?php else : ?>
                             <p class="text-center p-4"><?= $teks2 ?></p>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl3.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tempat Mencari Kost Terbaik</b></h5>
-                            <?php if (strlen($teks3) > 100):?>
+                            <?php if (strlen($teks3) > 100) : ?>
                             <p class="text-center p-4"><?= substr($teks3, 0, 97) . " ..." ?></p>
-                            <?php else:?>
+                            <?php else : ?>
                             <p class="text-center p-4"><?= $teks3 ?></p>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl4.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tips Belajar Efektif</b></h5>
-                            <?php if (strlen($teks4) > 100):?>
+                            <?php if (strlen($teks4) > 100) : ?>
                             <p class="text-center p-4"><?= substr($teks4, 0, 97) . " ..." ?></p>
-                            <?php else:?>
+                            <?php else : ?>
                             <p class="text-center p-4"><?= $teks4 ?></p>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                         <div class="slider-card">
                             <div class="d-flex justify-content-center align-items-center mb-4">
                                 <img src="assets/images/owl5.jpg" alt="">
                             </div>
                             <h5 class="mb-0 text-center"><b>Tips Menghemat ala Anak Kos</b></h5>
-                            <?php if (strlen($teks5) > 100):?>
+                            <?php if (strlen($teks5) > 100) : ?>
                             <p class="text-center p-4"><?= substr($teks5, 0, 97) . " ..." ?></p>
-                            <?php else:?>
+                            <?php else : ?>
                             <p class="text-center p-4"><?= $teks5 ?></p>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -381,7 +386,8 @@ mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.";
                 </div>
                 <div class="col ">
                     <h3>Anda bingung mencari kost tapi tidak di lokasi?</h3>
-                    <p> Tenang!! DeKost solusinya, anda bisa mencari kos dimanapun dan kapanpun tanpa harus datang ke lokasi.
+                    <p> Tenang!! DeKost solusinya, anda bisa mencari kos dimanapun dan kapanpun tanpa harus datang ke
+                        lokasi.
                     </p>
                 </div>
             </div>
@@ -404,8 +410,8 @@ mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.";
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/DeKost.png" class="mb-3 me-2"
-                            width="50" height="50" alt="logo"> Dekost</h5>
+                    <h5 class="h1 text-black mb-2"><img src="assets/icon/DeKost.png" class="mb-3 me-2" width="50"
+                            height="50" alt="logo"> Dekost</h5>
                     <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
                     <ul class="list-unstyled text-muted">
                         <li><a href="#tentangkami">Tentang Kami</a></li>

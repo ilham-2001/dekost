@@ -192,7 +192,7 @@ function uploadImage($imgURL)
     return $newName;
 }
 
-function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, $idPemilik, $fasilitas)
+function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, $idPemilik)
 {
     global $conn;
 
@@ -201,14 +201,13 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
     $harga = mysqli_real_escape_string($conn, $harga);
     $jenis = mysqli_real_escape_string($conn, $jenis);
     $alamat = mysqli_real_escape_string($conn, $alamat);
-    $fasilitas = mysqli_real_escape_string($conn, $fasilitas);
     $gambar = uploadImage($gambar);
 
     if (!$gambar) {
         return FALSE;
     }
 
-    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview, fasilitas) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', $harga, '$jenis', '$gambar', '$fasilitas')");
+    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', '$harga', '$jenis', '$gambar')");
 
     if (!$query) {
         return FALSE;
