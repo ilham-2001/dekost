@@ -60,7 +60,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
     <div class=" wrapper">
         <div class="container-fluid">
             <!-- navbar header -->
-            <nav class="navbar navbar-light fixed-top">
+            <nav class="navbar navbar-light ">
                 <div class="container-fluid justify-content-center">
                     <h4 class="navbar-header text-white">
                         Selamat Datang di Sistem Informasi Kostan | DEKOST
@@ -237,15 +237,18 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                     </tfoot> -->
                                                     <tbody>
                                                         <?php foreach ($dataPenyewa as $penyewa) : ?>
+                                                        <?php
+                                                            $dataPenyewa = getInfoPenyewaByNIK($penyewa['NIK_penyewa']);
+                                                            ?>
                                                         <tr>
                                                             <td><?= $num ?></td>
                                                             <td><?= $penyewa['NIK_penyewa'] ?></td>
-                                                            <td><?= $penyewa['firstName'] . $penyewa['lastName'] ?></td>
+                                                            <td><?= $penyewa['nama'] ?></td>
                                                             <td><?= $penyewa['idKamar'] ?></td>
                                                             <td><?= $penyewa['tannggal_mulai'] ?></td>
                                                             <td><?= $penyewa['tanggal_akhir'] ?></td>
-                                                            <td><?= $penyewa['email'] ?></td>
-                                                            <td><?= $penyewa['no_telepon'] ?></td>
+                                                            <td><?= $dataPenyewa['email'] ?></td>
+                                                            <td><?= $dataPenyewa['no_telepon'] ?></td>
                                                             <td>gambar</td>
                                                             <td>
                                                                 <form method="POST">

@@ -210,7 +210,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                             <th>Lebar</th>
                                                             <th>Panjang</th>
                                                             <!-- <th>Kategori</th> -->
-                                                            <th>Fasilitas</th>
+                                                            <th>Status</th>
                                                             <!-- <th>Gambar</th> -->
                                                             <th>Aksi</th>
                                                         </tr>
@@ -237,7 +237,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                             <td><?= $data['lebar'] ?></td>
                                                             <td><?= $data['panjang'] ?></td>
                                                             <td><?= $data['status'] ?></td>
-                                                            <td><?= $data['fasilitas'] ?></td>
+                                                            <!-- <td><?= $data['fasilitas'] ?></td> -->
                                                             <!-- <td>Kamar mandi dalam,
                                                                 AC,
                                                                 TV, dll?

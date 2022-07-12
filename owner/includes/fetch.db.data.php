@@ -522,7 +522,7 @@ function getDataPenyewaanById($idKost)
     global $conn;
 
     $data_array = [];
-    $data_query = mysqli_query($conn, "SELECT * FROM penyewaan INNER JOIN kost ON penyewaan.idKost=kost.id WHERE idKost='$idKost'");
+    $data_query = mysqli_query($conn, "SELECT penyewaan.tannggal_mulai, penyewaan.tanggal_akhir, penyewaan.idKamar, penyewaan.NIK_penyewa, kost.nama FROM penyewaan INNER JOIN kost ON penyewaan.idKost=kost.id WHERE idKost='$idKost'");
 
     while ($data = mysqli_fetch_assoc($data_query)) {
         array_push($data_array, $data);
@@ -555,4 +555,16 @@ function getSewaKeluarByBulan($bulan, $idKost)
     }
 
     return mysqli_fetch_assoc($query)['jumlah_penyewa'];
+}
+function getInfoPenyewaByNIK($NIK)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT no_telepon, email FROM users WHERE NIK='$NIK'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
 }
