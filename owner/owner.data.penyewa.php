@@ -15,6 +15,10 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+
+if (isset($_POST['manipulate-btn'])) {
+    $eventData = explode(" ", $_POST['manipulate-btn']);
+}
 // get username
 $id = $_SESSION['id_pemilik'];
 $data = getDataFromId("pemilik", $id);
@@ -69,8 +73,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
-                                href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
                                 <div class="sidebar-brand-icon">
                                     <img src="../owner/assets/icons/DeKost.png" alt="#logo">
                                 </div>
@@ -81,8 +84,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i
-                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -92,32 +94,26 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                                            aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                             <i class="fa-solid fa-database me-3"></i>
                                             Master Data
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="panelsStayOpen-headingOne">
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kost.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kamar.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Kamar</a>
+                                                <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
 
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="owner.data.penyewa.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+                                                <a class="nav-link active" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
 
                                             </li>
                                         </div>
@@ -129,8 +125,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" href="owner.pesanan.kost.php"><i
-                                        class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
 
                             <!-- Divider -->
@@ -139,8 +134,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <form method="POST">
-                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
-                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
 
                                     </form>
                                 </li>
@@ -159,8 +153,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
 
                                     <!-- Sidebar Toggle (Topbar) -->
-                                    <button id="sidebarToggleTop" onclick="myFunction()"
-                                        class="btn btn-link rounded-circle d-sm-none mr-3">
+                                    <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
 
                                         <i class="fa fa-bars"></i>
                                     </button>
@@ -169,15 +162,12 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                     <ul class="navbar-nav ms-auto me-4">
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
-                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                                aria-labelledby="userDropdown">
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
@@ -194,19 +184,17 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                     <div class="card shadow">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
-                                                <h1 class="h3 mb-0 text-gray-800"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</h1>
+                                                <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Data Penyewa</h1>
 
                                             </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table table-bordered" id="dataTable" width="100%"
-                                                    cellspacing="0">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Nama Penyewa</th>
+                                                            <th>NIK Penyewa</th>
                                                             <th>Nama Kost</th>
                                                             <th>No Kamar</th>
                                                             <th>Mulai Sewa</th>
@@ -231,21 +219,25 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                     </tfoot> -->
                                                     <tbody>
                                                         <?php foreach ($dataPenyewa as $penyewa) : ?>
-                                                        <tr>
-                                                            <td><?= $num ?></td>
-                                                            <td><?= $penyewa['NIK_penyewa'] ?></td>
-                                                            <td>kos ada</td>
-                                                            <td>2</td>
-                                                            <td><?= $penyewa['tannggal_mulai'] ?></td>
-                                                            <td><?= $penyewa['tanggal_akhir'] ?></td>
-                                                            <td>083778765378</td>
-                                                            <td>gambar</td>
-                                                            <td>
-                                                                <button class="btn btn-success">edit</button>
-                                                                <button class="btn btn-danger">hapus</button>
-                                                            </td>
-                                                        </tr>
-                                                        <?php $num++; ?>
+                                                            <tr>
+                                                                <td><?= $num ?></td>
+                                                                <td><?= $penyewa['NIK_penyewa'] ?></td>
+                                                                <td><?= $penyewa['nama'] ?></td>
+                                                                <td><?= $penyewa['idKamar'] ?></td>
+                                                                <td><?= $penyewa['tannggal_mulai'] ?></td>
+                                                                <td><?= $penyewa['tanggal_akhir'] ?></td>
+                                                                <td>083778765378</td>
+                                                                <td>gambar</td>
+                                                                <td>
+                                                                  <form method="POST">
+                                                                      <button class="btn btn-success" value="edit"
+                                                                          name="manipulate-btn">edit</button>
+                                                                      <button class="btn btn-danger" value="delete"
+                                                                          name="manipulate-btn">hapus</button>
+                                                                  </form>
+                                                              </td>
+                                                            </tr>
+                                                            <?php $num++; ?>
                                                         <?php endforeach; ?>
                                                         <!-- <tr>
                                                             <td>1</td>
@@ -304,19 +296,19 @@ $dataPenyewa = getDataPenyewaanById($idKost);
 
     </div>
     <script>
-    function myFunction() {
-        var x = document.getElementById("side-nav");
-        var y = document.getElementById("side-nav1");
-        var a = document.getElementById("main-content-header");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-            y.style.display = "none";
-        } else {
-            x.style.display = "block";
-            y.style.display = "block";
-            a.style.width = "none";
+        function myFunction() {
+            var x = document.getElementById("side-nav");
+            var y = document.getElementById("side-nav1");
+            var a = document.getElementById("main-content-header");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+                y.style.display = "none";
+            } else {
+                x.style.display = "block";
+                y.style.display = "block";
+                a.style.width = "none";
+            }
         }
-    }
     </script>
 
     <!-- <script src="../owner/assets/app/js/bootstrap.min.js"></script> -->

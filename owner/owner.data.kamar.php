@@ -3,9 +3,9 @@ require('core/init.php');
 
 session_start();
 
-$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
+// $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 
-$dataKamar = getOwnerKostDataKamar($idKost);
+$dataKamar = getOwnerKostDataKamar($_SESSION['id_pemilik']);
 
 $nikAkun = $_SESSION["id_pemilik"];
 $dataPemilik = getDataPemilik($nikAkun);
@@ -202,9 +202,9 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>ID Kamar</th>
-                                                            <th>Nama Kost</th>
-                                                            <th>Nama Pemilik</th>
-                                                            <th>Harga</th>
+                                                            <th>ID Kost</th>
+                                                            <th>Lebar</th>
+                                                            <th>Panjang</th>
                                                             <th>Kategori</th>
                                                             <th>Fasilitas</th>
                                                             <th>Gambar</th>

@@ -1,10 +1,7 @@
 <?php
-
-require('core/init.php');
 session_start();
 
-$nikAkun = $_SESSION["id_pemilik"];
-$dataPemilik = getDataPemilik($nikAkun);
+require('core/init.php');
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
@@ -18,6 +15,11 @@ if (!isset($_SESSION['login-admin'])) {
     exit;
 }
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
+
+var_dump($nikAkun);
+
 $currentDate = date("Y-m-d'", time());
 $currentYear = explode("-", $currentDate)[0];
 
@@ -26,7 +28,8 @@ $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 // $kamarGenereated = generateKamar(21, 3, 3, 4);
 
 $countPesanan = countPesanan($idKost)['pesanan'];
-$countKamar = countDataKamar($idKost)['kamar'];
+$countKamar = countDataKamar($nikAkun)['kamar'];
+// var_dump($countKamar);
 
 // get count data kost tiap owner 
 $id = $_SESSION['id_pemilik'];
@@ -293,9 +296,9 @@ $dataPoints2 = array(
                                                         <div class="col mr-2">
                                                             <div
                                                                 class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                                JUmlah Kamar</div>
+                                                                Jumlah Kamar</div>
                                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                                Isi</div>
+                                                                <?= $countKamar ?></div>
                                                         </div>
                                                         <div class="col-auto">
                                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
