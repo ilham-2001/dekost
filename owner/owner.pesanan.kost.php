@@ -32,10 +32,18 @@ if (isset($_POST['validation-btn'])) {
         // accept and set to random room
         $pesananUser = getInfoPesananById($val[1]);
         // var_dump($pesananUser);
-        setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa'], $idKost);
+        $valid = setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa'], $idKost, $val[1]);
+
+        if ($valid) {
+            echo "<script> document.location.href = 'owner.pesanan.kost.php'; </script>";
+        }
     } else {
         // reject, delete from data pemesanan 
-        rejectPemesanan($val[1]);
+        $valid = rejectPemesanan($val[1]);
+
+        if ($valid) {
+            echo "<script> document.location.href = 'owner.pesanan.kost.php'; </script>";
+        }
     }
 }
 

@@ -389,7 +389,7 @@ function getOwnerKostDataKamar($id)
 //     return $resQuery['id'];
 // }
 
-function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost)
+function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost, $idPesanan)
 {
     global $conn;
 
@@ -415,7 +415,13 @@ function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost)
 
     mysqli_query($conn, "UPDATE kamar SET `status`='TERISI' WHERE `idKamar`='$idKamar'");
 
-    return mysqli_affected_rows($conn) > 0;
+    $query = mysqli_query($conn, "DELETE FROM pesanan WHERE `idPesanan`='$idPesanan'");
+
+    if ($query) {
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 function getInfoPesananById($idPesanan)
@@ -431,7 +437,7 @@ function getInfoPesananById($idPesanan)
     return mysqli_fetch_assoc($query);
 }
 
-function getDataPenyewaanyId($idKost)
+function getDataPenyewaanById($idKost)
 {
     global $conn;
 
@@ -443,4 +449,30 @@ function getDataPenyewaanyId($idKost)
     }
 
     return $data_array;
+}
+
+function getSewaMasukByBulan($bulan, $idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(id) as jumlah_penyewa FROM penyewaan WHERE (tannggal_mulai BETWEEN '2022-$bulan-01' AND '2022-$bulan-31') AND idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_penyewa'];
+}
+
+function getSewaKeluarByBulan($bulan, $idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(id) as jumlah_penyewa FROM penyewaan WHERE (tanggal_akhir BETWEEN '2022-$bulan-01' AND '2022-$bulan-31') AND idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_penyewa'];
 }
