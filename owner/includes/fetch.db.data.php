@@ -329,10 +329,35 @@ function generateKamar($jumlahKamar, $idKost, $lebar, $panjang)
     for ($i = 0; $i < $jumlahKamar; $i++) {
         $valid = insertKamarData($idKost, $lebar, $panjang);
 
+        echo $valid;
+
         if (!$valid) {
             return FALSE;
         }
     }
+    return TRUE;
+}
+
+function getDataPemilik($nikAkun)
+{
+
+    global $conn;
+
+    $pemilik = mysqli_query($conn, "SELECT * FROM pemilik WHERE NIK='$nikAkun'");
+    $dataPemilik = mysqli_fetch_assoc($pemilik);
+
+    return $dataPemilik;
+}
+
+function generateRekening($namaBank, $rekening, $nikPemilik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "INSERT INTO rekening(`NoRekening`, `bank`, `NIK_Pemilik`) VALUES ('$rekening', '$namaBank', '$nikPemilik');");
+    if (!$query) {
+        return FALSE;
+    }
+
     return TRUE;
 }
 

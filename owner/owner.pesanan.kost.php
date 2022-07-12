@@ -3,6 +3,8 @@ require('core/init.php');
 
 session_start();
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
 
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
@@ -164,7 +166,7 @@ if (isset($_POST['validation-btn'])) {
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
                                             <!-- Dropdown - User Information -->

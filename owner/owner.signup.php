@@ -30,7 +30,7 @@ if (isset($_POST['button_signup'])) {
                 $response['error'] = FALSE;
                 $response['user']['name'] = $regis['email'];
                 $response['user']['key'] = $regis['NIK'];
-                $_SESSION['NIK'] = $nik;
+                $_SESSION['id_pemilik'] = $nik;
 
                 header("Location: owner.kos.signup.php");
                 exit;
