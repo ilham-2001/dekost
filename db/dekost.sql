@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 11, 2022 at 02:53 AM
+-- Generation Time: Jul 11, 2022 at 05:24 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -218,6 +218,13 @@ CREATE TABLE `penyewaan` (
   `idKamar` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `penyewaan`
+--
+
+INSERT INTO `penyewaan` (`id`, `NIK_penyewa`, `tannggal_mulai`, `tanggal_akhir`, `idKamar`) VALUES
+(1, '1989403989087564', '2022-07-11', '2023-07-11', '62cb6bb98f107');
+
 -- --------------------------------------------------------
 
 --
@@ -387,7 +394,7 @@ ALTER TABLE `kost`
 -- AUTO_INCREMENT for table `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
