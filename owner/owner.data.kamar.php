@@ -3,9 +3,9 @@ require('core/init.php');
 
 session_start();
 
-$idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
+// $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 
-$dataKamar = getOwnerKostDataKamar($idKost);
+$dataKamar = getOwnerKostDataKamar($_SESSION['id_pemilik']);
 
 $nikAkun = $_SESSION["id_pemilik"];
 $dataPemilik = getDataPemilik($nikAkun);
@@ -184,9 +184,9 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>ID Kamar</th>
-                                                            <th>Nama Kost</th>
-                                                            <th>Nama Pemilik</th>
-                                                            <th>Harga</th>
+                                                            <th>ID Kost</th>
+                                                            <th>Lebar</th>
+                                                            <th>Panjang</th>
                                                             <th>Kategori</th>
                                                             <th>Fasilitas</th>
                                                             <th>Gambar</th>
@@ -222,8 +222,8 @@ if (!isset($_SESSION['login-admin'])) {
                                                                 <td>ini gambar</td>
                                                                 <td>
                                                                     <form method="POST">
-                                                                        <button class="btn btn-success" value="accept" name="validation-btn" onclick="return confirm('Terima Pesanan?');">Edit</button>
-                                                                        <button class="btn btn-danger" value="reject" name="validation-btn" onclick="return confirm('Tolak dan Hapus Pesanan?');">Hapus</button>
+                                                                        <button class="btn btn-success">Edit</button>
+                                                                        <button class="btn btn-danger" value="reject" name="validation-btn">Hapus</button>
                                                                     </form>
                                                                 </td>
                                                             </tr>
