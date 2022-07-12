@@ -3,6 +3,9 @@
 require('core/init.php');
 session_start();
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
+
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -15,12 +18,25 @@ if (!isset($_SESSION['login-admin'])) {
     exit;
 }
 
+$currentDate = date("Y-m-d'", time());
+$currentYear = explode("-", $currentDate)[0];
+
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 
 // $kamarGenereated = generateKamar(21, 3, 3, 4);
 
 $countPesanan = countPesanan($idKost)['pesanan'];
 $countKamar = countDataKamar($idKost)['kamar'];
+
+// get count data kost tiap owner 
+$id = $_SESSION['id_pemilik'];
+$countDataKost = countDataKos($id)['kost'];
+
+// get count penghuni kost tiap owner 
+$countPenghuni = countPenghuniKost($id);
+
+// get username
+$data = getDataFromId("pemilik", $id);
 
 
 
@@ -30,33 +46,60 @@ $dataPoints = array(
     array("label" => "Campur", "y" => 65),
 );
 
+$janMasuk = getSewaMasukByBulan("01", $idKost);
+$febMasuk = getSewaMasukByBulan("02", $idKost);
+$marMasuk = getSewaMasukByBulan("03", $idKost);
+$aprMasuk = getSewaMasukByBulan("04", $idKost);
+$mayMasuk = getSewaMasukByBulan("05", $idKost);
+$junMasuk = getSewaMasukByBulan("06", $idKost);
+$julMasuk = getSewaMasukByBulan("07", $idKost);
+$augMasuk = getSewaMasukByBulan("08", $idKost);
+$sepMasuk = getSewaMasukByBulan("09", $idKost);
+$octMasuk = getSewaMasukByBulan("10", $idKost);
+$novMasuk = getSewaMasukByBulan("11", $idKost);
+$decMasuk = getSewaMasukByBulan("12", $idKost);
+
+$janKeluar = getSewaKeluarByBulan("01", $idKost);
+$febKeluar = getSewaKeluarByBulan("02", $idKost);
+$marKeluar = getSewaKeluarByBulan("03", $idKost);
+$aprKeluar = getSewaKeluarByBulan("04", $idKost);
+$mayKeluar = getSewaKeluarByBulan("05", $idKost);
+$junKeluar = getSewaKeluarByBulan("06", $idKost);
+$julKeluar = getSewaKeluarByBulan("07", $idKost);
+$augKeluar = getSewaKeluarByBulan("08", $idKost);
+$sepKeluar = getSewaKeluarByBulan("09", $idKost);
+$octKeluar = getSewaKeluarByBulan("10", $idKost);
+$novKeluar = getSewaKeluarByBulan("11", $idKost);
+$decKeluar = getSewaKeluarByBulan("12", $idKost);
+
 $dataPoints1 = array(
-    array("label" => "Jan", "y" => 6),
-    array("label" => "Feb", "y" => 2),
-    array("label" => "Mar", "y" => 1),
-    array("label" => "Apr", "y" => 3),
-    array("label" => "May", "y" => 4),
-    array("label" => "Jun", "y" => 1),
-    array("label" => "Jul", "y" => 3),
-    array("label" => "Aug", "y" => 2),
-    array("label" => "Sep", "y" => 1),
-    array("label" => "Oct", "y" => 3),
-    array("label" => "Nov", "y" => 0),
-    array("label" => "Dec", "y" => 2)
+    array("label" => "Jan", "y" => $janMasuk),
+    array("label" => "Feb", "y" => $febMasuk),
+    array("label" => "Mar", "y" => $marMasuk),
+    array("label" => "Apr", "y" => $aprMasuk),
+    array("label" => "May", "y" => $mayMasuk),
+    array("label" => "Jun", "y" => $junMasuk),
+    array("label" => "Jul", "y" => $julMasuk),
+    array("label" => "Aug", "y" => $augMasuk),
+    array("label" => "Sep", "y" => $sepMasuk),
+    array("label" => "Oct", "y" => $octMasuk),
+    array("label" => "Nov", "y" => $novMasuk),
+    array("label" => "Dec", "y" => $decMasuk)
 );
+
 $dataPoints2 = array(
-    array("label" => "Jan", "y" => 5),
-    array("label" => "Feb", "y" => 1),
-    array("label" => "Mar", "y" => 0),
-    array("label" => "Apr", "y" => 2),
-    array("label" => "May", "y" => 2),
-    array("label" => "Jun", "y" => 3),
-    array("label" => "Jul", "y" => 2),
-    array("label" => "Aug", "y" => 0),
-    array("label" => "Sep", "y" => 0),
-    array("label" => "Oct", "y" => 2),
-    array("label" => "Nov", "y" => 0),
-    array("label" => "Dec", "y" => 1)
+    array("label" => "Jan", "y" => $janKeluar),
+    array("label" => "Feb", "y" => $febKeluar),
+    array("label" => "Mar", "y" => $marKeluar),
+    array("label" => "Apr", "y" => $aprKeluar),
+    array("label" => "May", "y" => $mayKeluar),
+    array("label" => "Jun", "y" => $junKeluar),
+    array("label" => "Jul", "y" => $julKeluar),
+    array("label" => "Aug", "y" => $augKeluar),
+    array("label" => "Sep", "y" => $sepKeluar),
+    array("label" => "Oct", "y" => $octKeluar),
+    array("label" => "Nov", "y" => $novKeluar),
+    array("label" => "Dec", "y" => $decKeluar)
 );
 
 ?>
@@ -194,9 +237,9 @@ $dataPoints2 = array(
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
                                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span>Ini Nama Pemilik Kost</span>
-                                            <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px"
-                                                src="../owner/assets/icons/DeKost2.png">
+                                            <span><?= $data['nama'] ?><span>
+                                                    <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
+                                                        height="20px" src="../owner/assets/icons/DeKost2.png">
                                         </a>
                                         <!-- Dropdown - User Information -->
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -228,8 +271,8 @@ $dataPoints2 = array(
                                                         <div
                                                             class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                             Jumlah Kost</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">(count data
-                                                            kos)</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                            <?= $countDataKost ?></div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -249,7 +292,7 @@ $dataPoints2 = array(
                                                             class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                             JUmlah Kamar</div>
                                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                            <?= $countKamar ?></div>
+                                                            Isi</div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -273,7 +316,7 @@ $dataPoints2 = array(
                                                             <div class="col-auto">
                                                                 <div
                                                                     class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                                    (count data penyewa)</div>
+                                                                    <?= $countPenghuni ?></div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="progress progress-sm mr-2">
@@ -524,7 +567,7 @@ $dataPoints2 = array(
             animationEnabled: true,
             theme: "light2",
             title: {
-                text: "Jumlah Penyewa Kost"
+                text: "Jumlah Penyewa Tahun <?= $currentYear ?>"
             },
             axisY: {
                 includeZero: true

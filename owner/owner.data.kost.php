@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require('core/init.php');
 
 $nikAkun = $_SESSION["id_pemilik"];
@@ -23,6 +22,26 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
+
+// get data kost by NIK
+$dataKost = getDataKost($id);
+
+// hapus data kost beserta value di foreign key nya
+if (isset($_GET['hapus'])) {
+    $idKost = $_GET['hapus'];
+    echo $idKost;
+    // var_dump($idKost);
+    deleteDataKost($idKost);
+    echo "<script> 
+            alert('Data kost berhasil dihapus!');
+            document.location.href = 'owner.data.kost.php';
+        </script>
+    ";
+}
+
 
 if (isset($_POST["edit"])) {
     $nama = $_POST["nama"];
@@ -177,10 +196,10 @@ if (isset($_POST["edit"])) {
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
 
+                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -214,7 +233,6 @@ if (isset($_POST["edit"])) {
                                                     cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
@@ -226,12 +244,12 @@ if (isset($_POST["edit"])) {
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
                                                             <th>Fasilitas</th>
                                                             <th>Jumlah Kamar</th>
+                                                            <th>Fasilitas</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
@@ -276,17 +294,16 @@ if (isset($_POST["edit"])) {
                                                                             <td>" . $dataKost["jumlahKamar"] . "</td>
                                                                             <td>" . $dataKost["gambar_preview"] . "</td>
                                                                             <td>
-                                                                                <button class='btn btn-success'>edit</button>
-                                                                                <button class='btn btn-danger'>hapus</button>
+                                                                                <a href='owner.data.kost.php?idKost=$idKost'>
+                                                                                    <button type='submit' name='edit' class='btn btn-primary'>edit</button>
+                                                                                </a>
+                                                                                <a href='owner.hapus.data.kost.php?idKost=$idKost'>
+                                                                                    <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
+                                                                                </a>
                                                                             </td>
                                                                         </tr>";
                                                                     $nomor++;
-                                                                } // <a href='owner.data.kost.php?idKost=$idKost'>
-                                                                // <button type='submit' name='edit' class='btn btn-primary'>edit</button>
-                                                                // </a>
-                                                                // <a href='owner.data.kost.php?idKost=$idKost'>
-                                                                // <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
-                                                                // </a>
+                                                                }
                                                             }
                                                             ?>
                                                         </form>
@@ -316,21 +333,7 @@ if (isset($_POST["edit"])) {
         </div>
     </div>
     </div>
-    <script>
-    function myFunction() {
-        var x = document.getElementById("side-nav");
-        var y = document.getElementById("side-nav1");
-        var a = document.getElementById("main-content-header");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-            y.style.display = "none";
-        } else {
-            x.style.display = "block";
-            y.style.display = "block";
-            a.style.width = "none";
-        }
-    }
-    </script>
+
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 

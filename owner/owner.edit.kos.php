@@ -1,7 +1,8 @@
 <?php
+session_start();
+
 require('core/init.php');
 
-session_start();
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -9,19 +10,11 @@ if (isset($_POST['logout-owner-btn'])) {
     exit;
 }
 
-$id = $_SESSION['id_pemilik'];
-$dataPemilik = getDataPemilik($id);
-$data = getDataFromId("pemilik", $id);
-
-// var_dump($data);
-
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
-// get username
-$id = $_SESSION['id_pemilik'];
-$data = getDataFromId("pemilik", $id);
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +59,7 @@ $data = getDataFromId("pemilik", $id);
                         <ul class="nav flex-column">
                             <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
+                                    <img src="../owner/assets/icons/logo.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -94,7 +87,7 @@ $data = getDataFromId("pemilik", $id);
                                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link active" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
@@ -143,18 +136,15 @@ $data = getDataFromId("pemilik", $id);
                                     <ul class="navbar-nav ms-auto me-4">
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
-                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span><?= $dataPemilik["nama"] ?></span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/DeKost.png">
+                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span>Ini Nama Pemilik Kost</span>
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
-                                                </a>
                                                 </a>
                                             </div>
                                         </li>
@@ -164,56 +154,105 @@ $data = getDataFromId("pemilik", $id);
 
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
-                                    <!-- DataTales -->
                                     <div class="card shadow">
-                                        <div class="card-header" style="background-color:#2155CD ;">
+                                        <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
-                                                <h1 class="h3 mb-0 text-gray-800 fw-bold text-white">Profile Pemilik
-                                                </h1>
+                                                <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Edit Data Kost</h1>
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-5">
-                                                    <img class="img-fluid" src="../owner/assets/app/images/profile.jpg" height="400" width="400" alt="profile">
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-7" style="overflow:auto ;">
-                                                    <table class="table">
-                                                        <tbody>
-                                                            <tr style="height:60px">
-                                                                <th>NIK</th>
-                                                                <td> : <?= $data['NIK'] ?></td>
-                                                            </tr>
-                                                            <tr style="height:60px">
-                                                                <th>Nama </th>
-                                                                <td> : <?= $data['nama'] ?></td>
-                                                            </tr>
-                                                            <tr style="height:60px">
-                                                                <th>No. Telp </th>
-                                                                <td> : <?= $data['noTelp'] ?></td>
-                                                            </tr>
-                                                            <tr style="height:60px">
-                                                                <th>Alamat </th>
-                                                                <td> : <?= $data['alamat'] ?></td>
-                                                            </tr>
-                                                            <tr style="height:60px">
-                                                                <th>Email</th>
-                                                                <td> : <?= $data['email'] ?></td>
-                                                            </tr>
-                                                            <!-- <tr style="height:60px">
-                                                                <th>Username</th>
-                                                                <td> : Fajrun Shubhi</td>
-                                                            </tr> -->
-                                                            <!-- <tr style="height:60px">
-                                                                <th>Password</th>
-                                                                <td> : 1234567890</td>
-                                                            </tr> -->
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                        <div class="card-body ps-5">
+                                            <form class="form-edit-kos" method="POST" enctype="multipart/form-data">
+                                                <table class="table table-borderless">
+                                                    <tbody>
+                                                        <tr style="height:60px">
+                                                            <th><label for="nama">Nama</label></th>
+                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="nama" placeholder="Nama kost..." name="nama-kos" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th><label for="Alamat">Alamat</label></th>
+                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="alamat" placeholder="Alamat..." name="alamat-kos" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th><label for="jumlahkamar">Jumlah Kamar</label> </th>
+                                                            <td> : <input style="border-radius: 10px;" type="number" class="form pt-1 w-50" id="jumlahkamar" placeholder="Jumlah Kamar" name="jumlahkamar" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th><label for="harga">Harga</label></th>
+                                                            <td> : <input style="border-radius: 10px;" type="text" class="form pt-1 w-50" id="harga" placeholder="Harga..." name="harga" autocomplete="off"></td>
+                                                        </tr>
+                                                        <tr style="height:60px">
+                                                            <th>Kategori</th>
+                                                            <td> : <select class="form w-60" aria-label="Default select example" name="jenis">
+                                                                    <option value="Putra" selected>Putra</option>
+                                                                    <option value="Putri">Putri</option>
+                                                                    <option value="Campuran">Campuran</option>
+                                                                </select></td>
+                                                        </tr>
+                                                        <tr style="height:60px ;">
+                                                            <th>Fasilitas</th>
+                                                            <td>
+                                                                <div class="fasilitas">
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="ac" name="fasilitas" value="AC">
+                                                                            <label for="ac"> AC </label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="tv" name="fasilitas" value="Kamar Mandi Dalam">
+                                                                            <label for="tv"> Kamar Mandi Dalam</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="wifi" name="fasilitas" value="Wifi">
+                                                                            <label for="kmdalam"> Wifi</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="air" name="fasilitas" value="Air">
+                                                                            <label for="kasur"> Air </label><br>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="listrik" name="fasilitas" value="Listrik">
+                                                                            <label for="meja"> Listrik</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
+                                                                            <label for="kasur"> Kasur </label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="lemari" name="fasilitas" value="Lemari">
+                                                                            <label for="lemari"> Lemari</label><br>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="checkbox" id="meja" name="fasilitas" value="Meja">
+                                                                            <label for="kasur"> Meja </label><br>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Gambar</th>
+                                                            <td> :
+                                                                <label class="label-upload" style="color:#2155CD;">Upload Foto
+                                                                    Kost</label>
+                                                                <input type="file" class="form-control w-50" id="inputGroupFile02" name="kost-gambar"><br><br>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>
+                                                                <button style="width: 50%; border-radius:10px;" class=" btn btn-primary" type="submit" name="btn-edit-kos">Edit Data Kost
+                                                                </button>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </form>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
