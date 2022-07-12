@@ -16,19 +16,26 @@ if (isset($_POST['btn-kos-singup'])) {
     $jenisKos = $_POST['jenis'];
     $namabank = $_POST['nama-bank'];
     $rekening = $_POST['rekening'];
-    // $fasilitas = $_POST['fasilitas'];
+    $fasilitas = $_POST['fasilitas'];
 
     $idPemilik = $_SESSION['id_pemilik'];
     $gambar = $_FILES['kost-gambar'];
     $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik);
     $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
     $rekeningGenerated = generateRekening($namabank, $rekening, $idPemilik);
-
-    // var_dump($kamarGenereated);
-    if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && !$_SESSION['login-admin']) {
+    $idKost = $regis['idKost'];
+    
+    var_dump($fasilitas);
+    foreach($fasilitas as $fasil){
+        $fasilGenerated = addFasilKost($idKost, $fasil);
+        var_dump($fasil);
+        var_dump($fasilGenerated);
+    }
+    
+    if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && $fasilGenerated && !$_SESSION['login-admin']) {
         header("Location: owner.login.php");
         exit;
-    } else if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && $_SESSION['login-admin']) {
+    } else if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && $fasilGenerated && $_SESSION['login-admin']) {
         header("Location: owner.data.kost.php");
         exit;
     }
@@ -173,29 +180,29 @@ if (isset($_POST['btn-kos-singup'])) {
                                             <div class="fasilitas">
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <input type="checkbox" id="ac" name="fasilitas" value="AC">
+                                                        <input type="checkbox" id="ac" name="fasilitas[]" value="AC">
                                                         <label for="ac"> AC </label><br>
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="checkbox" id="tv" name="fasilitas" value="TV">
-                                                        <label for="tv"> TV</label><br>
+                                                        <input type="checkbox" id="wifi" name="fasilitas[]" value="Wifi">
+                                                        <label for="wifi"> Wifi</label><br>
                                                     </div>
                                                     <div class="col-5">
-                                                        <input type="checkbox" id="kmdalam" name="fasilitas" value="Kamar Mandi Dalam">
-                                                        <label for="kmdalam"> KM Dalam</label><br>
+                                                        <input type="checkbox" id="kmdalam" name="fasilitas[]" value="Kamar Mandi Dalam">
+                                                        <label for="kmdalam"> Air</label><br>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
+                                                        <input type="checkbox" id="kasur" name="fasilitas[]" value="Kasur">
                                                         <label for="kasur"> Kasur </label><br>
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="checkbox" id="meja" name="fasilitas" value="Meja">
+                                                        <input type="checkbox" id="meja" name="fasilitas[]" value="Meja">
                                                         <label for="meja"> Meja</label><br>
                                                     </div>
                                                     <div class="col-5">
-                                                        <input type="checkbox" id="lemari" name="fasilitas" value="Lemari">
+                                                        <input type="checkbox" id="lemari" name="fasilitas[]" value="Lemari">
                                                         <label for="lemari"> Lemari</label><br>
                                                     </div>
                                                 </div>
