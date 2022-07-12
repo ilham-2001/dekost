@@ -73,7 +73,7 @@ if (isset($_POST['rent-btn'])) {
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
         rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" href="assets/icon/favicon.ico">
+    <link rel="icon" href="assets/icon/DeKost.png">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
     <!-- xzoom -->
     <link rel="stylesheet" href="../user/assets/js/dist/xzoom.css">
@@ -157,7 +157,7 @@ if (isset($_POST['rent-btn'])) {
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <!-- Form Login -->
                                 <form class="form-signin" method="POST">
-                                    <img class="mb-4 icon-img" src="assets/icon/favicon.ico" alt="" width="72"
+                                    <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72"
                                         height="57">
                                     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -184,6 +184,8 @@ if (isset($_POST['rent-btn'])) {
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form class="form-signin" method="POST">
+                                <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72"
+                                        height="57">
 
                                     <div class="form-floating">
                                         <input type="email" class="form-control" id="floatingInput"
@@ -395,7 +397,7 @@ if (isset($_POST['rent-btn'])) {
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/logo.png" class="mb-3 me-2"
+                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/DeKost2.png" class="mb-3 me-2"
                             width="50" height="50" alt="logo"> Dekost</h5>
                     <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
                     <ul class="list-unstyled text-muted">
