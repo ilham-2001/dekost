@@ -229,7 +229,7 @@ function getDataPesanan($idKost)
 {
     global $conn;
     $data = [];
-    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE idKost='$idKost'");
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran, pesanan.idPemesan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE pesanan.idKost='$idKost'");
 
     if ($query) {
 
@@ -360,6 +360,8 @@ function generateKamar($jumlahKamar, $idKost, $lebar, $panjang)
     for ($i = 0; $i < $jumlahKamar; $i++) {
         $valid = insertKamarData($idKost, $lebar, $panjang);
 
+        echo $valid;
+
         if (!$valid) {
             return FALSE;
         }
@@ -372,11 +374,29 @@ function countPenghuniKost($nik)
     global $conn;
     $query = mysqli_query($conn, "SELECT COUNT(id) as id_penghuni FROM penyewaan WHERE NIK_penyewa='$nik'");
 
+
+function getDataPemilik($nikAkun)
+{
+
+    global $conn;
+
+    $pemilik = mysqli_query($conn, "SELECT * FROM pemilik WHERE NIK='$nikAkun'");
+    $dataPemilik = mysqli_fetch_assoc($pemilik);
+
+    return $dataPemilik;
+}
+
+function generateRekening($namaBank, $rekening, $nikPemilik)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "INSERT INTO rekening(`NoRekening`, `bank`, `NIK_Pemilik`) VALUES ('$rekening', '$namaBank', '$nikPemilik')");
+    
     if (!$query) {
         return FALSE;
     }
 
-    return mysqli_fetch_assoc($query);
+    return TRUE;
 }
 
 function getOwnerKostDataKamar($id)
@@ -414,3 +434,91 @@ function deleteDataKost($idKost)
 
 //     return $resQuery['id'];
 // }
+
+function setUserToKamar($idPenyewa, $tglMulai, $tglAkhir, $idKost, $idPesanan)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT idKamar from kamar WHERE status='KOSONG'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    $arr = [];
+    while ($data = mysqli_fetch_assoc($query)) {
+        array_push($arr, $data);
+    }
+
+    $idKamar = $arr[array_rand($arr, 1)]['idKamar'];
+    // var_dump($idKamar);
+
+    $kamarQuery = mysqli_query($conn, "INSERT INTO penyewaan(`NIK_Penyewa`, `tannggal_mulai`, `tanggal_akhir`, `idKamar`, `idKost`) VALUE ('$idPenyewa', '$tglMulai', '$tglAkhir', '$idKamar', '$idKost')");
+
+    if (!$kamarQuery) {
+        return FALSE;
+    }
+
+    mysqli_query($conn, "UPDATE kamar SET `status`='TERISI' WHERE `idKamar`='$idKamar'");
+
+    $query = mysqli_query($conn, "DELETE FROM pesanan WHERE `idPesanan`='$idPesanan'");
+
+    if ($query) {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+function getInfoPesananById($idPesanan)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT idPemesan, mulaiSewa, akhirSewa FROM pesanan WHERE idPesanan='$idPesanan'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+
+function getDataPenyewaanById($idKost)
+{
+    global $conn;
+
+    $data_array = [];
+    $data_query = mysqli_query($conn, "SELECT * FROM penyewaan WHERE idKost='$idKost'");
+
+    while ($data = mysqli_fetch_assoc($data_query)) {
+        array_push($data_array, $data);
+    }
+
+    return $data_array;
+}
+
+function getSewaMasukByBulan($bulan, $idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(id) as jumlah_penyewa FROM penyewaan WHERE (tannggal_mulai BETWEEN '2022-$bulan-01' AND '2022-$bulan-31') AND idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_penyewa'];
+}
+
+function getSewaKeluarByBulan($bulan, $idKost)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(id) as jumlah_penyewa FROM penyewaan WHERE (tanggal_akhir BETWEEN '2022-$bulan-01' AND '2022-$bulan-31') AND idKost='$idKost'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_penyewa'];
+}

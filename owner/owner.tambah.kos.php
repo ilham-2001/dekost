@@ -3,11 +3,16 @@ session_start();
 
 require('core/init.php');
 
-var_dump($_SESSION);
+
+// var_dump($_SESSION);
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
 
 if (isset($_POST['btn-kos-singup'])) {
     // var_dump($_POST);
     // var_dump($_FILES);
+
+    var_dump($_POST);
 
     $namaKos = $_POST['nama-kos'];
     $alamatKos = $_POST['alamat-kos'];
@@ -16,12 +21,12 @@ if (isset($_POST['btn-kos-singup'])) {
     $jenisKos = $_POST['jenis'];
     // $namabank = $_POST['nama-bank'];
     // $rekening = $_POST['rekening'];
-    $fasilitas = implode(', ', $_POST['fasilitas']);
+    // $fasilitas = $_POST['fasilitas'];
 
     $idPemilik = $_SESSION['id_pemilik'];
     $gambar = $_FILES['kost-gambar'];
 
-    $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik, $fasilitas);
+    $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik);
     $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
 
     if ($regis['isSuccess'] && $kamarGenereated) {
@@ -164,7 +169,8 @@ if (!isset($_SESSION['login-admin'])) {
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
+
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
@@ -220,6 +226,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <option value="Putra" selected>Putra</option>
                                                         <option value="Putri">Putri</option>
                                                         <option value="Campur">Campuran</option>
+
                                                     </select>
                                                 </div>
                                                 <!-- <div class="row mt-2">
@@ -243,36 +250,38 @@ if (!isset($_SESSION['login-admin'])) {
                                                         </div>
                                                     </div>
                                                 </div> -->
-                                                <div class="fasilitas">
+
+                                                <!-- <div class="fasilitas">
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <input type="checkbox" id="ac" name="fasilitas[]" value="AC">
+                                                            <input type="checkbox" id="ac" name="fasilitas" value="AC">
                                                             <label for="ac"> AC </label><br>
                                                         </div>
                                                         <div class="col-3">
-                                                            <input type="checkbox" id="tv" name="fasilitas[]" value="TV">
+                                                            <input type="checkbox" id="tv" name="fasilitas" value="TV">
                                                             <label for="tv"> TV</label><br>
                                                         </div>
                                                         <div class="col-5">
-                                                            <input type="checkbox" id="kmdalam" name="fasilitas[]" value="Kamar Mandi Dalam">
+                                                            <input type="checkbox" id="kmdalam" name="fasilitas" value="Kamar Mandi Dalam">
                                                             <label for="kmdalam"> KM Dalam</label><br>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <input type="checkbox" id="kasur" name="fasilitas[]" value="Kasur">
+
+                                                            <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
                                                             <label for="kasur"> Kasur </label><br>
                                                         </div>
                                                         <div class="col-3">
-                                                            <input type="checkbox" id="meja" name="fasilitas[]" value="Meja">
+                                                            <input type="checkbox" id="meja" name="fasilitas" value="Meja">
                                                             <label for="meja"> Meja</label><br>
                                                         </div>
                                                         <div class="col-5">
-                                                            <input type="checkbox" id="lemari" name="fasilitas[]" value="Lemari">
+                                                            <input type="checkbox" id="lemari" name="fasilitas" value="Lemari">
                                                             <label for="lemari"> Lemari</label><br>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
 
 
 

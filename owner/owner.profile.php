@@ -2,13 +2,19 @@
 require('core/init.php');
 
 session_start();
-
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
     header('Location: owner.login.php');
     exit;
 }
+
+$id = $_SESSION['id_pemilik'];
+$dataPemilik = getDataPemilik($id);
+$data = getDataFromId("pemilik", $id);
+
+// var_dump($data);
+
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
@@ -137,9 +143,11 @@ $data = getDataFromId("pemilik", $id);
                                     <ul class="navbar-nav ms-auto me-4">
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span><?= $data['nama'] ?></span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
+                                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
+                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span><?= $dataPemilik["nama"] ?></span>
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
+                                                    height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

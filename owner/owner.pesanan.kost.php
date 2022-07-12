@@ -3,6 +3,15 @@ require('core/init.php');
 
 session_start();
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
+
+if (!isset($_SESSION['login-admin'])) {
+    header("Location: owner.login.php");
+    exit;
+}
+
+
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 // var_dump($idKost);
 $dataPemesan = getDataPesanan($idKost);
@@ -17,20 +26,27 @@ if (isset($_POST['logout-owner-btn'])) {
 
 if (isset($_POST['validation-btn'])) {
     $val = explode(" ", $_POST['validation-btn']);
+    // var_dump($val);
 
     if ($val[0] == "accept") {
         // accept and set to random room
+        $pesananUser = getInfoPesananById($val[1]);
+        // var_dump($pesananUser);
+        $valid = setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa'], $idKost, $val[1]);
 
+        if ($valid) {
+            echo "<script> document.location.href = 'owner.pesanan.kost.php'; </script>";
+        }
     } else {
         // reject, delete from data pemesanan 
-        rejectPemesanan($val[1]);
+        $valid = rejectPemesanan($val[1]);
+
+        if ($valid) {
+            echo "<script> document.location.href = 'owner.pesanan.kost.php'; </script>";
+        }
     }
 }
 
-if (!isset($_SESSION['login-admin'])) {
-    header("Location: owner.login.php");
-    exit;
-}
 
 // get username
 $id = $_SESSION['id_pemilik'];
@@ -162,7 +178,8 @@ $data = getDataFromId("pemilik", $id);
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span><?= $data['nama'] ?></span>
+
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
@@ -222,8 +239,8 @@ $data = getDataFromId("pemilik", $id);
                                                             <td><?= $data['akhirSewa'] ?></td>
                                                             <td>
                                                                 <form method="POST">
-                                                                    <button class="btn btn-success" value="accept <?= $data['idPesanan'] ?>" name="validation-btn" onclick="return confirm('Terima Pesanan?');">Accept</button>
-                                                                    <button class="btn btn-danger" value="reject <?= $data['idPesanan'] ?>" name="validation-btn" onclick="return confirm('Tolak dan Hapus Pesanan?');">Reject</button>
+                                                                    <button class="btn btn-success" value="accept <?= "$data[idPesanan]" ?>" name="validation-btn" onclick="return confirm('Terima Pesanan?');">Accept</button>
+                                                                    <button class="btn btn-danger" value="reject <?= "$data[idPesanan]" ?>" name="validation-btn" onclick="return confirm('Tolak dan Hapus Pesanan?');">Reject</button>
                                                                 </form>
                                                             </td>
                                                             <td style="display: none;"><?= $data['tglPemesanan'] ?></td>

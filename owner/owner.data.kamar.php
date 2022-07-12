@@ -7,9 +7,8 @@ $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 
 $dataKamar = getOwnerKostDataKamar($idKost);
 
-// get username
-$id = $_SESSION['id_pemilik'];
-$data = getDataFromId("pemilik", $id);
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
 
 // var_dump($dataKamar);
 
@@ -151,7 +150,7 @@ if (!isset($_SESSION['login-admin'])) {
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span><?= $data['nama'] ?></span>
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
 
                                             </a>
@@ -221,8 +220,10 @@ if (!isset($_SESSION['login-admin'])) {
                                                                 </td>
                                                                 <td>ini gambar</td>
                                                                 <td>
-                                                                    <button>edit</button>
-                                                                    <button>hapus</button>
+                                                                    <form method="POST">
+                                                                        <button class="btn btn-success" value="accept" name="validation-btn" onclick="return confirm('Terima Pesanan?');">Edit</button>
+                                                                        <button class="btn btn-danger" value="reject" name="validation-btn" onclick="return confirm('Tolak dan Hapus Pesanan?');">Hapus</button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                             <?php $num++; ?>
