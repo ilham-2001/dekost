@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require('core/init.php');
 
 $nikAkun = $_SESSION["id_pemilik"];
@@ -10,7 +9,7 @@ global $conn;
 $pemilik = mysqli_query($conn, "SELECT * FROM pemilik WHERE NIK='$nikAkun'");
 $dataPemilik = mysqli_fetch_assoc($pemilik);
 $kost = mysqli_query($conn, "SELECT * FROM kost WHERE NIK_Pemilik = $nikAkun");
-$dataKost = $kost -> fetch_array();
+$dataKost = $kost->fetch_array();
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
@@ -23,14 +22,34 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
 
-if(isset($_POST["edit"])){
+// get data kost by NIK
+// $dataKost = getDataKost($id);
+
+// hapus data kost beserta value di foreign key nya
+if (isset($_GET['hapus'])) {
+    $idKost = $_GET['hapus'];
+    echo $idKost;
+    // var_dump($idKost);
+    deleteDataKost($idKost);
+    echo "<script> 
+            alert('Data kost berhasil dihapus!');
+            document.location.href = 'owner.data.kost.php';
+        </script>
+    ";
+}
+
+
+if (isset($_POST["edit"])) {
     $nama = $_POST["nama"];
     $alamat = $_POST["alamat"];
     $jmlKamar = $_POST["jmlKamar"];
     // var_dump($_GET);
     $id = $_POST["id"];
-    
+
     $query = "UPDATE kost SET 
                 nama = '$nama',
                 alamat = '$alamat',
@@ -38,10 +57,9 @@ if(isset($_POST["edit"])){
             WHERE id = '$id'";
     mysqli_query($conn, $query);
 
-    if(mysqli_affected_rows($conn) > 0){
+    if (mysqli_affected_rows($conn) > 0) {
         echo "<script> document.location.href = 'owner.data.kost.php'; </script>";
     };
-
 }
 
 ?>
@@ -89,7 +107,7 @@ if(isset($_POST["edit"])){
                             <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
                                 href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/logo.png" alt="#logo">
+                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -178,10 +196,9 @@ if(isset($_POST["edit"])){
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/logo.png">
-
+                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -204,7 +221,7 @@ if(isset($_POST["edit"])){
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i
                                                         class="fa-solid fa-database me-3"></i>Data Kost</h1>
-                                                <a href="owner.kos.signup.php" class="tambah-data-kost float-right"
+                                                <a href="owner.tambah.kos.php" class="tambah-data-kost float-right"
                                                     style="text-decoration:none ;">
                                                     <i class="fa-solid fa-plus me-2"></i>Tambah Data Kost</a>
                                             </div>
@@ -215,7 +232,6 @@ if(isset($_POST["edit"])){
                                                     cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
@@ -227,12 +243,12 @@ if(isset($_POST["edit"])){
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
                                                             <th>Fasilitas</th>
                                                             <th>Jumlah Kamar</th>
+                                                            <th>Fasilitas</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
@@ -240,7 +256,8 @@ if(isset($_POST["edit"])){
                                                     <tbody>
                                                         <form action="" method="POST">
                                                             <?php
-                                                            if(empty($dataKost["id"])){
+                                                            // var_dump($dataKost["id"]);
+                                                            if (empty($dataKost["id"])) {
                                                                 echo "<tr>
                                                                         <td></td>
                                                                         <td></td>
@@ -251,44 +268,44 @@ if(isset($_POST["edit"])){
                                                                         <td></td>
                                                                         <td></td>
                                                                     </tr>";
-                                                            }
-                                                            else{
+                                                            } else {
                                                                 $nomor = 1;
                                                                 $kost = mysqli_query($conn, "SELECT * FROM kost WHERE NIK_Pemilik = $nikAkun");
-                                                                while($dataKost = $kost -> fetch_array()){
+                                                                while ($dataKost = $kost->fetch_array()) {
                                                                     $idKost = $dataKost["id"];
                                                                     $fasilitas = mysqli_query($conn, "SELECT nama FROM fasilitas WHERE id = ANY(SELECT id_fasil FROM fasil_kost WHERE id_kost = $idKost)");
                                                                     $allFasilitas = "";
                                                                     $i = 0;
-                                                                    while($fasil = $fasilitas -> fetch_array()){
+                                                                    while ($fasil = $fasilitas->fetch_array()) {
                                                                         $nama = $fasil["nama"];
-                                                                        if($i>0){
+                                                                        if ($i > 0) {
                                                                             $allFasilitas = $allFasilitas . ", " . $nama;
-                                                                        } else{$allFasilitas = $nama;}
+                                                                        } else {
+                                                                            $allFasilitas = $nama;
+                                                                        }
                                                                         $i++;
                                                                     }
                                                                     echo "<tr>
-                                                                            <td>".$nomor."</td>
-                                                                            <td>".$idKost."</td>
-                                                                            <td>".$dataKost["nama"]."</td>
-                                                                            <td>".$dataKost["alamat"]."</td>
-                                                                            <td>".$allFasilitas."</td>
-                                                                            <td>".$dataKost["jumlahKamar"]."</td>
-                                                                            <td>".$dataKost["gambar_preview"]."</td>
+                                                                            <td>" . $nomor . "</td>
+                                                                            <td>" . $idKost . "</td>
+                                                                            <td>" . $dataKost["nama"] . "</td>
+                                                                            <td>" . $dataKost["alamat"] . "</td>
+                                                                            <td>" . $allFasilitas . "</td>
+                                                                            <td>" . $dataKost["jumlahKamar"] . "</td>
+                                                                            <td>" . $dataKost["gambar_preview"] . "</td>
                                                                             <td>
-                                                                                <button class='btn btn-primary'>edit</button>
-                                                                                <button class='btn btn-primary'>hapus</button>
+                                                                                <a href='owner.data.kost.php?idKost=$idKost'>
+                                                                                    <button type='submit' name='edit' class='btn btn-primary'>edit</button>
+                                                                                </a>
+                                                                                <a href='owner.hapus.data.kost.php?idKost=$idKost'>
+                                                                                    <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
+                                                                                </a>
                                                                             </td>
                                                                         </tr>";
                                                                     $nomor++;
-                                                                } // <a href='owner.data.kost.php?idKost=$idKost'>
-                                                                // <button type='submit' name='edit' class='btn btn-primary'>edit</button>
-                                                            // </a>
-                                                            // <a href='owner.data.kost.php?idKost=$idKost'>
-                                                                // <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
-                                                        // </a>
+                                                                }
                                                             }
-                                                        ?>
+                                                            ?>
                                                         </form>
                                                     </tbody>
                                                 </table>
@@ -316,21 +333,7 @@ if(isset($_POST["edit"])){
         </div>
     </div>
     </div>
-    <script>
-    function myFunction() {
-        var x = document.getElementById("side-nav");
-        var y = document.getElementById("side-nav1");
-        var a = document.getElementById("main-content-header");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-            y.style.display = "none";
-        } else {
-            x.style.display = "block";
-            y.style.display = "block";
-            a.style.width = "none";
-        }
-    }
-    </script>
+
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 

@@ -1,8 +1,9 @@
 <?php
-
 require('core/init.php');
 session_start();
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -14,10 +15,13 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
 
 $num = 1;
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
-$dataPenyewa = getDataPenyewaanyId($idKost);
+$dataPenyewa = getDataPenyewaanById($idKost);
 
 // var_dump($dataPenyewa);
 
@@ -63,9 +67,10 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
+                                href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/logo.png" alt="#logo">
+                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -74,7 +79,8 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -123,7 +129,6 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                             <li class="nav-item">
                                 <a class="nav-link" href="owner.pesanan.kost.php"><i
                                         class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
-
                             </li>
 
                             <!-- Divider -->
@@ -166,7 +171,7 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span>Ini Nama Pemilik Kost</span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/logo.png">
+                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -297,19 +302,19 @@ $dataPenyewa = getDataPenyewaanyId($idKost);
 
     </div>
     <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
+    function myFunction() {
+        var x = document.getElementById("side-nav");
+        var y = document.getElementById("side-nav1");
+        var a = document.getElementById("main-content-header");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            y.style.display = "none";
+        } else {
+            x.style.display = "block";
+            y.style.display = "block";
+            a.style.width = "none";
         }
+    }
     </script>
 
     <!-- <script src="../owner/assets/app/js/bootstrap.min.js"></script> -->

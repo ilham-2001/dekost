@@ -3,6 +3,8 @@ require('core/init.php');
 
 session_start();
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
 
 if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
@@ -30,13 +32,25 @@ if (isset($_POST['validation-btn'])) {
         // accept and set to random room
         $pesananUser = getInfoPesananById($val[1]);
         // var_dump($pesananUser);
-        setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa'], $idKost);
+        $valid = setUserToKamar($pesananUser['idPemesan'], $pesananUser['mulaiSewa'], $pesananUser['akhirSewa'], $idKost, $val[1]);
+
+        if ($valid) {
+            echo "<script> document.location.href = 'owner.pesanan.kost.php'; </script>";
+        }
     } else {
         // reject, delete from data pemesanan 
-        rejectPemesanan($val[1]);
+        $valid = rejectPemesanan($val[1]);
+
+        if ($valid) {
+            echo "<script> document.location.href = 'owner.pesanan.kost.php'; </script>";
+        }
     }
 }
 
+
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
 
 ?>
 
@@ -83,7 +97,7 @@ if (isset($_POST['validation-btn'])) {
                         <ul class="nav flex-column">
                             <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/logo.png" alt="#logo">
+                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -164,18 +178,14 @@ if (isset($_POST['validation-btn'])) {
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
+                                                <span><?= $dataPemilik["nama"] ?></span>
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
-                                                </a>
-                                                <a class="dropdown-item" href="#setting">
-                                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                                    Settings
                                                 </a>
                                             </div>
                                         </li>

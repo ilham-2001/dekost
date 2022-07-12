@@ -3,12 +3,14 @@ session_start();
 
 require('core/init.php');
 
+
 // var_dump($_SESSION);
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
 
 if (isset($_POST['btn-kos-singup'])) {
     // var_dump($_POST);
     // var_dump($_FILES);
-
 
     var_dump($_POST);
 
@@ -20,7 +22,6 @@ if (isset($_POST['btn-kos-singup'])) {
     // $namabank = $_POST['nama-bank'];
     // $rekening = $_POST['rekening'];
     // $fasilitas = $_POST['fasilitas'];
-
 
     $idPemilik = $_SESSION['id_pemilik'];
     $gambar = $_FILES['kost-gambar'];
@@ -90,7 +91,7 @@ if (!isset($_SESSION['login-admin'])) {
                         <ul class="nav flex-column">
                             <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/logo.png" alt="#logo">
+                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -168,8 +169,8 @@ if (!isset($_SESSION['login-admin'])) {
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
+                                                <span><?= $dataPemilik["nama"] ?></span>
+                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -223,7 +224,8 @@ if (!isset($_SESSION['login-admin'])) {
                                                     <select class="form-select" aria-label="Default select example" name="jenis">
                                                         <option value="Putra" selected>Putra</option>
                                                         <option value="Putri">Putri</option>
-                                                        <option value="Campuran">Campuran</option>
+                                                        <option value="Campur">Campuran</option>
+
                                                     </select>
                                                 </div>
                                                 <!-- <div class="row mt-2">
@@ -247,6 +249,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                         </div>
                                                     </div>
                                                 </div> -->
+
                                                 <!-- <div class="fasilitas">
                                                     <div class="row">
                                                         <div class="col-4">
@@ -264,6 +267,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-4">
+
                                                             <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
                                                             <label for="kasur"> Kasur </label><br>
                                                         </div>

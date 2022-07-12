@@ -39,7 +39,7 @@ if (isset($_POST["btn_submit"])) {
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
         rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" href="assets/icon/favicon.ico">
+    <link rel="icon" href="assets/icon/DeKost.png">
 </head>
 
 <body>
@@ -125,7 +125,7 @@ if (isset($_POST["btn_submit"])) {
                                     <div class="card-body p-md-5">
                                         <div class="text-center">
                                             <h4 class="mt-1 mb-5 pb-1"> <img class="pb-2 pe-2"
-                                                    src="../owner/assets/icons/logo.png"
+                                                    src="../owner/assets/icons/DeKost2.png"
                                                     style="width: 50px; height:50px;" alt="logo">De'Kost</h4>
                                         </div>
 
