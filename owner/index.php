@@ -28,6 +28,16 @@ $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 $countPesanan = countPesanan($idKost)['pesanan'];
 $countKamar = countDataKamar($idKost)['kamar'];
 
+// get count data kost tiap owner 
+$id = $_SESSION['id_pemilik'];
+$countDataKost = countDataKos($id)['kost'];
+
+// get count penghuni kost tiap owner 
+$countPenghuni = countPenghuniKost($id)['id_penghuni'];
+
+// get username
+$data = getDataFromId("pemilik", $id);
+
 
 
 $dataPoints = array(
@@ -225,11 +235,9 @@ $dataPoints2 = array(
                                 <ul class="navbar-nav ms-auto me-4">
                                     <!-- Nav Item - User Information -->
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
-                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span>Ini Nama Pemilik Kost</span>
-                                            <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px"
-                                                src="../owner/assets/icons/logo.png">
+                                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span><?= $data['nama'] ?><span>
+                                                    <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
                                         </a>
                                         <!-- Dropdown - User Information -->
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -261,8 +269,7 @@ $dataPoints2 = array(
                                                         <div
                                                             class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                             Jumlah Kost</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">(count data
-                                                            kos)</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $countDataKost ?></div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -304,9 +311,8 @@ $dataPoints2 = array(
                                                         </div>
                                                         <div class="row no-gutters align-items-center">
                                                             <div class="col-auto">
-                                                                <div
-                                                                    class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                                    <?= $countKamar ?></div>
+                                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                                    <?= $countPenghuni ?></div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="progress progress-sm mr-2">

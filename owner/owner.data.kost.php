@@ -1,5 +1,6 @@
 <?php
 session_start();
+require('core/init.php');
 
 require('core/init.php');
 
@@ -23,6 +24,26 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
+
+// get data kost by NIK
+$dataKost = getDataKost($id);
+
+// hapus data kost beserta value di foreign key nya
+if (isset($_GET['hapus'])) {
+    $idKost = $_GET['hapus'];
+    echo $idKost;
+    // var_dump($idKost);
+    deleteDataKost($idKost);
+    echo "<script> 
+            alert('Data kost berhasil dihapus!');
+            document.location.href = 'owner.data.kost.php';
+        </script>
+    ";
+}
+
 
 if (isset($_POST["edit"])) {
     $nama = $_POST["nama"];
@@ -85,8 +106,7 @@ if (isset($_POST["edit"])) {
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
-                                href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
                                 <div class="sidebar-brand-icon">
                                     <img src="../owner/assets/icons/logo.png" alt="#logo">
                                 </div>
@@ -97,8 +117,7 @@ if (isset($_POST["edit"])) {
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i
-                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -109,31 +128,25 @@ if (isset($_POST["edit"])) {
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                                            aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                             <i class="fa-solid fa-database me-3"></i>
                                             Master Data
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="panelsStayOpen-headingOne">
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="owner.data.kost.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link active" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kamar.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Kamar</a>
+                                                <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.penyewa.php"><i
-                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+                                                <a class="nav-link" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
                                             </li>
                                         </div>
                                     </div>
@@ -144,8 +157,7 @@ if (isset($_POST["edit"])) {
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" href="owner.pesanan.kost.php"><i
-                                        class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
 
                             <!-- Divider -->
@@ -153,8 +165,7 @@ if (isset($_POST["edit"])) {
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <form method="POST">
-                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
-                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
                                     </form>
                                 </li>
                             </div>
@@ -167,8 +178,7 @@ if (isset($_POST["edit"])) {
                                 <!-- Topbar -->
                                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
                                     <!-- Sidebar Toggle (Topbar) -->
-                                    <button id="sidebarToggleTop" onclick="myFunction()"
-                                        class="btn btn-link rounded-circle d-sm-none mr-3">
+                                    <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
                                         <i class="fa fa-bars"></i>
                                     </button>
                                     <!-- Topbar Navbar -->
@@ -180,11 +190,9 @@ if (isset($_POST["edit"])) {
                                                 <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
                                                     height="20px" src="../owner/assets/icons/logo.png">
-
                                             </a>
                                             <!-- Dropdown - User Information -->
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                                aria-labelledby="userDropdown">
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
@@ -210,11 +218,9 @@ if (isset($_POST["edit"])) {
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table table-bordered" id="dataTable" width="100%"
-                                                    cellspacing="0">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
@@ -226,12 +232,12 @@ if (isset($_POST["edit"])) {
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
                                                             <th>Fasilitas</th>
                                                             <th>Jumlah Kamar</th>
+                                                            <th>Fasilitas</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
@@ -315,21 +321,7 @@ if (isset($_POST["edit"])) {
         </div>
     </div>
     </div>
-    <script>
-    function myFunction() {
-        var x = document.getElementById("side-nav");
-        var y = document.getElementById("side-nav1");
-        var a = document.getElementById("main-content-header");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-            y.style.display = "none";
-        } else {
-            x.style.display = "block";
-            y.style.display = "block";
-            a.style.width = "none";
-        }
-    }
-    </script>
+
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
 

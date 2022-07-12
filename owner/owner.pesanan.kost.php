@@ -48,6 +48,10 @@ if (isset($_POST['validation-btn'])) {
 }
 
 
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
+
 ?>
 
 <!DOCTYPE html>
@@ -174,6 +178,7 @@ if (isset($_POST['validation-btn'])) {
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
                                                 <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
@@ -182,10 +187,6 @@ if (isset($_POST['validation-btn'])) {
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
-                                                </a>
-                                                <a class="dropdown-item" href="#setting">
-                                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                                    Settings
                                                 </a>
                                             </div>
                                         </li>

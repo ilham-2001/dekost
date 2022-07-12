@@ -1,7 +1,7 @@
 <?php
-
 require('core/init.php');
 session_start();
+
 $nikAkun = $_SESSION["id_pemilik"];
 $dataPemilik = getDataPemilik($nikAkun);
 if (isset($_POST['logout-owner-btn'])) {
@@ -15,6 +15,9 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
 
 $num = 1;
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
@@ -115,9 +118,18 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                             <!-- Divider -->
                             <hr class="sidebar-divider mt-2 bg-light">
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                        </li>
 
+                        <!-- Divider -->
+                        <hr class="sidebar-divider mt-2 bg-light">
+
+                        <div class="logout">
+                            <li class="nav-item-logout">
+                                <form method="POST">
+                                    <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                </form>
                             </li>
 
                             <!-- Divider -->
