@@ -62,7 +62,7 @@ function checkRegistredUser($email)
     return $isRegistred;
 }
 
-function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik)
+function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik, $noTelp)
 {
     global $conn;
 
@@ -72,10 +72,11 @@ function registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_
     $nama_belakang = mysqli_real_escape_string($conn, $nama_belakang);
     $jenis_kelamin = mysqli_real_escape_string($conn, $jenis_kelamin);
     $nik = mysqli_real_escape_string($conn, $nik);
+    $noTelp = mysqli_real_escape_string($conn, $noTelp);
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = mysqli_query($conn, "INSERT INTO users(NIK, firstName, lastName, email, jenisKelamin, keypassword) VALUES('$nik', '$nama_depan', '$nama_belakang', '$email', '$jenis_kelamin', '$password') ");
+    $query = mysqli_query($conn, "INSERT INTO users(NIK, firstName, lastName, email, jenisKelamin, keypassword, no_telepon) VALUES('$nik', '$nama_depan', '$nama_belakang', '$email', '$jenis_kelamin', '$password', '$noTelp') ");
 
     if ($query) {
         $q = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");

@@ -20,13 +20,20 @@ if (isset($_POST['btn-kos-singup'])) {
     $gambar = $_FILES['kost-gambar'];
     $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik, $fasilitas);
     $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
-    // $rekeningGenerated = generateRekening($namabank, $rekening, $idPemilik);
+    $rekeningGenerated = generateRekening($namabank, $rekening, $idPemilik);
+    $idKost = $regis['idKost'];
 
-    // var_dump($kamarGenereated);
-    if ($regis['isSuccess'] && $kamarGenereated && !$_SESSION['login-admin']) {
+    // var_dump($fasilitas);
+    // foreach($fasilitas as $fasil){
+    //     $fasilGenerated = addFasilKost($idKost, $fasil);
+    //     var_dump($fasil);
+    //     var_dump($fasilGenerated);
+    // }
+
+    if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && !$_SESSION['login-admin']) {
         header("Location: owner.login.php");
         exit;
-    } else if ($regis['isSuccess'] && $kamarGenereated && $_SESSION['login-admin']) {
+    } else if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && $_SESSION['login-admin']) {
         header("Location: owner.data.kost.php");
         exit;
     }
@@ -47,8 +54,8 @@ if (isset($_POST['btn-kos-singup'])) {
     <!-- Bootstrap -->
     <link rel="stylesheet" href="assets/app/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/app/css/custom.style.css">
-    <!-- Favicon -->
-    <link rel="icon" href="assets/icon/DeKost.png">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>
@@ -147,7 +154,8 @@ if (isset($_POST['btn-kos-singup'])) {
                                             <!-- <div class="row mt-2">
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <select class="form-select" aria-label="Default select example" name="nama-bank">
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            name="nama-bank">
                                                             <option selected>Pilih Bank</option>
                                                             <option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia
                                                             </option>
@@ -163,7 +171,9 @@ if (isset($_POST['btn-kos-singup'])) {
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" id="floatingInput" placeholder="No Rekening" name="rekening" autocomplete="off">
+                                                        <input type="text" class="form-control" id="floatingInput"
+                                                            placeholder="No Rekening" name="rekening"
+                                                            autocomplete="off">
                                                         <label for="floatingInput">No Rekening</label>
                                                     </div>
                                                 </div>
