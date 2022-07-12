@@ -37,6 +37,7 @@ if (isset($_POST['button_signup'])) {
     $password = $_POST['password'];
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $nik = $_POST['nik'];
+    $noTelp = $_POST['noTelp'];
 
     $isComplete = checkCompleteess($email, $password, $nik);
 
@@ -46,7 +47,7 @@ if (isset($_POST['button_signup'])) {
 
         if (!$isRegistred) {
             // make account if email is not set yet in the database
-            $regis = registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik);
+            $regis = registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik, $noTelp);
 
             if ($regis) {
                 // regis is success 
@@ -276,6 +277,12 @@ mengetahui keluar masuknya uang dan membantu menyusun prioritas kebutuhan.";
                                         <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
                                             name="nik" autocomplete="off">
                                         <label for="floatingInput">NIK</label>
+                                    </div>
+
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
+                                            name="noTelp" autocomplete="off">
+                                        <label for="floatingInput">No.Telepon</label>
                                     </div>
 
                                     <div class="form-check">
