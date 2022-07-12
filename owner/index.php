@@ -3,6 +3,9 @@
 require('core/init.php');
 session_start();
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
+
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();

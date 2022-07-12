@@ -177,7 +177,7 @@ if (isset($_POST["edit"])) {
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
                                                     height="20px" src="../owner/assets/icons/logo.png">
 
@@ -276,17 +276,16 @@ if (isset($_POST["edit"])) {
                                                                             <td>" . $dataKost["jumlahKamar"] . "</td>
                                                                             <td>" . $dataKost["gambar_preview"] . "</td>
                                                                             <td>
-                                                                                <button class='btn btn-success'>edit</button>
-                                                                                <button class='btn btn-danger'>hapus</button>
+                                                                                <a href='owner.data.kost.php?idKost=$idKost'>
+                                                                                    <button type='submit' name='edit' class='btn btn-primary'>edit</button>
+                                                                                </a>
+                                                                                <a href='owner.hapus.data.kost.php?idKost=$idKost'>
+                                                                                    <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
+                                                                                </a>
                                                                             </td>
                                                                         </tr>";
                                                                     $nomor++;
-                                                                } // <a href='owner.data.kost.php?idKost=$idKost'>
-                                                                // <button type='submit' name='edit' class='btn btn-primary'>edit</button>
-                                                                // </a>
-                                                                // <a href='owner.data.kost.php?idKost=$idKost'>
-                                                                // <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
-                                                                // </a>
+                                                                }
                                                             }
                                                             ?>
                                                         </form>

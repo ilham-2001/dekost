@@ -7,6 +7,9 @@ $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 
 $dataKamar = getOwnerKostDataKamar($idKost);
 
+$nikAkun = $_SESSION["id_pemilik"];
+$dataPemilik = getDataPemilik($nikAkun);
+
 // var_dump($dataKamar);
 
 $num = 1;
@@ -147,7 +150,7 @@ if (!isset($_SESSION['login-admin'])) {
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/logo.png">
 
                                             </a>

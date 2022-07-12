@@ -2,7 +2,6 @@
 require('core/init.php');
 
 session_start();
-
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -11,7 +10,7 @@ if (isset($_POST['logout-owner-btn'])) {
 }
 
 $id = $_SESSION['id_pemilik'];
-
+$dataPemilik = getDataPemilik($id);
 $data = getDataFromId("pemilik", $id);
 
 // var_dump($data);
@@ -155,7 +154,7 @@ if (!isset($_SESSION['login-admin'])) {
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
+                                                <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
                                                     height="20px" src="../owner/assets/icons/logo.png">
                                             </a>
