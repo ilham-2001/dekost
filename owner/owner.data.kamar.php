@@ -14,6 +14,10 @@ $dataPemilik = getDataPemilik($nikAkun);
 
 $num = 1;
 
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
+
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
@@ -151,8 +155,8 @@ if (!isset($_SESSION['login-admin'])) {
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                                <span><?= $dataPemilik["nama"] ?></span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
+                                                <span class="fw-bold fs-5" style="text-transform: capitalize;"><?= $data['nama'] ?><span>
+                                                        <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
 
                                             </a>
                                             <!-- Dropdown - User Information -->
@@ -174,7 +178,6 @@ if (!isset($_SESSION['login-admin'])) {
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-database me-3"></i>Data Kamar</h1>
-                                                <button class="tambah-data-kamar float-right">Tambah Data Kamar</button>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -184,7 +187,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>ID Kamar</th>
-                                                            <th>ID Kost</th>
+                                                            <th>Nama Kost</th>
                                                             <th>Lebar</th>
                                                             <th>Panjang</th>
                                                             <th>Kategori</th>
@@ -211,15 +214,12 @@ if (!isset($_SESSION['login-admin'])) {
                                                             <tr>
                                                                 <td><?= $num ?></td>
                                                                 <td><?= $data['idKamar'] ?></td>
-                                                                <td><?= $data['id_kost'] ?></td>
+                                                                <td><?= $data['nama'] ?></td>
                                                                 <td><?= $data['lebar'] ?></td>
                                                                 <td><?= $data['panjang'] ?></td>
                                                                 <td><?= $data['status'] ?></td>
-                                                                <td>Kamar mandi dalam,
-                                                                    AC,
-                                                                    TV, dll?
-                                                                </td>
-                                                                <td>ini gambar</td>
+                                                                <td><?= $data['fasilitas'] ?></td>
+                                                                <td><?= $data['gambar_preview'] ?></td>
                                                                 <td>
                                                                     <form method="POST">
                                                                         <button class="btn btn-success">Edit</button>

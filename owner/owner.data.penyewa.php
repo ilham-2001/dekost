@@ -157,8 +157,8 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
+                                                <span class="fw-bold fs-5" style="text-transform: capitalize;"><?= $data['nama'] ?><span>
+                                                        <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -188,11 +188,12 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>NIK Penyewa</th>
-                                                            <th>Nama Kost</th>
+                                                            <th>NIK</th>
+                                                            <th>Nama</th>
                                                             <th>No Kamar</th>
                                                             <th>Mulai Sewa</th>
                                                             <th>Akhir Sewa</th>
+                                                            <th>Email</th>
                                                             <th>No Telp</th>
                                                             <th>Bukti Pembayaran</th>
                                                             <th>Aksi</th>
@@ -216,11 +217,12 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                             <tr>
                                                                 <td><?= $num ?></td>
                                                                 <td><?= $penyewa['NIK_penyewa'] ?></td>
-                                                                <td><?= $penyewa['nama'] ?></td>
+                                                                <td><?= $penyewa['firstName'] . $penyewa['lastName'] ?></td>
                                                                 <td><?= $penyewa['idKamar'] ?></td>
                                                                 <td><?= $penyewa['tannggal_mulai'] ?></td>
                                                                 <td><?= $penyewa['tanggal_akhir'] ?></td>
-                                                                <td>083778765378</td>
+                                                                <td><?= $penyewa['email'] ?></td>
+                                                                <td><?= $penyewa['no_telepon'] ?></td>
                                                                 <td>gambar</td>
                                                                 <td>
                                                                     <button class="btn btn-success">edit</button>

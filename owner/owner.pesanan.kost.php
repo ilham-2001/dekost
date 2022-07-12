@@ -14,7 +14,7 @@ if (!isset($_SESSION['login-admin'])) {
 
 $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 // var_dump($idKost);
-$dataPemesan = getDataPesanan($idKost);
+$dataPemesan = getDataPesanan($nikAkun);
 // var_dump($dataPemesan);
 
 if (isset($_POST['logout-owner-btn'])) {
@@ -178,8 +178,8 @@ $data = getDataFromId("pemilik", $id);
                                         <!-- Nav Item - User Information -->
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span><?= $dataPemilik["nama"] ?></span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
+                                                <span class="fw-bold fs-5" style="text-transform: capitalize;"><?= $data['nama'] ?><span>
+                                                        <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

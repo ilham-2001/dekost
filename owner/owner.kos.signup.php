@@ -6,29 +6,27 @@ session_start();
 
 
 if (isset($_POST['btn-kos-singup'])) {
-    // var_dump($_POST);
-    // var_dump($_FILES);
 
     $namaKos = $_POST['nama-kos'];
     $alamatKos = $_POST['alamat-kos'];
-    $jumlahKamarKos = $_POST['jmlh-kamar'];
+    $jumlahKamarKos = $_POST['jumlahkamar'];
     $hargaKos = $_POST['harga'];
     $jenisKos = $_POST['jenis'];
-    $namabank = $_POST['nama-bank'];
-    $rekening = $_POST['rekening'];
-    // $fasilitas = $_POST['fasilitas'];
+    // $namabank = $_POST['nama-bank'];
+    // $rekening = $_POST['rekening'];
+    $fasilitas = implode(', ', $_POST['fasilitas']);
 
     $idPemilik = $_SESSION['id_pemilik'];
     $gambar = $_FILES['kost-gambar'];
-    $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik);
+    $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik, $fasilitas);
     $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
-    $rekeningGenerated = generateRekening($namabank, $rekening, $idPemilik);
+    // $rekeningGenerated = generateRekening($namabank, $rekening, $idPemilik);
 
     // var_dump($kamarGenereated);
-    if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && !$_SESSION['login-admin']) {
+    if ($regis['isSuccess'] && $kamarGenereated && !$_SESSION['login-admin']) {
         header("Location: owner.login.php");
         exit;
-    } else if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && $_SESSION['login-admin']) {
+    } else if ($regis['isSuccess'] && $kamarGenereated && $_SESSION['login-admin']) {
         header("Location: owner.data.kost.php");
         exit;
     }
@@ -117,24 +115,24 @@ if (isset($_POST['btn-kos-singup'])) {
                                             <p class="fw-bold text-center">CREATE KOST</p>
                                             <div class="form-floating">
                                                 <input type="text" class="form-control pt-1" id="floatingInput" placeholder="name@example.com" name="nama-kos" autocomplete="off">
-                                                <label for="floatingInput">Nama</label>
+                                                <label for="floatingInput">Nama Kost</label>
                                             </div>
 
                                             <div class="form-floating">
                                                 <input type="text" class="form-control sign-up-input" id="floatingPassword" placeholder="alamat" name="alamat-kos" autocomplete="off">
-                                                <label for="floatingPassword">Alamat</label>
+                                                <label for="floatingPassword">Alamat Kost</label>
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input type="number" class="form-control sign-up-input" id="floatingInput" placeholder="nama depan" name="jmlh-kamar" autocomplete="off">
+                                                        <input type="number" class="form-control sign-up-input" id="floatingInput" placeholder="Jumlah kamar" name="jumlahkamar" autocomplete="off">
                                                         <label for="floatingInput">Jumlah Kamar</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control sign-up-input" id="floatingInput" placeholder="nama belakang" name="harga" autocomplete="off">
-                                                        <label for="floatingInput">Harga</label>
+                                                        <input type="text" class="form-control sign-up-input" id="floatingInput" placeholder="Harga" name="harga" autocomplete="off">
+                                                        <label for="floatingInput">Harga Kost</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,7 +144,7 @@ if (isset($_POST['btn-kos-singup'])) {
                                                     <option value="Campuran">Campuran</option>
                                                 </select>
                                             </div>
-                                            <div class="row mt-2">
+                                            <!-- <div class="row mt-2">
                                                 <div class="col">
                                                     <div class="form-floating">
                                                         <select class="form-select" aria-label="Default select example" name="nama-bank">
@@ -169,39 +167,45 @@ if (isset($_POST['btn-kos-singup'])) {
                                                         <label for="floatingInput">No Rekening</label>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="fasilitas">
                                                 <div class="row">
-                                                    <div class="col-4">
-                                                        <input type="checkbox" id="ac" name="fasilitas" value="AC">
+                                                    <div class="col-3">
+                                                        <input type="checkbox" id="ac" name="fasilitas[]" value="AC">
                                                         <label for="ac"> AC </label><br>
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="checkbox" id="tv" name="fasilitas" value="TV">
-                                                        <label for="tv"> TV</label><br>
+                                                        <input type="checkbox" id="tv" name="fasilitas[]" value="Kamar Mandi Dalam">
+                                                        <label for="tv"> Kamar Mandi Dalam</label><br>
                                                     </div>
-                                                    <div class="col-5">
-                                                        <input type="checkbox" id="kmdalam" name="fasilitas" value="Kamar Mandi Dalam">
-                                                        <label for="kmdalam"> KM Dalam</label><br>
+                                                    <div class="col-3">
+                                                        <input type="checkbox" id="wifi" name="fasilitas[]" value="Wifi">
+                                                        <label for="kmdalam"> Wifi</label><br>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="checkbox" id="air" name="fasilitas[]" value="Air">
+                                                        <label for="kasur"> Air </label><br>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-4">
-                                                        <input type="checkbox" id="kasur" name="fasilitas" value="Kasur">
+                                                    <div class="col-3">
+                                                        <input type="checkbox" id="listrik" name="fasilitas[]" value="Listrik">
+                                                        <label for="meja"> Listrik</label><br>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="checkbox" id="kasur" name="fasilitas[]" value="Kasur">
                                                         <label for="kasur"> Kasur </label><br>
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="checkbox" id="meja" name="fasilitas" value="Meja">
-                                                        <label for="meja"> Meja</label><br>
-                                                    </div>
-                                                    <div class="col-5">
-                                                        <input type="checkbox" id="lemari" name="fasilitas" value="Lemari">
+                                                        <input type="checkbox" id="lemari" name="fasilitas[]" value="Lemari">
                                                         <label for="lemari"> Lemari</label><br>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="checkbox" id="meja" name="fasilitas[]" value="Meja">
+                                                        <label for="kasur"> Meja </label><br>
                                                     </div>
                                                 </div>
                                             </div>
-
-
 
                                             <div class="mt-2">
                                                 <label class="label-upload" style="color:#2155CD;">Upload Foto

@@ -26,8 +26,20 @@ $idKost = getUniqueIdKostByNIK($_SESSION['id_pemilik'])['id'];
 // $kamarGenereated = generateKamar(21, 3, 3, 4);
 
 $countPesanan = countPesanan($idKost)['pesanan'];
-$countKamar = countDataKamar($nikAkun);
-var_dump($countKamar);
+
+// jumlah kamar berdasarkan nik pemilik
+$sql = "SELECT COUNT(kamar.idKamar) as kamar FROM kamar inner join kost on kamar.id_kost=kost.id WHERE NIK_Pemilik='$nikAkun'";
+$result = mysqli_query($conn, $sql);
+$data = mysqli_fetch_assoc($result);
+// var_dump($data);
+$jumlahKamar = $data['kamar'];
+// end jumlah kamar
+
+// jumlah penghuni berdasarkan nik
+$penghuni = countJumlahPenghuni($nikAkun);
+$jumlahPenghuni = $penghuni['penghuni'];
+// end jumlah penghuni
+
 
 // get count data kost tiap owner 
 $id = $_SESSION['id_pemilik'];
@@ -130,13 +142,13 @@ $dataPoints2 = array(
     <div class=" wrapper">
     <div class="container-fluid">
         <!-- navbar header -->
-        <!-- <nav class="navbar navbar-light fixed-top">
+        <nav class="navbar navbar-light fixed-top">
             <div class="container-fluid justify-content-center">
                 <h4 class="navbar-header text-white">
                     Selamat Datang di Sistem Informasi Kostan | DEKOST
                 </h4>
             </div>
-        </nav> -->
+        </nav>
         <!--  CONTENT -->
         <div class="content mt-5">
             <div class="row">
@@ -226,7 +238,7 @@ $dataPoints2 = array(
                                     <!-- Nav Item - User Information -->
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span><?= $data['nama'] ?><span>
+                                            <span class="fw-bold fs-5" style="text-transform: capitalize;"><?= $data['nama'] ?><span>
                                                     <img class="img-profile rounded-circle ms-2 mb-1" width="20px" height="20px" src="../owner/assets/icons/DeKost2.png">
                                         </a>
                                         <!-- Dropdown - User Information -->
@@ -277,7 +289,7 @@ $dataPoints2 = array(
                                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                             JUmlah Kamar</div>
                                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                            <?= $countKamar ?></div>
+                                                            <?= $jumlahKamar ?></div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -299,7 +311,7 @@ $dataPoints2 = array(
                                                         <div class="row no-gutters align-items-center">
                                                             <div class="col-auto">
                                                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                                    <?= $countPenghuni ?></div>
+                                                                    <?= $jumlahPenghuni ?></div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="progress progress-sm mr-2">
