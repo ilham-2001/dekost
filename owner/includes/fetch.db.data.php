@@ -205,7 +205,7 @@ function addFasilKost($idKost, $namaFasil)
     return true;
 }
 
-function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, $idPemilik)
+function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, $idPemilik, $fasilitas)
 {
     global $conn;
 
@@ -222,7 +222,7 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
         return FALSE;
     }
 
-    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', '$harga', '$jenis', '$gambar')");
+    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview, fasilitas) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', '$harga', '$jenis', '$gambar', '$fasilitas')");
 
     if (!$query) {
         return FALSE;
