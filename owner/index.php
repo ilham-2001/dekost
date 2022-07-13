@@ -105,6 +105,14 @@ $dataPoints2 = array(
     array("label" => "Dec", "y" => $decKeluar)
 );
 
+$barChartData = array(
+    array("y" => 7, "label" => "March"),
+    array("y" => 12, "label" => "April"),
+    array("y" => 28, "label" => "May"),
+    array("y" => 18, "label" => "June"),
+    array("y" => 41, "label" => "July")
+);
+
 ?>
 
 <!DOCTYPE html>
@@ -457,93 +465,60 @@ $dataPoints2 = array(
                                             <!-- Project Card Example -->
                                             <div class="card shadow mb-4">
                                                 <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                                    <h6 class="m-0 font-weight-bold text-primary">Perbandingan
+                                                        Pendapatan Kos Berdasarkan Jenis</h6>
                                                 </div>
                                                 <div class="card-body">
-                                                    <h4 class="small font-weight-bold">Server Migration <span
-                                                            class="float-right">20%</span></h4>
-                                                    <div class="progress mb-4">
-                                                        <div class="progress-bar bg-danger" role="progressbar"
-                                                            style="width: 20%" aria-valuenow="20" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                    <div id="barChartContainer" style="height: 370px; width: 100%;">
                                                     </div>
-                                                    <h4 class="small font-weight-bold">Sales Tracking <span
-                                                            class="float-right">40%</span></h4>
-                                                    <div class="progress mb-4">
-                                                        <div class="progress-bar bg-warning" role="progressbar"
-                                                            style="width: 40%" aria-valuenow="40" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <h4 class="small font-weight-bold">Customer Database <span
-                                                            class="float-right">60%</span></h4>
-                                                    <div class="progress mb-4">
-                                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div>
-                                                    <h4 class="small font-weight-bold">Payout Details <span
-                                                            class="float-right">80%</span></h4>
-                                                    <div class="progress mb-4">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <h4 class="small font-weight-bold">Account Setup <span
-                                                            class="float-right">Complete!</span></h4>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-success" role="progressbar"
-                                                            style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6 mb-4">
-                                            <!-- Illustrations -->
-                                            <div class="card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="text-center">
-                                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4"
-                                                            style="width: 25rem;" src="img/undraw_posting_photo.svg"
-                                                            alt="...">
-                                                    </div>
-                                                    <p>Add some quality, svg illustrations to your project courtesy of
-                                                        <a target="_blank" rel="nofollow"
-                                                            href="https://undraw.co/">unDraw</a>, a
-                                                        constantly updated collection of beautiful svg images that you
-                                                        can
-                                                        use
-                                                        completely free and without attribution!
-                                                    </p>
-                                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse
-                                                        Illustrations on
-                                                        unDraw &rarr;</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- <div class="col-lg-6 mb-4">
+                                        <div class="card shadow mb-4">
+                                            <div class="card-header py-3">
+                                                <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                                        src="img/undraw_posting_photo.svg" alt="...">
+                                                </div>
+                                                <p>Add some quality, svg illustrations to your project courtesy of
+                                                    <a target="_blank" rel="nofollow"
+                                                        href="https://undraw.co/">unDraw</a>, a
+                                                    constantly updated collection of beautiful svg images that you
+                                                    can
+                                                    use
+                                                    completely free and without attribution!
+                                                </p>
+                                                <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse
+                                                    Illustrations on
+                                                    unDraw &rarr;</a>
+                                            </div>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
-                            <!-- End of Main Content -->
-
-                            <!-- Footer -->
-                            <footer class="sticky-footer bg-white fixed-bottom">
-                                <div class="container">
-                                    <div class="copyright text-center">
-                                        <span>Copyright &copy; Kolektif Team 2022</span>
-                                    </div>
-                                </div>
-                            </footer>
-                            <!-- End of Footer -->
                         </div>
+                        <!-- End of Main Content -->
+
+                        <!-- Footer -->
+                        <footer class="sticky-footer bg-white fixed-bottom">
+                            <div class="container">
+                                <div class="copyright text-center">
+                                    <span>Copyright &copy; Kolektif Team 2022</span>
+                                </div>
+                            </div>
+                        </footer>
+                        <!-- End of Footer -->
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <script>
     function myFunction() {
@@ -574,7 +549,7 @@ $dataPoints2 = array(
     <script>
     window.onload = function() {
 
-        var chart = new CanvasJS.Chart("myChart", {
+        const chart = new CanvasJS.Chart("myChart", {
             animationEnabled: true,
             theme: "light2",
             title: {
@@ -616,7 +591,7 @@ $dataPoints2 = array(
             chart.render();
         }
 
-        var pieChart = new CanvasJS.Chart("pieChartContainer", {
+        const pieChart = new CanvasJS.Chart("pieChartContainer", {
             animationEnabled: true,
             exportEnabled: true,
             title: {
@@ -638,6 +613,29 @@ $dataPoints2 = array(
         pieChart.render();
 
     }
+
+    const barChart = new CanvasJS.Chart("barChartContainer", {
+        animationEnabled: true,
+        title: {
+            text: "Pendapatan"
+        },
+        axisY: {
+            title: "Revenue (in IDR)",
+            includeZero: true,
+            prefix: "Rp",
+            suffix: "k"
+        },
+        data: [{
+            type: "bar",
+            yValueFormatString: "IDR#,##0K",
+            indexLabel: "{y}",
+            indexLabelPlacement: "inside",
+            indexLabelFontWeight: "bolder",
+            indexLabelFontColor: "white",
+            dataPoints: <?php echo json_encode($barChartData, JSON_NUMERIC_CHECK); ?>
+        }]
+    });
+    barChart.render();
     </script>
 
 </body>
