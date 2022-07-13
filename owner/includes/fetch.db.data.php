@@ -568,3 +568,15 @@ function getInfoPenyewaByNIK($NIK)
 
     return mysqli_fetch_assoc($query);
 }
+function countDataPeminatKost($gender)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(penyewaan.NIK_penyewa) AS jumlah_minat FROM penyewaan INNER JOIN kost ON penyewaan.idKost=kost.id WHERE kost.jenis='$gender'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_minat'];
+}

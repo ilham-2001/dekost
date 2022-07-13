@@ -39,12 +39,15 @@ $countPenghuni = countPenghuniKost($id);
 // get username
 $data = getDataFromId("pemilik", $id);
 
+$putra = countDataPeminatKost("Putra");
+$putri = countDataPeminatKost("Putri");
+$campur = countDataPeminatKost("Campur");
 
 
 $dataPoints = array(
-    array("label" => "Putra", "y" => 150),
-    array("label" => "Putri", "y" => 100),
-    array("label" => "Campur", "y" => 65),
+    array("label" => "Putra", "y" => $putra),
+    array("label" => "Putri", "y" => $putri),
+    array("label" => "Campur", "y" => $campur),
 );
 
 $janMasuk = getSewaMasukByBulan("01", $idKost);
