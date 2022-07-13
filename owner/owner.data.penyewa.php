@@ -15,6 +15,10 @@ if (!isset($_SESSION['login-admin'])) {
     header("Location: owner.login.php");
     exit;
 }
+
+if (isset($_POST['manipulate-btn'])) {
+    $eventData = explode(" ", $_POST['manipulate-btn']);
+}
 // get username
 $id = $_SESSION['id_pemilik'];
 $data = getDataFromId("pemilik", $id);
@@ -47,6 +51,8 @@ $dataPenyewa = getDataPenyewaanById($idKost);
     <link href="../owner/dist/css/index.css" rel="stylesheet"">
     <!-- CSS Data Tabel -->
     <link rel=" stylesheet" type="text/css" href="../owner/dist/css/datatables.min.css">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>
@@ -169,9 +175,10 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1"
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Ini Nama Pemilik Kost</span>
-                                                <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
+                                                <span class="fw-bold fs-5"
+                                                    style="text-transform: capitalize;"><?= $data['nama'] ?><span>
+                                                        <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
+                                                            height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -204,11 +211,12 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Nama Penyewa</th>
+                                                            <th>NIK Penyewa</th>
                                                             <th>Nama Kost</th>
                                                             <th>No Kamar</th>
                                                             <th>Mulai Sewa</th>
                                                             <th>Akhir Sewa</th>
+                                                            <th>Email</th>
                                                             <th>No Telp</th>
                                                             <th>Bukti Pembayaran</th>
                                                             <th>Aksi</th>
@@ -229,18 +237,26 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                     </tfoot> -->
                                                     <tbody>
                                                         <?php foreach ($dataPenyewa as $penyewa) : ?>
+                                                        <?php
+                                                            $dataPenyewa = getInfoPenyewaByNIK($penyewa['NIK_penyewa']);
+                                                            ?>
                                                         <tr>
                                                             <td><?= $num ?></td>
                                                             <td><?= $penyewa['NIK_penyewa'] ?></td>
-                                                            <td>kos ada</td>
-                                                            <td>2</td>
+                                                            <td><?= $penyewa['nama'] ?></td>
+                                                            <td><?= $penyewa['idKamar'] ?></td>
                                                             <td><?= $penyewa['tannggal_mulai'] ?></td>
                                                             <td><?= $penyewa['tanggal_akhir'] ?></td>
-                                                            <td>083778765378</td>
+                                                            <td><?= $dataPenyewa['email'] ?></td>
+                                                            <td><?= $dataPenyewa['no_telepon'] ?></td>
                                                             <td>gambar</td>
                                                             <td>
-                                                                <button class="btn btn-success">edit</button>
-                                                                <button class="btn btn-danger">hapus</button>
+                                                                <form method="POST">
+                                                                    <button class="btn btn-success" value="edit"
+                                                                        name="manipulate-btn">edit</button>
+                                                                    <button class="btn btn-danger" value="delete"
+                                                                        name="manipulate-btn">hapus</button>
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                         <?php $num++; ?>

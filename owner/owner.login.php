@@ -38,8 +38,8 @@ if (isset($_POST["btn_submit"])) {
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
         rel="stylesheet">
-    <!-- Favicon -->
-    <link rel="icon" href="assets/icon/DeKost.png">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>

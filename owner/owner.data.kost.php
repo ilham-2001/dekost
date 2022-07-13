@@ -84,6 +84,8 @@ if (isset($_POST["edit"])) {
     <link href="../owner/dist/css/index.css" rel="stylesheet">
     <!-- CSS Data Tabel -->
     <link rel=" stylesheet" type="text/css" href="../owner/dist/css/datatables.min.css">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>
@@ -91,13 +93,13 @@ if (isset($_POST["edit"])) {
     <div class=" wrapper">
         <div class="container-fluid">
             <!-- navbar header -->
-            <!-- <nav class="navbar navbar-light fixed-top">
+            <nav class="navbar navbar-light fixed-top">
                 <div class="container-fluid justify-content-center">
                     <h4 class="navbar-header text-white">
                         Selamat Datang di Sistem Informasi Kostan | DEKOST
                     </h4>
                 </div>
-            </nav> -->
+            </nav>
             <!--  CONTENT -->
             <div class="content mt-5">
                 <div class="row">
@@ -221,7 +223,7 @@ if (isset($_POST["edit"])) {
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i
                                                         class="fa-solid fa-database me-3"></i>Data Kost</h1>
-                                                <a href="owner.tambah.kos.php" class="tambah-data-kost float-right"
+                                                <a href="owner.tambah.kost.php" class="tambah-data-kost float-right"
                                                     style="text-decoration:none ;">
                                                     <i class="fa-solid fa-plus me-2"></i>Tambah Data Kost</a>
                                             </div>
@@ -232,27 +234,28 @@ if (isset($_POST["edit"])) {
                                                     cellspacing="0">
                                                     <thead>
                                                         <tr>
+                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
                                                             <th>Fasilitas</th>
-                                                            <th>Jumlah Kamar</th>
+                                                            <th>Jmlh Kamar</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
-                                                    <tfoot>
+                                                    <!-- <tfoot>
                                                         <tr>
+                                                            <th>No.</th>
                                                             <th>ID Kost</th>
                                                             <th>Nama Kost</th>
                                                             <th>Alamat</th>
                                                             <th>Fasilitas</th>
-                                                            <th>Jumlah Kamar</th>
-                                                            <th>Fasilitas</th>
+                                                            <th>Jmlh Kamar</th>
                                                             <th>Gambar</th>
                                                             <th>Aksi</th>
                                                         </tr>
-                                                    </tfoot>
+                                                    </tfoot> -->
                                                     <tbody>
                                                         <form action="" method="POST">
                                                             <?php
@@ -295,10 +298,10 @@ if (isset($_POST["edit"])) {
                                                                             <td>" . $dataKost["gambar_preview"] . "</td>
                                                                             <td>
                                                                                 <a href='owner.data.kost.php?idKost=$idKost'>
-                                                                                    <button type='submit' name='edit' class='btn btn-primary'>edit</button>
+                                                                                    <button type='submit' name='edit' class='btn btn-success'>edit</button>
                                                                                 </a>
                                                                                 <a href='owner.hapus.data.kost.php?idKost=$idKost'>
-                                                                                    <button type='submit' name='hapus' class='btn btn-primary'>hapus</button>
+                                                                                    <button type='submit' name='hapus' class='btn btn-danger'>hapus</button>
                                                                                 </a>
                                                                             </td>
                                                                         </tr>";

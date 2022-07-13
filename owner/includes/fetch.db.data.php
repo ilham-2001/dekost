@@ -192,6 +192,19 @@ function uploadImage($imgURL)
     return $newName;
 }
 
+function addFasilKost($idKost, $namaFasil)
+{
+    global $conn;
+    $idFasil = mysqli_query($conn, "SELECT id FROM fasilitas WHERE nama = $namaFasil");
+    $query = mysqli_query($conn, "INSERT INTO fasil_kost(`id_kost`, `id_fasil`) VALUES ($idKost, $idFasil)");
+
+    if (!$query) {
+        return false;
+    }
+
+    return true;
+}
+
 function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, $idPemilik, $fasilitas)
 {
     global $conn;
@@ -201,14 +214,15 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
     $harga = mysqli_real_escape_string($conn, $harga);
     $jenis = mysqli_real_escape_string($conn, $jenis);
     $alamat = mysqli_real_escape_string($conn, $alamat);
-    $fasilitas = mysqli_real_escape_string($conn, $fasilitas);
+    // $fasilitas = mysqli_real_escape_string($conn, $fasilitas);
+
     $gambar = uploadImage($gambar);
 
     if (!$gambar) {
         return FALSE;
     }
 
-    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview, fasilitas) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', $harga, '$jenis', '$gambar', '$fasilitas')");
+    $query = mysqli_query($conn, "INSERT INTO kost(nama, alamat, jumlahKamar, NIK_Pemilik, harga, jenis, gambar_preview, fasilitas) VALUES ('$namaKos', '$alamat', '$jumlahKamar', '$idPemilik', '$harga', '$jenis', '$gambar', '$fasilitas')");
 
     if (!$query) {
         return FALSE;
@@ -225,11 +239,12 @@ function registerKost($namaKos, $alamat, $jumlahKamar, $harga, $jenis, $gambar, 
     return ["isSuccess" => TRUE, "idKost" => $idKos['id']];
 }
 
-function getDataPesanan($idKost)
+function getDataPesanan($idpemilik)
 {
     global $conn;
     $data = [];
-    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran, pesanan.idPemesan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE pesanan.idKost='$idKost'");
+    // $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran, pesanan.idPemesan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK WHERE pesanan.idKost='$idKost'");
+    $query = mysqli_query($conn, "SELECT users.firstName, users.lastName, pesanan.idPesanan, pesanan.mulaiSewa, pesanan.akhirSewa, pesanan.tglPemesanan, pesanan.totalPembayaran, pesanan.idPemesan FROM pesanan INNER JOIN users ON pesanan.idPemesan=users.NIK INNER JOIN kost on pesanan.idKost=kost.id INNER JOIN pemilik on kost.NIK_Pemilik=pemilik.NIK WHERE pemilik.NIK='$idpemilik'");
 
     if ($query) {
 
@@ -326,16 +341,29 @@ function countPesanan($idKost)
     return mysqli_fetch_assoc($query);
 }
 
-function countDataKamar($idKost)
+function countDataKamar($idPemilik)
 {
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT COUNT(idKamar) as kamar FROM kamar WHERE id_kost='$idKost'");
+    $query = mysqli_query($conn, "SELECT COUNT(kamar.idKamar) as kamar  FROM kamar INNER JOIN kost ON kamar.id_kost=kost.id WHERE NIK_Pemilik='$idPemilik'");
 
     if (!$query) {
         return FALSE;
     }
 
+    return mysqli_fetch_assoc($query);
+}
+
+function countJumlahPenghuni($id)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(penyewaan.id) as penghuni FROM penyewaan WHERE penyewaan.idKost = ANY
+    (SELECT kost.id FROM kost WHERE kost.NIK_Pemilik='$id')");
+
+    if (!$query) {
+        return FALSE;
+    }
     return mysqli_fetch_assoc($query);
 }
 
@@ -369,10 +397,10 @@ function generateKamar($jumlahKamar, $idKost, $lebar, $panjang)
     return TRUE;
 }
 
-function countPenghuniKost($nik)
+function countPenghuniKost()
 {
     global $conn;
-    $query = mysqli_query($conn, "SELECT COUNT(id) as id_penghuni FROM penyewaan WHERE NIK_penyewa='$nik'");
+    $query = mysqli_query($conn, "SELECT COUNT(id) as id_penghuni FROM penyewaan");
 
     if (!$query) {
         return FALSE;
@@ -410,7 +438,7 @@ function getOwnerKostDataKamar($id)
     global $conn;
 
     $data_array = [];
-    $data_query = mysqli_query($conn, "SELECT * FROM kamar WHERE id_kost='$id'");
+    $data_query = mysqli_query($conn, "SELECT * FROM kamar INNER JOIN kost ON kamar.id_kost=kost.id WHERE NIK_Pemilik='$id'");
 
     while ($data = mysqli_fetch_assoc($data_query)) {
         array_push($data_array, $data);
@@ -494,7 +522,7 @@ function getDataPenyewaanById($idKost)
     global $conn;
 
     $data_array = [];
-    $data_query = mysqli_query($conn, "SELECT * FROM penyewaan WHERE idKost='$idKost'");
+    $data_query = mysqli_query($conn, "SELECT penyewaan.tannggal_mulai, penyewaan.tanggal_akhir, penyewaan.idKamar, penyewaan.NIK_penyewa, kost.nama FROM penyewaan INNER JOIN kost ON penyewaan.idKost=kost.id WHERE idKost='$idKost'");
 
     while ($data = mysqli_fetch_assoc($data_query)) {
         array_push($data_array, $data);
@@ -527,4 +555,28 @@ function getSewaKeluarByBulan($bulan, $idKost)
     }
 
     return mysqli_fetch_assoc($query)['jumlah_penyewa'];
+}
+function getInfoPenyewaByNIK($NIK)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT no_telepon, email FROM users WHERE NIK='$NIK'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query);
+}
+function countDataPeminatKost($gender)
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(penyewaan.NIK_penyewa) AS jumlah_minat FROM penyewaan INNER JOIN kost ON penyewaan.idKost=kost.id WHERE kost.jenis='$gender'");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlah_minat'];
 }

@@ -44,6 +44,8 @@ $data = getDataFromId("pemilik", $id);
     <link href="../owner/dist/css/index.css" rel="stylesheet"">
     <!-- CSS Data Tabel -->
     <link rel=" stylesheet" type="text/css" href="../owner/dist/css/datatables.min.css">
+    <!-- FavIcon -->
+    <link rel=" icon" href="assets/icons/DeKost2.png">
 </head>
 
 <body>
@@ -64,9 +66,10 @@ $data = getDataFromId("pemilik", $id);
                     <div class="side-nav1 col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav1"></div>
                     <div class="side-nav col-sm-4 col-md-3 col-lg-3 col-xxl-2" id="side-nav">
                         <ul class="nav flex-column">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none" href="index.php">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
+                                href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
+                                    <img src="../owner/assets/icons/DeKost2.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -75,7 +78,8 @@ $data = getDataFromId("pemilik", $id);
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>
+                                <a class="nav-link" aria-current="page" href="index.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -86,25 +90,31 @@ $data = getDataFromId("pemilik", $id);
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                            aria-controls="panelsStayOpen-collapseOne">
                                             <i class="fa-solid fa-database me-3"></i>
                                             Master Data
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kost.php"><i class="fa-solid fa-database me-3"></i>Data Kost</a>
+                                                <a class="nav-link" href="owner.data.kost.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kost</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.kamar.php"><i class="fa-solid fa-database me-3"></i>Data Kamar</a>
+                                                <a class="nav-link" href="owner.data.kamar.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Kamar</a>
                                             </li>
                                             <!-- Divider -->
                                             <hr class="sidebar-divider mt-2 bg-light">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="owner.data.penyewa.php"><i class="fa-solid fa-database me-3"></i>Data Penyewa</a>
+                                                <a class="nav-link" href="owner.data.penyewa.php"><i
+                                                        class="fa-solid fa-database me-3"></i>Data Penyewa</a>
                                             </li>
                                         </div>
                                     </div>
@@ -115,7 +125,8 @@ $data = getDataFromId("pemilik", $id);
                             <hr class="sidebar-divider mt-2 bg-light">
 
                             <li class="nav-item">
-                                <a class="nav-link" href="owner.pesanan.kost.php"><i class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
+                                <a class="nav-link" href="owner.pesanan.kost.php"><i
+                                        class="fas fa-fw fa-tachometer-alt me-2"></i>Pesanan Kost</a>
                             </li>
 
                             <!-- Divider -->
@@ -123,7 +134,8 @@ $data = getDataFromId("pemilik", $id);
                             <div class="logout">
                                 <li class="nav-item-logout">
                                     <form method="POST">
-                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i class="fa-solid fa-power-off me-2"></i>Log Out</button>
+                                        <button class="btn btn-primary" type="submit" name="logout-owner-btn"><i
+                                                class="fa-solid fa-power-off me-2"></i>Log Out</button>
                                     </form>
                                 </li>
                             </div>
@@ -136,7 +148,8 @@ $data = getDataFromId("pemilik", $id);
                                 <!-- Topbar -->
                                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
                                     <!-- Sidebar Toggle (Topbar) -->
-                                    <button id="sidebarToggleTop" onclick="myFunction()" class="btn btn-link rounded-circle d-sm-none mr-3">
+                                    <button id="sidebarToggleTop" onclick="myFunction()"
+                                        class="btn btn-link rounded-circle d-sm-none mr-3">
                                         <i class="fa fa-bars"></i>
                                     </button>
                                     <!-- Topbar Navbar -->
@@ -147,10 +160,11 @@ $data = getDataFromId("pemilik", $id);
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span><?= $dataPemilik["nama"] ?></span>
                                                 <img class="img-profile rounded-circle ms-2 mb-1" width="20px"
-                                                    height="20px" src="../owner/assets/icons/DeKost.png">
+                                                    height="20px" src="../owner/assets/icons/DeKost2.png">
                                             </a>
                                             <!-- Dropdown - User Information -->
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
                                                 <a class="dropdown-item" href="owner.profile.php">
                                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Profile
@@ -175,7 +189,8 @@ $data = getDataFromId("pemilik", $id);
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-5">
-                                                    <img class="img-fluid" src="../owner/assets/app/images/profile.jpg" height="400" width="400" alt="profile">
+                                                    <img class="img-fluid" src="../owner/assets/app/images/profile.jpg"
+                                                        height="400" width="400" alt="profile">
                                                 </div>
                                                 <div class="col-12 col-sm-12 col-md-7" style="overflow:auto ;">
                                                     <table class="table">
@@ -235,19 +250,19 @@ $data = getDataFromId("pemilik", $id);
     </div>
     </div>
     <script>
-        function myFunction() {
-            var x = document.getElementById("side-nav");
-            var y = document.getElementById("side-nav1");
-            var a = document.getElementById("main-content-header");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "block";
-                a.style.width = "none";
-            }
+    function myFunction() {
+        var x = document.getElementById("side-nav");
+        var y = document.getElementById("side-nav1");
+        var a = document.getElementById("main-content-header");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            y.style.display = "none";
+        } else {
+            x.style.display = "block";
+            y.style.display = "block";
+            a.style.width = "none";
         }
+    }
     </script>
     <script src="../owner/dist/js/jquery.js"></script>
     <script src="../owner/assets/app/js/bootstrap.bundle.min.js"></script>
