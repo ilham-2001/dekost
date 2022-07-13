@@ -14,6 +14,10 @@ $dataPemilik = getDataPemilik($nikAkun);
 
 $num = 1;
 
+// get username
+$id = $_SESSION['id_pemilik'];
+$data = getDataFromId("pemilik", $id);
+
 
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
@@ -202,12 +206,12 @@ if (!isset($_SESSION['login-admin'])) {
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>ID Kamar</th>
-                                                            <th>ID Kost</th>
+                                                            <th>Nama Kost</th>
                                                             <th>Lebar</th>
                                                             <th>Panjang</th>
-                                                            <th>Kategori</th>
-                                                            <th>Fasilitas</th>
-                                                            <th>Gambar</th>
+                                                            <!-- <th>Kategori</th> -->
+                                                            <th>Status</th>
+                                                            <!-- <th>Gambar</th> -->
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -233,11 +237,12 @@ if (!isset($_SESSION['login-admin'])) {
                                                             <td><?= $data['lebar'] ?></td>
                                                             <td><?= $data['panjang'] ?></td>
                                                             <td><?= $data['status'] ?></td>
-                                                            <td>Kamar mandi dalam,
+                                                            <!-- <td><?= $data['fasilitas'] ?></td> -->
+                                                            <!-- <td>Kamar mandi dalam,
                                                                 AC,
                                                                 TV, dll?
-                                                            </td>
-                                                            <td>ini gambar</td>
+                                                            </td> -->
+                                                            <!-- <td>ini gambar</td> -->
                                                             <td>
                                                                 <form method="POST">
                                                                     <button class="btn btn-success" value="accept"

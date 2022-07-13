@@ -3,6 +3,40 @@ session_start();
 
 require('core/init.php');
 
+$nikAkun = $_SESSION["id_pemilik"];
+
+global $conn;
+
+$pemilik = mysqli_query($conn, "SELECT * FROM pemilik WHERE NIK='$nikAkun'");
+$dataPemilik = mysqli_fetch_assoc($pemilik);
+
+if (isset($_POST['btn-tambah-kos'])) {
+    $namaKos = $_POST['nama-kos'];
+    $alamatKos = $_POST['alamat-kos'];
+    $jumlahKamarKos = $_POST['jumlahkamar'];
+    $hargaKos = $_POST['harga'];
+    $jenisKos = $_POST['jenis'];
+    // $namabank = $_POST['nama-bank'];
+    // $rekening = $_POST['rekening'];
+    $fasilitas = implode(',', $_POST['fasilitas']);
+
+    $idPemilik = $_SESSION['id_pemilik'];
+    $gambar = $_FILES['kost-gambar'];
+    $regis = registerKost($namaKos, $alamatKos, $jumlahKamarKos, $hargaKos, $jenisKos, $gambar, $idPemilik, $fasilitas);
+    $kamarGenereated = generateKamar($jumlahKamarKos, $regis['idKost'], 3, 4);
+    // $rekeningGenerated = generateRekening($namabank, $rekening, $idPemilik);
+
+    // var_dump($kamarGenereated);
+    if ($regis['isSuccess'] && $kamarGenereated && $rekeningGenerated && !$_SESSION['login-admin']) {
+        header("Location: owner.login.php");
+        exit;
+    } else if ($regis['isSuccess'] && $kamarGenereated && $_SESSION['login-admin']) {
+        header("Location: owner.data.kost.php");
+        exit;
+    }
+}
+
+
 if (isset($_POST['logout-owner-btn'])) {
     session_unset();
     session_destroy();
@@ -62,7 +96,7 @@ if (!isset($_SESSION['login-admin'])) {
                             <a class="sidebar-brand d-flex align-items-center justify-content-center mb-3 text-decoration-none"
                                 href="index.php">
                                 <div class="sidebar-brand-icon">
-                                    <img src="../owner/assets/icons/logo.png" alt="#logo">
+                                    <img src="../owner/assets/icons/DeKost.png" alt="#logo">
                                 </div>
                                 <h4 class="sidebar-brand-text ms-1 text-white mt-3">DEKOST</h4>
                             </a>
@@ -174,7 +208,7 @@ if (!isset($_SESSION['login-admin'])) {
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i
-                                                        class="fa-solid fa-database me-3"></i>Edit Data Kost</h1>
+                                                        class="fa-solid fa-database me-3"></i>Tambah Data Kost</h1>
                                             </div>
                                         </div>
                                         <div class="card-body ps-5">
@@ -182,14 +216,14 @@ if (!isset($_SESSION['login-admin'])) {
                                                 <table class="table table-borderless">
                                                     <tbody>
                                                         <tr style="height:60px">
-                                                            <th><label for="nama">Nama</label></th>
+                                                            <th><label for="nama">Nama Kost</label></th>
                                                             <td> : <input style="border-radius: 10px;" type="text"
                                                                     class="form pt-1 w-50" id="nama"
                                                                     placeholder="Nama kost..." name="nama-kos"
                                                                     autocomplete="off"></td>
                                                         </tr>
                                                         <tr style="height:60px">
-                                                            <th><label for="Alamat">Alamat</label></th>
+                                                            <th><label for="Alamat">Alamat Kost</label></th>
                                                             <td> : <input style="border-radius: 10px;" type="text"
                                                                     class="form pt-1 w-50" id="alamat"
                                                                     placeholder="Alamat..." name="alamat-kos"
@@ -203,7 +237,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                                     autocomplete="off"></td>
                                                         </tr>
                                                         <tr style="height:60px">
-                                                            <th><label for="harga">Harga</label></th>
+                                                            <th><label for="harga">Harga Kost</label></th>
                                                             <td> : <input style="border-radius: 10px;" type="text"
                                                                     class="form pt-1 w-50" id="harga"
                                                                     placeholder="Harga..." name="harga"
@@ -215,7 +249,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                                     aria-label="Default select example" name="jenis">
                                                                     <option value="Putra" selected>Putra</option>
                                                                     <option value="Putri">Putri</option>
-                                                                    <option value="Campuran">Campuran</option>
+                                                                    <option value="Campur">Campuran</option>
                                                                 </select></td>
                                                         </tr>
                                                         <tr style="height:60px ;">
@@ -225,46 +259,46 @@ if (!isset($_SESSION['login-admin'])) {
                                                                     <div class="row">
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="ac"
-                                                                                name="fasilitas" value="AC">
+                                                                                name="fasilitas[]" value="AC">
                                                                             <label for="ac"> AC </label><br>
                                                                         </div>
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="tv"
-                                                                                name="fasilitas"
+                                                                                name="fasilitas[]"
                                                                                 value="Kamar Mandi Dalam">
                                                                             <label for="tv"> Kamar Mandi
                                                                                 Dalam</label><br>
                                                                         </div>
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="wifi"
-                                                                                name="fasilitas" value="Wifi">
+                                                                                name="fasilitas[]" value="Wifi">
                                                                             <label for="kmdalam"> Wifi</label><br>
                                                                         </div>
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="air"
-                                                                                name="fasilitas" value="Air">
+                                                                                name="fasilitas[]" value="Air">
                                                                             <label for="kasur"> Air </label><br>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="listrik"
-                                                                                name="fasilitas" value="Listrik">
+                                                                                name="fasilitas[]" value="Listrik">
                                                                             <label for="meja"> Listrik</label><br>
                                                                         </div>
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="kasur"
-                                                                                name="fasilitas" value="Kasur">
+                                                                                name="fasilitas[]" value="Kasur">
                                                                             <label for="kasur"> Kasur </label><br>
                                                                         </div>
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="lemari"
-                                                                                name="fasilitas" value="Lemari">
+                                                                                name="fasilitas[]" value="Lemari">
                                                                             <label for="lemari"> Lemari</label><br>
                                                                         </div>
                                                                         <div class="col-3">
                                                                             <input type="checkbox" id="meja"
-                                                                                name="fasilitas" value="Meja">
+                                                                                name="fasilitas[]" value="Meja">
                                                                             <label for="kasur"> Meja </label><br>
                                                                         </div>
                                                                     </div>
@@ -286,7 +320,7 @@ if (!isset($_SESSION['login-admin'])) {
                                                             <td>
                                                                 <button style="width: 50%; border-radius:10px;"
                                                                     class=" btn btn-primary" type="submit"
-                                                                    name="btn-edit-kos">Edit Data Kost
+                                                                    name="btn-tambah-kos">Tambah Data Kost
                                                                 </button>
                                                             </td>
                                                             <td></td>

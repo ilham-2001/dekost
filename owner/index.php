@@ -18,8 +18,6 @@ if (!isset($_SESSION['login-admin'])) {
 $nikAkun = $_SESSION["id_pemilik"];
 $dataPemilik = getDataPemilik($nikAkun);
 
-var_dump($nikAkun);
-
 $currentDate = date("Y-m-d'", time());
 $currentYear = explode("-", $currentDate)[0];
 
