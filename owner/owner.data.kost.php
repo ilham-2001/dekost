@@ -223,7 +223,7 @@ if (isset($_POST["edit"])) {
                                             <div class="d-flex justify-content-between mb-2 mt-2">
                                                 <h1 class="h3 mb-0 text-gray-800"><i
                                                         class="fa-solid fa-database me-3"></i>Data Kost</h1>
-                                                <a href="owner.tambah.kos.php" class="tambah-data-kost float-right"
+                                                <a href="owner.tambah.kost.php" class="tambah-data-kost float-right"
                                                     style="text-decoration:none ;">
                                                     <i class="fa-solid fa-plus me-2"></i>Tambah Data Kost</a>
                                             </div>
