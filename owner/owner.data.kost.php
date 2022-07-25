@@ -276,7 +276,7 @@ if (isset($_POST["edit"])) {
                                                                             <td>" . $idKost . "</td>
                                                                             <td>" . $dataKost["nama"] . "</td>
                                                                             <td>" . $dataKost["alamat"] . "</td>
-                                                                            <td>" . $allFasilitas . "</td>
+                                                                            <td>" . $dataKost['fasilitas'] . "</td>
                                                                             <td>" . $dataKost["jumlahKamar"] . "</td>
                                                                             <td>" . $dataKost["gambar_preview"] . "</td>
                                                                             <td>

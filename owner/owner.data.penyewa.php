@@ -194,6 +194,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
+                                                            <th>Nama</th>
                                                             <th>NIK Penyewa</th>
                                                             <th>Nama Kost</th>
                                                             <th>No Kamar</th>
@@ -225,6 +226,7 @@ $dataPenyewa = getDataPenyewaanById($idKost);
                                                             ?>
                                                             <tr>
                                                                 <td><?= $num ?></td>
+                                                                <td> <?= $penyewa['firstName'] . " " . $penyewa['lastName'] ?></td>
                                                                 <td><?= $penyewa['NIK_penyewa'] ?></td>
                                                                 <td><?= $penyewa['nama'] ?></td>
                                                                 <td><?= $penyewa['idKamar'] ?></td>
