@@ -16,6 +16,35 @@ function getalldata($table)
     return $data_array;
 }
 
+function getAllKamarLimit($table, $limitStart, $dataPerPage)
+{
+    global $conn;
+
+    $dataArr = [];
+
+    $query = mysqli_query($conn, "SELECT * FROM $table LIMIT $limitStart, $dataPerPage");
+
+    while ($data = mysqli_fetch_assoc($query)) {
+        array_push($dataArr, $data);
+    }
+
+    return $dataArr;
+}
+
+function countKamarKost()
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT COUNT(id) as jumlahKost FROM kost ");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['jumlahKost'];
+}
+
+
 function getDataFromId($table, $id)
 {
     global $conn;
@@ -196,4 +225,17 @@ function addPesanan($idPemesan, $idKost, $mulaiSewa, $akhirSewa, $totalPembayara
     }
 
     return TRUE;
+}
+
+function getAllFasilitas()
+{
+    global $conn;
+
+    $query = mysqli_query($conn, "SELECT fasilitas FROM kost WHERE id=13");
+
+    if (!$query) {
+        return FALSE;
+    }
+
+    return mysqli_fetch_assoc($query)['fasilitas'];
 }

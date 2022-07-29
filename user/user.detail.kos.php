@@ -32,6 +32,53 @@ if (isset($_POST["btn_submit"])) {
     }
 }
 
+if (isset($_POST['button_signup'])) {
+    $nama_depan = $_POST['nama_depan'];
+    $nama_belakang = $_POST['nama_belakang'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $jenis_kelamin = $_POST['jenis_kelamin'];
+    $nik = $_POST['nik'];
+    $noTelp = $_POST['noTelp'];
+
+    $isComplete = checkCompleteess($email, $password, $nik);
+
+    if ($isComplete) {
+        // procees to checking regitered account by email
+        $isRegistred = checkRegistredUser($email);
+
+        if (!$isRegistred) {
+            // make account if email is not set yet in the database
+            $regis = registerAccount($email, $password, $nama_depan, $nama_belakang, $jenis_kelamin, $nik, $noTelp);
+
+            if ($regis) {
+                // regis is success 
+                $response['error'] = FALSE;
+                $response['user']['name'] = $regis['email'];
+                $response['user']['key'] = $regis['NIK'];
+
+                // echo json_encode($response);
+            } else {
+                // give warnings about failing to insert
+                $response['error'] = TRUE;
+                $response['error_msg'] = "failed insertion";
+
+                // echo json_encode($response);
+            }
+        } else {
+            // give warnings if email is used before
+            $response['error'] = TRUE;
+            $response['error_msg'] = "email is already registred";
+            // echo json_encode($response);
+        }
+    } else {
+        // give warnings unfinished data fillings
+        echo "
+        <script> alert('Some fields are not filled'); </script>
+        ";
+    }
+}
+
 
 if (isset($_POST['rent-btn'])) {
     $duration = $_POST['duration'];
@@ -81,7 +128,9 @@ $lebarkamar = $data['lebar'];
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/DeKost.png">
     <link rel="stylesheet" href="../owner/assets/icons/css/all.min.css">
@@ -95,7 +144,9 @@ $lebarkamar = $data['lebar'];
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -122,13 +173,16 @@ $lebarkamar = $data['lebar'];
                     <div class="modal-header">
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                             </symbol>
                             <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                <path
+                                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                             </symbol>
                             <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                <path
+                                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                             </symbol>
                         </svg>
 
@@ -143,10 +197,13 @@ $lebarkamar = $data['lebar'];
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Sign In</button>
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">Sign In</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Sign
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">Sign
                                     Up</button>
                             </li>
                         </ul>
@@ -159,15 +216,18 @@ $lebarkamar = $data['lebar'];
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <!-- Form Login -->
                                 <form class="form-signin" method="POST">
-                                    <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72" height="57">
+                                    <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72"
+                                        height="57">
                                     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
+                                        <input type="email" class="form-control" id="floatingInput"
+                                            placeholder="name@example.com" name="email" autocomplete="off">
                                         <label for="floatingInput">Email address</label>
                                     </div>
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                                        <input type="password" class="form-control" id="floatingPassword"
+                                            placeholder="Password" name="password">
                                         <label for="floatingPassword">Password</label>
                                     </div>
                                     <div class="checkbox mb-3">
@@ -175,48 +235,63 @@ $lebarkamar = $data['lebar'];
                                             <input type="checkbox" value="true" name="is_remember"> Remember me
                                         </label>
                                     </div>
-                                    <button class="w-100 btn btn-lg btn-primary btn-login" type="submit" name="btn_submit">Sign
+                                    <button class="w-100 btn btn-lg btn-primary btn-login" type="submit"
+                                        name="btn_submit">Sign
                                         in</button>
                                 </form>
 
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form class="form-signin" method="POST">
-                                    <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72" height="57">
+                                    <img class="mb-4 icon-img" src="assets/icon/DeKost.png" alt="" width="72"
+                                        height="57">
 
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" autocomplete="off">
+                                        <input type="email" class="form-control" id="floatingInput"
+                                            placeholder="name@example.com" name="email" autocomplete="off">
                                         <label for="floatingInput">Email address</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword" placeholder="password" name="password" autocomplete="off">
+                                        <input type="password" class="form-control" id="floatingPassword"
+                                            placeholder="password" name="password" autocomplete="off">
                                         <label for="floatingPassword">Password</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="nama depan" name="nama_depan" autocomplete="off">
+                                        <input type="text" class="form-control" id="floatingInput"
+                                            placeholder="nama depan" name="nama_depan" autocomplete="off">
                                         <label for="floatingInput">Nama Depan</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="nama belakang" name="nama_belakang" autocomplete="off">
+                                        <input type="text" class="form-control" id="floatingInput"
+                                            placeholder="nama belakang" name="nama_belakang" autocomplete="off">
                                         <label for="floatingInput">Nama Belakang</label>
                                     </div>
 
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK" name="nik" autocomplete="off">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
+                                            name="nik" autocomplete="off">
                                         <label for="floatingInput">NIK</label>
                                     </div>
 
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="NIK"
+                                            name="noTelp" autocomplete="off">
+                                        <label for="floatingInput">No.Telepon</label>
+                                    </div>
+
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault1" value="L">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
+                                            id="flexRadioDefault1" value="L">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             Laki-laki
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="flexRadioDefault2" checked value="P">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
+                                            id="flexRadioDefault2" checked value="P">
                                         <label class="form-check-label" for="flexRadioDefault2">
                                             Perempuan
                                         </label>
@@ -238,26 +313,31 @@ $lebarkamar = $data['lebar'];
         <section class="display-kos-image">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 xzoom-container">
-                    <img class="primary-img img-fluid rounded xzoom" xoriginal="assets/images/kamar_kos.jpg" id="xzoom-default" src="assets/images/kamar_kos.jpg" title="Gambar Kost 1" alt="">
+                    <img class="primary-img img-fluid rounded xzoom" xoriginal="assets/images/kamar_kos.jpg"
+                        id="xzoom-default" src="assets/images/kamar_kos.jpg" title="Gambar Kost 1" alt="">
                     <div class="row mt-2">
                         <div class="col-3">
                             <a href="assets/images/kamar_kos.jpg">
-                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kamar_kos.jpg" title="Gambar Kost 2" alt="">
+                                <img class="primary-img img-fluid rounded xzoom-gallery"
+                                    src="assets/images/kamar_kos.jpg" title="Gambar Kost 2" alt="">
                             </a>
                         </div>
                         <div class="col-3">
                             <a href="assets/images/kos.jpg">
-                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg" title="Gambar Kost 3" alt="">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg"
+                                    title="Gambar Kost 3" alt="">
                             </a>
                         </div>
                         <div class="col-3">
                             <a href="assets/images/kamar_kos.jpg">
-                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kamar_kos.jpg" title="Gambar Kost 4" alt="">
+                                <img class="primary-img img-fluid rounded xzoom-gallery"
+                                    src="assets/images/kamar_kos.jpg" title="Gambar Kost 4" alt="">
                             </a>
                         </div>
                         <div class="col-3">
                             <a href="assets/images/kos.jpg">
-                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg" title="Gambar Kost 5" alt="">
+                                <img class="primary-img img-fluid rounded xzoom-gallery" src="assets/images/kos.jpg"
+                                    title="Gambar Kost 5" alt="">
                             </a>
                         </div>
                     </div>
@@ -287,19 +367,21 @@ $lebarkamar = $data['lebar'];
 
                     <div class="kos-info">
                         <h3 class="section-heading"> <?= $kos['nama']; ?> </h3>
-                        <span class="section-col" style="padding:5px; border: 1px solid black; border-radius:10px;"> <?= $kos['jenis'] ?> </span> <br><br>
+                        <span class="section-col" style="padding:5px; border: 1px solid black; border-radius:10px;">
+                            <?= $kos['jenis'] ?> </span> <br><br>
                         <span class="section-col"> <?= $kos['alamat']; ?> </span>
                     </div>
                     <hr>
                     <div class="kos-specification">
                         <h4 class="section-heading"> Spesifikasi kamar </h4>
-                        <span class="section-col"><i class="fa-solid fa-house-chimney-window me-2"></i> <?= $panjangkamar . '  x  ' . $lebarkamar ?> Meter </span>
+                        <span class="section-col"><i class="fa-solid fa-house-chimney-window me-2"></i>
+                            <?= $panjangkamar . '  x  ' . $lebarkamar ?> Meter </span>
                     </div>
                     <hr>
                     <div class="kos-facility">
                         <h4 class="section-heading"> Fasilitas </h4>
                         <?php foreach ($f as $fs) : ?>
-                            <span class="me-4"> <?= $fs . ',' ?></span>
+                        <span class="me-4"> <?= $fs . ',' ?></span>
                         <?php endforeach; ?>
                     </div>
                     <hr>
@@ -307,22 +389,25 @@ $lebarkamar = $data['lebar'];
                     <div class="kos-lokasi">
                         <h4 class="section-heading">Lokasi</h4>
                         <div class="mapouter">
-                            <div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=<?= $mapKosNama[0] ?>%20<?= $mapKosNama[1] ?>%20<?= $mapKosAddr[0] ?>%20<?= $mapKosAddr[1] ?>%20<?= $mapKosAddr[2] ?>&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br>
+                            <div class="gmap_canvas"><iframe width="400" height="300" id="gmap_canvas"
+                                    src="https://maps.google.com/maps?q=<?= $mapKosNama[0] ?>%20<?= $mapKosNama[1] ?>%20<?= $mapKosAddr[0] ?>%20<?= $mapKosAddr[1] ?>%20<?= $mapKosAddr[2] ?>&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
+                                    href="https://123movies-to.org"></a><br>
                                 <style>
-                                    .mapouter {
-                                        position: relative;
-                                        text-align: right;
-                                        height: 300px;
-                                        width: 400px;
-                                    }
+                                .mapouter {
+                                    position: relative;
+                                    text-align: right;
+                                    height: 300px;
+                                    width: 400px;
+                                }
                                 </style><a href="https://www.embedgooglemap.net">google maps iframe embed</a>
                                 <style>
-                                    .gmap_canvas {
-                                        overflow: hidden;
-                                        background: none !important;
-                                        height: 300px;
-                                        width: 400px;
-                                    }
+                                .gmap_canvas {
+                                    overflow: hidden;
+                                    background: none !important;
+                                    height: 300px;
+                                    width: 400px;
+                                }
                                 </style>
                             </div>
                         </div>
@@ -338,16 +423,19 @@ $lebarkamar = $data['lebar'];
                                 <span class="subs-text">/ bulan</span>
                             </h5>
                             <form method="POST">
-                                <input class="form-control me-2 rent-input" type="date" placeholder="Mulai Sewa" aria-label="Search" name="start-date">
-                                <input class="form-control me-2 rent-input" type="text" placeholder="Lama Sewa" aria-label="Search" name="duration">
+                                <input class="form-control me-2 rent-input" type="date" placeholder="Mulai Sewa"
+                                    aria-label="Search" name="start-date">
+                                <input class="form-control me-2 rent-input" type="text" placeholder="Lama Sewa"
+                                    aria-label="Search" name="duration">
                                 <?php if (isset($_SESSION['login'])) : ?>
-                                    <button class="btn btn-primary rent-btn" type="submit" name="rent-btn">Ajukan
-                                        Penyewaan</button>
+                                <button class="btn btn-primary rent-btn" type="submit" name="rent-btn">Ajukan
+                                    Penyewaan</button>
                                 <?php endif; ?>
                             </form>
                             <?php if (!isset($_SESSION['login'])) : ?>
-                                <button class="btn btn-primary rent-btn hidden-btn" type="submit" name="rent-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajukan
-                                    Penyewaan</button>
+                            <button class="btn btn-primary rent-btn hidden-btn" type="submit" name="rent-btn"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">Ajukan
+                                Penyewaan</button>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -377,7 +465,8 @@ $lebarkamar = $data['lebar'];
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/DeKost2.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
+                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/DeKost2.png" class="mb-3 me-2"
+                            width="50" height="50" alt="logo"> Dekost</h5>
                     <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
                     <ul class="list-unstyled text-muted">
                         <li><a href="#tentangkami">Tentang Kami</a></li>
@@ -437,8 +526,10 @@ $lebarkamar = $data['lebar'];
                         kepada kami.</p>
                     <form action="#">
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
+                            <input class="form-control" type="text" placeholder="Recipient's username"
+                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" id="button-addon2" type="button"><i
+                                    class="fas fa-paper-plane"></i></button>
                         </div>
                     </form>
                 </div>
@@ -453,15 +544,15 @@ $lebarkamar = $data['lebar'];
     <!-- XZOOM -->
     <script src="../user/assets/js/dist/xzoom.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.xzoom, .xzoom-gallery').xzoom({
-                zoomWidth: 500,
-                zoomHeight: 300,
-                title: true,
-                tint: '#333',
-                Xoffset: 50,
-            })
-        });
+    $(document).ready(function() {
+        $('.xzoom, .xzoom-gallery').xzoom({
+            zoomWidth: 500,
+            zoomHeight: 300,
+            title: true,
+            tint: '#333',
+            Xoffset: 50,
+        })
+    });
     </script>
 </body>
 

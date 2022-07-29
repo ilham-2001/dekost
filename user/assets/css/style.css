@@ -200,6 +200,9 @@ h3 {
 .owl-dots .owl-dot.active {
   background: #2155cd !important;
 }
+.paging {
+  text-align: center;
+}
 .primary-img {
   width: 700px;
 }

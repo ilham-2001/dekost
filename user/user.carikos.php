@@ -4,7 +4,14 @@ require('core/init.php');
 
 session_start();
 
-$dataKost = getalldata('kost');
+$jumlahData = countKamarKost();
+$activePage = isset($_GET['p']) ? $_GET['p'] : 1;
+$dataPerPage = 9;
+$jumlahPage = (int) ceil($jumlahData / $dataPerPage);
+$limitStart = $dataPerPage * ($activePage - 1);
+
+$dataKost = getAllKamarLimit('kost', $limitStart, $dataPerPage);
+
 
 if (isset($_POST['set-filter'])) {
     $filterJenis = $_POST['jenis-filter'];
@@ -13,7 +20,8 @@ if (isset($_POST['set-filter'])) {
     $dataKost = filterSearch($filterJenis, $minHarga, $maxHarga);
 }
 
-
+$fasilitas = getAllFasilitas();
+// var_dump(explode(",", $fasilitas));
 
 ?>
 
@@ -32,7 +40,9 @@ if (isset($_POST['set-filter'])) {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Ubuntu:wght@500&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="assets/icon/DeKost.png">
     <!-- Star Icon -->
@@ -46,7 +56,9 @@ if (isset($_POST['set-filter'])) {
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">De'Kost</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -82,50 +94,72 @@ if (isset($_POST['set-filter'])) {
         <section class="kos-field">
             <div class="row">
                 <?php foreach ($dataKost as $kos) : ?>
-                    <div class="col-3" style="margin-right:75px ; margin-bottom: 10px;">
-                        <a href="user.detail.kos.php?q=<?= $kos['id'] ?>">
-                            <div class="card" style="width: 18.1rem;">
-                                <img src="../assets/upload/<?= $kos['gambar_preview'] ?>" class="card-img-top">
-                                <div class="card-body">
-                                    <h4 class="card-text card-title">
-                                        <?= $kos['nama']; ?>
-                                    </h4>
-                                    <p class="card-text">
-                                        <?php if (strlen($kos['alamat'] > 35)) : ?>
-                                            <?= substr($kos['alamat'], 0, 31) . "..." ?>
-                                        <?php else : ?>
-                                            <?php echo "$kos[alamat]"; ?>
-                                        <?php endif; ?>
-                                    </p>
-                                    <p>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span>3</span>
-                                    </p>
-                                    <p class="card-text harga-text">
-                                        <?php
+                <div class="col-3" style="margin-right:75px ; margin-bottom: 10px;">
+                    <a href="user.detail.kos.php?q=<?= $kos['id'] ?>">
+                        <div class="card" style="width: 18.1rem;">
+                            <img src="../assets/upload/<?= $kos['gambar_preview'] ?>" class="card-img-top">
+                            <div class="card-body">
+                                <h4 class="card-text card-title">
+                                    <?= $kos['nama']; ?>
+                                </h4>
+                                <p class="card-text">
+                                    <?php if (strlen($kos['alamat'] > 35)) : ?>
+                                    <?= substr($kos['alamat'], 0, 31) . "..." ?>
+                                    <?php else : ?>
+                                    <?php echo "$kos[alamat]"; ?>
+                                    <?php endif; ?>
+                                </p>
+                                <p>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span>3</span>
+                                </p>
+                                <p class="card-text harga-text">
+                                    <?php
                                         $floatHarga = (float) $kos['harga'];
                                         $hargaFormatted = number_format($floatHarga);
                                         echo "Rp $hargaFormatted.00";
                                         ?>
-                                        <span class="subs-text">/ bulan</span>
-                                    </p>
-                                </div>
+                                    <span class="subs-text">/ bulan</span>
+                                </p>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
+                </div>
                 <?php endforeach; ?>
             </div>
         </section>
+
+        <div class="paging">
+            <?php if ($activePage > 1) : ?>
+            <a href="user.carikos.php?p=<?= $activePage - 1 ?>">&laquo;</a>
+            <?php endif; ?>
+
+            <?php for ($i = 0; $i < $jumlahPage; $i++) : ?>
+            <?php if (($i + 1) == $activePage) : ?>
+            <a href="user.carkos.php?p=<?= $i + 1 ?>"
+                style="font-size: 1.2rem; font-weight: bold; text-decoration: none; color: red;"><?= $i + 1 ?> </a>
+            <?php else : ?>
+            <a href="user.carikos.php?p=<?= $i + 1 ?>" style="font-size: 1.2rem; text-decoration: none;"> <?= $i + 1 ?>
+            </a>
+            <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($activePage < $jumlahPage) : ?>
+            <a href="user.carikos.php?p=<?= $activePage + 1 ?>">&raquo;</a>
+            <?php endif; ?>
+        </div>
+
     </main>
     <footer class="w-100 py-4 flex-shrink-0">
         <div class="container">
             <div class="row gy-4 gx-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/DeKost2.png" class="mb-3 me-2" width="50" height="50" alt="logo"> Dekost</h5>
+                    <h5 class="h1 text-black mb-2"><img src="../owner/assets/icons/DeKost2.png" class="mb-3 me-2"
+                            width="50" height="50" alt="logo"> Dekost</h5>
                     <p class="small text-muted fw-bold">Mencari kost sangat mudah menggunakan dekost</p>
                     <ul class="list-unstyled text-muted">
                         <li><a href="#tentangkami">Tentang Kami</a></li>
@@ -186,8 +220,10 @@ if (isset($_POST['set-filter'])) {
                         kepada kami.</p>
                     <form action="#">
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
+                            <input class="form-control" type="text" placeholder="Recipient's username"
+                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" id="button-addon2" type="button"><i
+                                    class="fas fa-paper-plane"></i></button>
                         </div>
                     </form>
                 </div>
